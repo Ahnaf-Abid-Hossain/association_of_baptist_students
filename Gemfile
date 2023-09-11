@@ -80,3 +80,4 @@ group :test do
 end
 
 gem 'brakeman'
+gem 'seed_dump'
