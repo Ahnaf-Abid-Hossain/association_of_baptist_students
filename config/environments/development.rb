@@ -68,3 +68,6 @@ Rails.application.configure do
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
 end
+
+ENV['GOOGLE_OAUTH_CLIENT_ID'] = '583288431043-og799qcl465hc86b7m1d7js56f4ibt37.apps.googleusercontent.com'
+ENV['GOOGLE_OAUTH_CLIENT_SECRET'] = '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'
