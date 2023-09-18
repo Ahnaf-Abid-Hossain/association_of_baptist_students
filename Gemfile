@@ -85,3 +85,13 @@ end
 
 gem 'brakeman'
 gem 'seed_dump'
+
+# Devise (as of now, no need for specific version)
+gem 'devise'
+
+# Specified (in assignment) version 1.9.1 omniauth
+gem 'omniauth', '~> 1.9.1'
+
+# Versions that go with 1.9.1
+gem 'omniauth-oauth2', '~> 1.7.1'
+gem 'omniauth-google-oauth2', '~> 0.8.2'
