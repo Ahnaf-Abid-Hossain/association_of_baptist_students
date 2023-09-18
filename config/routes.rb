@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   # Old routing
   # devise_for :admins
-  # resources :books
   # root 'books#index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -10,7 +9,8 @@ Rails.application.routes.draw do
 
   # -=-=-=-=-
   # New routing
-  root 'dashboards#show'
+  root 'books#index'
+  resources :books
   devise_for :admins, controllers: { omniauth_callbacks: 'admins/omniauth_callbacks' }
   devise_scope :admin do
     get 'admins/sign_in', to: 'admins/sessions#new', as: :new_admin_session
