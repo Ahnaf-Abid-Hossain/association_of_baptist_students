@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :alumnis
   # Old routing
   # devise_for :admins
   # root 'books#index'
