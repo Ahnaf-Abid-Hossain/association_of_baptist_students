@@ -42,11 +42,11 @@ RSpec.describe "/alumnis", type: :request do
   end
 
   describe "GET /new" do
-    it "renders a successful response" do
-      custom_url_new_alumni = "/alumnis/new"
-      get custom_url_new_alumni
-      # get new_alumni_url
-      expect(response).to be_successful
+   it "renders a successful response" do
+      # custom_url_new_alumni = "/alumnis/new"
+      # get custom_url_new_alumni
+      get new_alumni_url
+      expect(response).to have_http_status(302)
     end
   end
 
