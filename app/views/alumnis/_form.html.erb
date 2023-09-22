@@ -1,0 +1,17 @@
+<%= form_with(model: alumni) do |form| %>
+  <% if alumni.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(alumni.errors.count, "error") %> prohibited this alumni from being saved:</h2>
+
+      <ul>
+        <% alumni.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
