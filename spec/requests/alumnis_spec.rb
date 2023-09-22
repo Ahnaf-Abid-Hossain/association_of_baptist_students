@@ -43,7 +43,9 @@ RSpec.describe "/alumnis", type: :request do
 
   describe "GET /new" do
     it "renders a successful response" do
-      get new_alumni_url
+      custom_url_new_alumni = "/alumnis/new"
+      get custom_url_new_alumni
+      # get new_alumni_url
       expect(response).to be_successful
     end
   end
