@@ -1,8 +1,8 @@
-class Admins::SessionsController < Devise::SessionsController
+class Users::SessionsController < Devise::SessionsController
   # Helper for linking to post-"sign out"
   # (in this case, to new session path)
   def after_sign_out_path_for(_resource_or_scope)
-    new_admin_session_path
+    new_user_session_path
   end
 
   # Helper for linking to post-"sign in"
