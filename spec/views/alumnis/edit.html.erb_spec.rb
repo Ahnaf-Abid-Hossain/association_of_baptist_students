@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe "alumnis/edit", type: :view do
   let(:alumni) {
-    Alumni.create!()
+    user = User.create!(email: "test@gmail.com")
+    Alumni.create!(user: user)
   }
 
   before(:each) do

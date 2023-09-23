@@ -2,9 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "alumnis/index", type: :view do
   before(:each) do
+    user1 = User.create!(email: "test1@gmail.com")
+    user2 = User.create!(email: "test2@gmail.com")
     assign(:alumnis, [
-      Alumni.create!(),
-      Alumni.create!()
+      Alumni.create!(user: user1),
+      Alumni.create!(user: user2)
     ])
   end
 
