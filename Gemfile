@@ -95,3 +95,4 @@ gem 'omniauth', '~> 1.9.1'
 # Versions that go with 1.9.1
 gem 'omniauth-oauth2', '~> 1.7.1'
 gem 'omniauth-google-oauth2', '~> 0.8.2'
+gem "factory_bot_rails", "~> 6.2", :groups => [:development, :test]
