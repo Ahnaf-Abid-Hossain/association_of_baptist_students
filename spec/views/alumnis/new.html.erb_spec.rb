@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe "alumnis/new", type: :view do
   before(:each) do
-    assign(:alumni, Alumni.new())
+    user = User.create!(email: "test@gmail.com")
+    assign(:alumni, Alumni.new(user: user))
   end
 
   it "renders new alumni form" do

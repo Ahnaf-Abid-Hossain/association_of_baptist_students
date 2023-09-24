@@ -1,5 +1,6 @@
 class AlumnisController < ApplicationController
   before_action :set_alumni, only: %i[ show edit update destroy ]
+  before_action :force_new_alumni, only: %i[ index show edit ]
 
   # GET /alumnis or /alumnis.json
   def index
@@ -22,6 +23,7 @@ class AlumnisController < ApplicationController
   # POST /alumnis or /alumnis.json
   def create
     @alumni = Alumni.new(alumni_params)
+    @alumni.user = current_user
 
     respond_to do |format|
       if @alumni.save
@@ -65,7 +67,15 @@ class AlumnisController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def alumni_params
-      #params.fetch(:alumni, {})
       params.require(:alumni).permit(:alum_first_name, :alum_last_name, :alum_email, :alum_ph_num, :alum_class_year, :alum_job_field, :alum_location, :alum_status, :alum_major)
+    end
+
+    # Used to direct user to create new alumni, if needed
+    private
+    def force_new_alumni
+      if current_user.alumni == nil
+        # Redirect to new page
+        redirect_to new_alumni_path
+      end
     end
 end
