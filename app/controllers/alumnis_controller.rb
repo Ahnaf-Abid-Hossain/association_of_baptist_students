@@ -22,18 +22,7 @@ class AlumnisController < ApplicationController
 
   # POST /alumnis or /alumnis.json
   def create
-    # @alumni = Alumni.new(alumni_params)
-
-    # For testing
-    @alumni = Alumni.new(alum_first_name: "Test",
-      alum_last_name: "User",
-      alum_email: "test@gmail.com",
-      alum_ph_num: "(555) 555-5555",
-      alum_class_year: 2024,
-      alum_job_field: "Software Engineering",
-      alum_location: "Houston, TX",
-      alum_status: "Current Student",
-      alum_major: "Computer Science")
+    @alumni = Alumni.new(alumni_params)
     @alumni.user = current_user
 
     respond_to do |format|
@@ -78,7 +67,7 @@ class AlumnisController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def alumni_params
-      params.fetch(:alumni)
+      params.require(:alumni).permit(:alum_first_name, :alum_last_name, :alum_email, :alum_ph_num, :alum_class_year, :alum_job_field, :alum_location, :alum_status, :alum_major)
     end
 
     # Used to direct user to create new alumni, if needed
