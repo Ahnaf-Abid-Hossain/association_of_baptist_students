@@ -14,7 +14,6 @@ class AlumnisController < ApplicationController
   # GET /alumnis/new
   def new
     @alumni = Alumni.new
-    @alumni.user = current_user
   end
 
   # GET /alumnis/1/edit
@@ -23,7 +22,19 @@ class AlumnisController < ApplicationController
 
   # POST /alumnis or /alumnis.json
   def create
-    @alumni = Alumni.new(alumni_params)
+    # @alumni = Alumni.new(alumni_params)
+
+    # For testing
+    @alumni = Alumni.new(alum_first_name: "Test",
+      alum_last_name: "User",
+      alum_email: "test@gmail.com",
+      alum_ph_num: "(555) 555-5555",
+      alum_class_year: 2024,
+      alum_job_field: "Software Engineering",
+      alum_location: "Houston, TX",
+      alum_status: "Current Student",
+      alum_major: "Computer Science")
+    @alumni.user = current_user
 
     respond_to do |format|
       if @alumni.save
@@ -67,7 +78,7 @@ class AlumnisController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def alumni_params
-      params.fetch(:alumni, {})
+      params.fetch(:alumni)
     end
 
     # Used to direct user to create new alumni, if needed
