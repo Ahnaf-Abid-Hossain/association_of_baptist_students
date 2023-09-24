@@ -16,15 +16,12 @@
     <%= form.text_field :request %>
   </div>
 
-  <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.text_field :status %>
-  </div>
-
-  <div>
-    <%= form.label :alumni_id, style: "display: block" %>
-    <%= form.text_field :alumni_id %>
-  </div>
+  <% if current_user.is_admin? %>
+    <div>
+      <%= form.label :status, style: "display: block" %>
+      <%= form.text_field :status %>
+    </div>
+  <% end %>
 
   <div>
     <%= form.submit %>
