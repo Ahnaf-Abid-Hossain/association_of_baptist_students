@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :prayer_requests
   # -=-=-=-=-
   # New routing
   root 'alumnis#index'
