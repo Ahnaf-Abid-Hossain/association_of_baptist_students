@@ -46,6 +46,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_24_061408) do
     t.datetime "updated_at", null: false
     t.index ["alumni_id"], name: "index_prayer_requests_on_alumni_id"
   end
+  
+  create_table "meeting_notes", force: :cascade do |t|
+    t.string "title"
+    t.text "content"
+    t.date "date"
+    t.bigint "alumni_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["alumni_id"], name: "index_meeting_notes_on_alumni_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
@@ -59,4 +69,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_24_061408) do
   end
 
   add_foreign_key "prayer_requests", "alumnis"
+  add_foreign_key "meeting_notes", "alumnis"
 end

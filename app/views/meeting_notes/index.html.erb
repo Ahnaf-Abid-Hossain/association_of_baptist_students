@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Meeting notes</h1>
+
+<div id="meeting_notes">
+  <% @meeting_notes.each do |meeting_note| %>
+    <%= render meeting_note %>
+    <p>
+      <%= link_to "Show this meeting note", meeting_note %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New meeting note", new_meeting_note_path %>
