@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
+  resources :meeting_notes
   # -=-=-=-=-
   # New routing
   root 'alumnis#index'
-  resources :alumnis
+  resources :alumnis do
+    resources :meeting_notes
+  end
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   devise_scope :user do
     get 'users/sign_in', to: 'users/sessions#new', as: :new_user_session
