@@ -1,0 +1,29 @@
+<%= form_with(model: prayer_request) do |form| %>
+  <% if prayer_request.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(prayer_request.errors.count, "error") %> prohibited this prayer_request from being saved:</h2>
+
+      <ul>
+        <% prayer_request.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :request, style: "display: block" %>
+    <%= form.text_field :request %>
+  </div>
+
+  <% if current_user.is_admin? %>
+    <div>
+      <%= form.label :status, style: "display: block" %>
+      <%= form.text_field :status %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

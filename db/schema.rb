@@ -10,19 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_23_024959) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_25_021428) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "admins", force: :cascade do |t|
-    t.string "email", null: false
-    t.string "full_name"
-    t.string "uid"
-    t.string "avatar_url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_admins_on_email", unique: true
-  end
 
   create_table "alumnis", force: :cascade do |t|
     t.string "alum_first_name"
@@ -48,6 +38,25 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_23_024959) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "meeting_notes", force: :cascade do |t|
+    t.string "title"
+    t.text "content"
+    t.date "date"
+    t.bigint "alumni_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["alumni_id"], name: "index_meeting_notes_on_alumni_id"
+  end
+
+  create_table "prayer_requests", force: :cascade do |t|
+    t.string "request"
+    t.string "status"
+    t.bigint "alumni_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["alumni_id"], name: "index_prayer_requests_on_alumni_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.string "full_name"
@@ -59,4 +68,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_23_024959) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "meeting_notes", "alumnis"
+  add_foreign_key "prayer_requests", "alumnis"
 end

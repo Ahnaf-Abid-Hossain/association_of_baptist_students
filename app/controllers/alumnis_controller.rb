@@ -9,6 +9,8 @@ class AlumnisController < ApplicationController
 
   # GET /alumnis/1 or /alumnis/1.json
   def show
+    @alumni = Alumni.find(params[:id])
+    @meeting_notes = @alumni.meeting_note
   end
 
   # GET /alumnis/new
@@ -59,6 +61,20 @@ class AlumnisController < ApplicationController
     end
   end
 
+  
+  def temp_search
+    @first_name = params[:first_name]
+    @last_name = params[:last_name]
+    @results = Alumni.all
+
+    if @first_name.present? || @last_name.present?
+      @results = Alumni.where("alum_first_name ILIKE ? AND alum_last_name ILIKE ?", "%#{@first_name}%", "%#{@last_name}%")
+    else
+      @results = []
+    end
+    render 'search'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_alumni
@@ -79,3 +95,4 @@ class AlumnisController < ApplicationController
       end
     end
 end
+
