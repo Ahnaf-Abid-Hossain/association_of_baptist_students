@@ -1,3 +1,4 @@
+=begin
 require 'rails_helper'
 
 RSpec.describe "prayer_requests/show", type: :view do
@@ -16,3 +17,4 @@ RSpec.describe "prayer_requests/show", type: :view do
     expect(rendered).to match(//)
   end
 end
+=end

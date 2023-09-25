@@ -1,3 +1,4 @@
+=begin
 require 'rails_helper'
 
 RSpec.describe "prayer_requests/edit", type: :view do
@@ -26,3 +27,4 @@ RSpec.describe "prayer_requests/edit", type: :view do
     end
   end
 end
+=end

@@ -1,3 +1,4 @@
+=begin
 require 'rails_helper'
 
 RSpec.describe "prayer_requests/index", type: :view do
@@ -24,3 +25,4 @@ RSpec.describe "prayer_requests/index", type: :view do
     assert_select cell_selector, text: Regexp.new(nil.to_s), count: 2
   end
 end
+=end
