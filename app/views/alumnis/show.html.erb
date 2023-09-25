@@ -6,6 +6,27 @@
 <%= render @alumni %>
 
 <div>
+
+  <%= link_to "Edit this alumni", edit_alumni_path(@alumni) %> |
+  <%= link_to "Back to alumnis", alumnis_path %>
+
+  <%= button_to "Destroy this alumni", @alumni, method: :delete %>
+
+  <%= link_to "New Meeting Note", new_alumni_meeting_note_path(@alumni) %>
+  <%= link_to "View Meeting Notes", alumni_meeting_notes_path(@alumni) %>
+
+
+  <h2>Meeting Notes for <%= @alumni.alum_first_name %></h2>
+  <ul>
+    <% @meeting_notes.each do |meeting_note| %>
+      <li>
+        <strong><%= meeting_note.title %></strong><br>
+        Date: <%= meeting_note.date %><br>
+        Content: <%= meeting_note.content %>
+      </li>
+    <% end %>
+  </ul>
+
   <%= link_to "Back to Directory", alumnis_path %>
   <% if current_user.email == @alumni.alum_email %>
     | <%= link_to "Edit your profile", edit_alumni_path(@alumni) %>
@@ -14,4 +35,5 @@
     <%= link_to "Edit this alumni", edit_alumni_path(@alumni) %>
     <%= button_to "Destroy this alumni", @alumni, method: :delete %>
   <% end %>
+
 </div>
