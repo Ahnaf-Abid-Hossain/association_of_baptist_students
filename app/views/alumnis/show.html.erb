@@ -6,6 +6,7 @@
 <%= render @alumni %>
 
 <div>
+
   <%= link_to "Edit this alumni", edit_alumni_path(@alumni) %> |
   <%= link_to "Back to alumnis", alumnis_path %>
 
@@ -25,5 +26,14 @@
       </li>
     <% end %>
   </ul>
+
+  <%= link_to "Back to Directory", alumnis_path %>
+  <% if current_user.email == @alumni.alum_email %>
+    | <%= link_to "Edit your profile", edit_alumni_path(@alumni) %>
+  <% end %>
+  <% if current_user && current_user.is_admin? %>
+    <%= link_to "Edit this alumni", edit_alumni_path(@alumni) %>
+    <%= button_to "Destroy this alumni", @alumni, method: :delete %>
+  <% end %>
 
 </div>
