@@ -3,7 +3,7 @@ FactoryBot.define do
     title { 'MyString' }
     content { 'MyText' }
     date { '2023-09-25' }
-    
+
     # If alumni is not present, create a new transient Alumni
     transient do
       alumni { FactoryBot.create(:alumni) }

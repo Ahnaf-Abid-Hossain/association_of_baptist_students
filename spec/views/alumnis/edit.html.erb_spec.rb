@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe('alumnis/edit') do
   let(:alumni) do
-    alumni = FactoryBot.create(:alumni)
+    FactoryBot.create(:alumni)
   end
 
   before do

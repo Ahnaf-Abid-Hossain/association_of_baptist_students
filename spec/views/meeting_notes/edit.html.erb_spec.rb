@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe('meeting_notes/edit') do
   let(:meeting_note) do
-    meeting_note = FactoryBot.create(:meeting_note, title: 'MyString', content: 'MyText')
+    FactoryBot.create(:meeting_note, title: 'MyString', content: 'MyText')
   end
 
   before do

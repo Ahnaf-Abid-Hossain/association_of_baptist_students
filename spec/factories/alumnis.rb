@@ -20,6 +20,5 @@ FactoryBot.define do
       alumni.user.email = alumni.alum_email
       alumni.user.save!
     end
-
   end
 end

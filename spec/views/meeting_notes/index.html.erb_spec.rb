@@ -7,14 +7,17 @@ RSpec.describe('meeting_notes/index') do
 
     assign(:meeting_notes, [
       FactoryBot.build(:meeting_note,
-        title: 'Title',
-        content: 'MyText',
-        alumni: author),
+                       title: 'Title',
+                       content: 'MyText',
+                       alumni: author
+                      ),
       FactoryBot.build(:meeting_note,
-        title: 'Title',
-        content: 'MyText',
-        alumni: author)
-    ])
+                       title: 'Title',
+                       content: 'MyText',
+                       alumni: author
+                      )
+    ]
+    )
   end
 
   it 'renders a list of meeting_notes' do
