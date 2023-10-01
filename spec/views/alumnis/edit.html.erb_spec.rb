@@ -13,7 +13,7 @@ RSpec.describe('alumnis/edit', type: :view) do
   it 'renders the edit alumni form' do
     render
 
-    assert_select 'form[action=?][method=?]', alumni_path(alumni), 'post' do
-    end
+    assert_select 'form[action=?][method=?]', alumni_path(alumni), 'post'
+    # do ... end
   end
 end

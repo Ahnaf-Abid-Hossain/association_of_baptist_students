@@ -9,7 +9,7 @@ RSpec.describe('alumnis/new', type: :view) do
   it 'renders new alumni form' do
     render
 
-    assert_select 'form[action=?][method=?]', alumnis_path, 'post' do
-    end
+    assert_select 'form[action=?][method=?]', alumnis_path, 'post'
+    # do ... end
   end
 end

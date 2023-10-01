@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_one :alumni
+  has_one :alumni, dependent: nil
 
   devise :omniauthable, omniauth_providers: [:google_oauth2]
 
