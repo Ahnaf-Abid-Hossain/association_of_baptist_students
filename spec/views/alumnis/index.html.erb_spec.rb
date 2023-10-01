@@ -2,10 +2,15 @@ require 'rails_helper'
 
 RSpec.describe('alumnis/index') do
   before do
-    user1 = FactoryBot.create(:user)
-    user2 = FactoryBot.create(:user)
-    assign(:alumnis, [user1, user2])
-    sign_in user1
+    # Create two alumni
+    alumni1 = FactoryBot.create(:alumni, alum_email: "alum1@gmail.com")
+    alumni2 = FactoryBot.create(:alumni, alum_email: "alum2@gmail.com")
+
+    # Attach them to the view
+    assign(:alumnis, [alumni1, alumni2])
+
+    # Sign in as the first alumni
+    sign_in alumni1.user
   end
 
   it 'renders a list of alumnis' do

@@ -7,7 +7,7 @@ RSpec.describe('New User Redirect') do
 
   it 'redirects a new user to profile creation from index' do
     # Create user WITHOUT alumni
-    user = FactoryBot.create(:user_no_profile)
+    user = FactoryBot.create(:user)
 
     # Sign in
     sign_in user
@@ -22,6 +22,7 @@ RSpec.describe('New User Redirect') do
   it 'redirects an existing user to the directory page from index' do
     # Create user with alumni
     user = FactoryBot.create(:user)
+    user.alumni = FactoryBot.create(:alumni, user: user)
 
     # Sign in
     sign_in user

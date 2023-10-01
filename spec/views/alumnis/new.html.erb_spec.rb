@@ -2,9 +2,14 @@ require 'rails_helper'
 
 RSpec.describe('alumnis/new') do
   before do
-    user = FactoryBot.create(:user)
-    assign(:alumni, user)
-    sign_in user
+    # Create new alumni
+    alumni = Alumni.new
+
+    # Attach it to the view
+    assign(:alumni, alumni)
+
+    # Sign in as a user
+    sign_in FactoryBot.create(:user)
   end
 
   it 'renders new alumni form' do

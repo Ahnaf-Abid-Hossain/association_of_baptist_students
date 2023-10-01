@@ -6,7 +6,7 @@ FactoryBot.define do
     
     # If alumni is not present, create a new transient Alumni
     transient do
-      alumni { FactoryBot.build(:alumni) }
+      alumni { FactoryBot.create(:alumni) }
     end
 
     after(:build) do |prayer_request, evaluator|

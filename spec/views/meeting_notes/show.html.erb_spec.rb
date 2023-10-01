@@ -2,12 +2,7 @@ require 'rails_helper'
 
 RSpec.describe('meeting_notes/show') do
   before do
-    assign(:meeting_note, MeetingNote.create!(
-                            title: 'Title',
-                            content: 'MyText',
-                            alumni: nil
-                          )
-    )
+    assign(:meeting_note, FactoryBot.create(:meeting_note, title: 'Title', content: 'MyText'))
   end
 
   it 'renders attributes in <p>' do
