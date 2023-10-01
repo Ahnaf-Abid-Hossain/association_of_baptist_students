@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe('alumnis/new') do
   before do
-    user = User.create!(email: 'test@gmail.com')
-    assign(:alumni, Alumni.new(user: user))
+    user = FactoryBot.create(:user)
+    assign(:alumni, user)
+    sign_in user
   end
 
   it 'renders new alumni form' do

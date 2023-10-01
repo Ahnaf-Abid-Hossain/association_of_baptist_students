@@ -1,13 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe('alumnis/edit') do
-  let(:alumni) do
-    user = User.create!(email: 'test@gmail.com')
-    Alumni.create!(user: user)
-  end
-
   before do
-    assign(:alumni, alumni)
+    user = FactoryBot.create(:user)
+    assign(:alumni, user)
+    sign_in user
   end
 
   it 'renders the edit alumni form' do

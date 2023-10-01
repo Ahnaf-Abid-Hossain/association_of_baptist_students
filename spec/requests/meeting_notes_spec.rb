@@ -42,6 +42,7 @@ RSpec.describe('/meeting_notes') do
 
   describe 'GET /new' do
     it 'renders a successful response' do
+      sign_in FactoryBot.create(:user)
       get new_meeting_note_url
       expect(response).to(be_successful)
     end
