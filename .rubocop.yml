@@ -450,6 +450,9 @@ Style/StringConcatenation:
 Style/SwapValues: # (new in 1.1)
     Enabled: true
 
+Style/FrozenStringLiteralComment:
+    Enabled: false
+
 ###########################################################
 ######################## RSpec ############################
 ###########################################################

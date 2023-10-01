@@ -12,126 +12,121 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/alumnis", type: :request do
-  
+RSpec.describe('/alumnis', type: :request) do
   # This should return the minimal set of attributes required to create a valid
   # Alumni. As you add validations to Alumni, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  let(:valid_attributes) do
+    skip('Add a hash of attributes valid for your model')
+  end
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:invalid_attributes) do
+    skip('Add a hash of attributes invalid for your model')
+  end
 
-  describe "GET /index" do
-    it "renders a successful response" do
-      Alumni.create! valid_attributes
+  describe 'GET /index' do
+    it 'renders a successful response' do
+      Alumni.create!(valid_attributes)
       get alumnis_url
-      expect(response).to be_successful
+      expect(response).to(be_successful)
     end
   end
 
-  describe "GET /show" do
-    it "renders a successful response" do
-      alumni = Alumni.create! valid_attributes
+  describe 'GET /show' do
+    it 'renders a successful response' do
+      alumni = Alumni.create!(valid_attributes)
       get alumni_url(alumni)
-      expect(response).to be_successful
+      expect(response).to(be_successful)
     end
   end
 
-  describe "GET /new" do
-   it "renders a successful response" do
+  describe 'GET /new' do
+    it 'renders a successful response' do
       # custom_url_new_alumni = "/alumnis/new"
       # get custom_url_new_alumni
       get new_alumni_url
-      expect(response).to have_http_status(302)
+      expect(response).to(have_http_status(:found))
     end
   end
 
-  describe "GET /edit" do
-    it "renders a successful response" do
-      alumni = Alumni.create! valid_attributes
+  describe 'GET /edit' do
+    it 'renders a successful response' do
+      alumni = Alumni.create!(valid_attributes)
       get edit_alumni_url(alumni)
-      expect(response).to be_successful
+      expect(response).to(be_successful)
     end
   end
 
-  describe "POST /create" do
-    context "with valid parameters" do
-      it "creates a new Alumni" do
-        expect {
-          post alumnis_url, params: { alumni: valid_attributes }
-        }.to change(Alumni, :count).by(1)
+  describe 'POST /create' do
+    context 'with valid parameters' do
+      it 'creates a new Alumni' do
+        expect do
+          post(alumnis_url, params: { alumni: valid_attributes })
+        end.to(change(Alumni, :count).by(1))
       end
 
-      it "redirects to the created alumni" do
+      it 'redirects to the created alumni' do
         post alumnis_url, params: { alumni: valid_attributes }
-        expect(response).to redirect_to(alumni_url(Alumni.last))
+        expect(response).to(redirect_to(alumni_url(Alumni.last)))
       end
     end
 
-    context "with invalid parameters" do
-      it "does not create a new Alumni" do
-        expect {
-          post alumnis_url, params: { alumni: invalid_attributes }
-        }.to change(Alumni, :count).by(0)
+    context 'with invalid parameters' do
+      it 'does not create a new Alumni' do
+        expect do
+          post(alumnis_url, params: { alumni: invalid_attributes })
+        end.to(change(Alumni, :count).by(0))
       end
 
-    
       it "renders a response with 422 status (i.e. to display the 'new' template)" do
         post alumnis_url, params: { alumni: invalid_attributes }
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to(have_http_status(:unprocessable_entity))
       end
-    
     end
   end
 
-  describe "PATCH /update" do
-    context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
-
-      it "updates the requested alumni" do
-        alumni = Alumni.create! valid_attributes
-        patch alumni_url(alumni), params: { alumni: new_attributes }
-        alumni.reload
-        skip("Add assertions for updated state")
+  describe 'PATCH /update' do
+    context 'with valid parameters' do
+      let(:new_attributes) do
+        skip('Add a hash of attributes valid for your model')
       end
 
-      it "redirects to the alumni" do
-        alumni = Alumni.create! valid_attributes
+      it 'updates the requested alumni' do
+        alumni = Alumni.create!(valid_attributes)
         patch alumni_url(alumni), params: { alumni: new_attributes }
         alumni.reload
-        expect(response).to redirect_to(alumni_url(alumni))
+        skip('Add assertions for updated state')
+      end
+
+      it 'redirects to the alumni' do
+        alumni = Alumni.create!(valid_attributes)
+        patch alumni_url(alumni), params: { alumni: new_attributes }
+        alumni.reload
+        expect(response).to(redirect_to(alumni_url(alumni)))
       end
     end
 
-    context "with invalid parameters" do
-    
+    context 'with invalid parameters' do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
-        alumni = Alumni.create! valid_attributes
+        alumni = Alumni.create!(valid_attributes)
         patch alumni_url(alumni), params: { alumni: invalid_attributes }
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to(have_http_status(:unprocessable_entity))
       end
-    
     end
   end
 
-  describe "DELETE /destroy" do
-    it "destroys the requested alumni" do
-      alumni = Alumni.create! valid_attributes
-      expect {
-        delete alumni_url(alumni)
-      }.to change(Alumni, :count).by(-1)
+  describe 'DELETE /destroy' do
+    it 'destroys the requested alumni' do
+      alumni = Alumni.create!(valid_attributes)
+      expect do
+        delete(alumni_url(alumni))
+      end.to(change(Alumni, :count).by(-1))
     end
 
-    it "redirects to the alumnis list" do
-      alumni = Alumni.create! valid_attributes
+    it 'redirects to the alumnis list' do
+      alumni = Alumni.create!(valid_attributes)
       delete alumni_url(alumni)
-      expect(response).to redirect_to(alumnis_url)
+      expect(response).to(redirect_to(alumnis_url))
     end
   end
 end
