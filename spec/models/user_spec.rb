@@ -1,17 +1,17 @@
 require 'rails_helper'
 
-RSpec.describe(User, type: :model) do
+RSpec.describe(User) do
   it 'allows gmail accounts to log in' do
     user = described_class.from_google(email: 'test@gmail.com', uid: '00000', full_name: 'Test User', avatar_url: '/')
-    expect(user).not_to(eq(nil))
+    expect(user).not_to(be_nil)
   end
 
   it 'disallows tamu accounts from logging in' do
     user = described_class.from_google(email: 'test@tamu.edu', uid: '00000', full_name: 'Test User', avatar_url: '/')
-    expect(user).to(eq(nil))
+    expect(user).to(be_nil)
   end
 
-  it 'correctlies report if it has a profile' do
+  it 'correctly reports if it has a profile' do
     # Make a user
     user = described_class.from_google(email: 'test@gmail.com', uid: '00000', full_name: 'Test User', avatar_url: '/')
 
@@ -38,7 +38,7 @@ RSpec.describe(User, type: :model) do
     expect(user.alumni).to(be(alumni_profile))
   end
 
-  it 'correctlies report if it does NOT have a profile' do
+  it 'correctly reports if it does NOT have a profile' do
     # Make a user
     user = described_class.from_google(email: 'test@gmail.com', uid: '00000', full_name: 'Test User', avatar_url: '/')
 

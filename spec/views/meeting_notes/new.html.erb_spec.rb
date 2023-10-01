@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe('meeting_notes/new', type: :view) do
+RSpec.describe('meeting_notes/new') do
   before do
     assign(:meeting_note, MeetingNote.new(
                             title: 'MyString',

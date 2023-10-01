@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe('alumnis/edit', type: :view) do
+RSpec.describe('alumnis/edit') do
   let(:alumni) do
     user = User.create!(email: 'test@gmail.com')
     Alumni.create!(user: user)

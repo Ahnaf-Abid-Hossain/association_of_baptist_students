@@ -10,6 +10,6 @@ require 'rails_helper'
 #     end
 #   end
 # end
-RSpec.describe(MeetingNotesHelper, type: :helper) do
+RSpec.describe(MeetingNotesHelper) do
   pending "add some examples to (or delete) #{__FILE__}"
 end

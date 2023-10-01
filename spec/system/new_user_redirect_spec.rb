@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe('New User Redirect', type: :system) do
+RSpec.describe('New User Redirect') do
   before do
     driven_by(:rack_test)
   end
@@ -46,6 +46,6 @@ RSpec.describe('New User Redirect', type: :system) do
     get '/alumnis'
 
     # Expect to be redirected to directory page
-    expect(response.status).to(be(200))
+    expect(response).to(have_http_status(:ok))
   end
 end

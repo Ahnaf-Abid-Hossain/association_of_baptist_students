@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe(PrayerRequestsController, type: :routing) do
+RSpec.describe(PrayerRequestsController) do
   describe 'routing' do
     it 'routes to #index' do
       expect(get: '/prayer_requests').to(route_to('prayer_requests#index'))

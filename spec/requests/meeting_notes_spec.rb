@@ -12,7 +12,7 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe('/meeting_notes', type: :request) do
+RSpec.describe('/meeting_notes') do
   # This should return the minimal set of attributes required to create a valid
   # MeetingNote. As you add validations to MeetingNote, be sure to
   # adjust the attributes here as well.
@@ -73,7 +73,7 @@ RSpec.describe('/meeting_notes', type: :request) do
       it 'does not create a new MeetingNote' do
         expect do
           post(meeting_notes_url, params: { meeting_note: invalid_attributes })
-        end.to(change(MeetingNote, :count).by(0))
+        end.not_to(change(MeetingNote, :count))
       end
 
       it "renders a response with 422 status (i.e. to display the 'new' template)" do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe('User Bar', type: :system) do
+RSpec.describe('User Bar') do
   before do
     driven_by(:rack_test)
   end

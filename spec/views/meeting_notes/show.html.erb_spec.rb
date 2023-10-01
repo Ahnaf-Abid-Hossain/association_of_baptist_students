@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe('meeting_notes/show', type: :view) do
+RSpec.describe('meeting_notes/show') do
   before do
     assign(:meeting_note, MeetingNote.create!(
                             title: 'Title',

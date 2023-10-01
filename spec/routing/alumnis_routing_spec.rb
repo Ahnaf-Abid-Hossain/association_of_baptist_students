@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe(AlumnisController, type: :routing) do
+RSpec.describe(AlumnisController) do
   describe 'routing' do
     it 'routes to #index' do
       expect(get: '/alumnis').to(route_to('alumnis#index'))

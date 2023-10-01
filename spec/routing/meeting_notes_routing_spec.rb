@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe(MeetingNotesController, type: :routing) do
+RSpec.describe(MeetingNotesController) do
   describe 'routing' do
     it 'routes to #index' do
       expect(get: '/meeting_notes').to(route_to('meeting_notes#index'))
