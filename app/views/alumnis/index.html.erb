@@ -1,0 +1,26 @@
+<!-- Render user bar -->
+<%= render partial: "shared/user_bar" %>
+
+<p style="color: green"><%= notice %></p>
+
+<h1>Associate of Baptist Student's Alumni Directory</h1>
+
+<%= link_to "Search Directory", search_alumni_path %>
+<!--<hr style="border: none; background-color: maroon; height: 3px; width: 25%; margin-left: 0;">-->
+
+<div id="alumnis">
+  <% @alumnis.each_with_index do |alumni, index| %>
+    <div class=alumni-item">
+      <p>
+        <%= alumni.alum_first_name %> <%= alumni.alum_last_name %> <br>
+        <%= link_to "View Profile", alumni %>
+      </p>
+    </div>
+    <% unless index == @alumnis.size - 1 %>
+      <hr>
+    <% end %>
+  <% end %>
+</div>
+<% if current_user && current_user.is_admin? %>
+  <%= link_to "New alumni", new_alumni_path %>
+<% end %>

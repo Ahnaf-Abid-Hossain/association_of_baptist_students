@@ -16,6 +16,7 @@
   </head>
 
   <body>
+    <!-- Render flash messages -->
     <% if flash.any? %>
       <% flash.each do |key, value| -%>
         <section class="flash flash__<%= key %>"><%= value.html_safe %></section>

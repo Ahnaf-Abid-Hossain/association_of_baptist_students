@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_18_012044) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_25_021428) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -24,6 +24,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_18_012044) do
     t.index ["email"], name: "index_admins_on_email", unique: true
   end
 
+  create_table "alumnis", force: :cascade do |t|
+    t.string "alum_first_name"
+    t.string "alum_last_name"
+    t.string "alum_email"
+    t.string "alum_ph_num"
+    t.integer "alum_class_year"
+    t.string "alum_job_field"
+    t.string "alum_location"
+    t.string "alum_status"
+    t.string "alum_major"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+  end
+
   create_table "books", force: :cascade do |t|
     t.string "title"
     t.string "author"
@@ -33,4 +48,36 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_18_012044) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "meeting_notes", force: :cascade do |t|
+    t.string "title"
+    t.text "content"
+    t.date "date"
+    t.bigint "alumni_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["alumni_id"], name: "index_meeting_notes_on_alumni_id"
+  end
+
+  create_table "prayer_requests", force: :cascade do |t|
+    t.string "request"
+    t.string "status"
+    t.bigint "alumni_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["alumni_id"], name: "index_prayer_requests_on_alumni_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", null: false
+    t.string "full_name"
+    t.string "uid"
+    t.string "avatar_url"
+    t.boolean "is_admin"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+  end
+
+  add_foreign_key "meeting_notes", "alumnis"
+  add_foreign_key "prayer_requests", "alumnis"
 end
