@@ -22,6 +22,10 @@
         <section class="flash flash__<%= key %>"><%= value.html_safe %></section>
       <% end -%>
     <% end %>
+
+    <!-- Render user bar -->
+    <%= render partial: "shared/user_bar", locals: { links: @links } %>
+
     <%= yield %>
   </body>
 </html>
