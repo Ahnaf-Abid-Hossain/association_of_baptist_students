@@ -1,11 +1,12 @@
 class LinksController < ApplicationController
   before_action :set_link, only: %i[show edit update destroy]
-  before_action :forbid_non_admin, only: %i[create update destroy]
+  before_action :forbid_non_admin, only: %i[create update destroy] 
   before_action :redirect_non_admin, only: %i[index show new edit]
 
   # GET /links or /links.json
   def index
-    @links = Link.all
+    # Actually redundant due to the ApplicationController hook
+    # @links = Link.all
   end
 
   # GET /links/1 or /links/1.json
