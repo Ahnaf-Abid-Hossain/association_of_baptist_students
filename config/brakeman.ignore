@@ -1,0 +1,50 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 4,
+      "fingerprint": "70ceaf34933388dd3cfa3d98a26a6a1abee67023bd2158fa1d883df6fc9c4040",
+      "check_name": "LinkToHref",
+      "message": "Potentially unsafe model attribute in `link_to` href",
+      "file": "app/views/shared/_user_bar.html.erb",
+      "line": 6,
+      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
+      "code": "link_to(Link.new.label, Link.new.url, :target => :blank)",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "LinksController",
+          "method": "index",
+          "line": 7,
+          "file": "app/controllers/links_controller.rb",
+          "rendered": {
+            "name": "layouts/application",
+            "file": "app/views/layouts/application.html.erb"
+          }
+        },
+        {
+          "type": "template",
+          "name": "layouts/application",
+          "line": 27,
+          "file": "app/views/layouts/application.html.erb",
+          "rendered": {
+            "name": "shared/_user_bar",
+            "file": "app/views/shared/_user_bar.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "shared/_user_bar"
+      },
+      "user_input": "Link.new.url",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": "Because this is `sanitize`-ed, I don't believe this should cause issues. There is high confidence that the admin is only one able to make links (in deployed version)."
+    }
+  ],
+  "updated": "2023-10-03 19:43:13 +0000",
+  "brakeman_version": "6.0.1"
+}

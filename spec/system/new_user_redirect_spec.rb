@@ -30,7 +30,7 @@ RSpec.describe('New User Redirect') do
     # Go to the root
     get '/alumnis'
 
-    # Expect to be redirected to directory page
+    # Expect to be allowed into directory page
     expect(response).to(have_http_status(:ok))
   end
 end
