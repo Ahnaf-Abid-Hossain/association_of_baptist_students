@@ -1,1 +1,1 @@
-json.array! @links, partial: "links/link", as: :link
+json.array!(@links, partial: 'links/link', as: :link)

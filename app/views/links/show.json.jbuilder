@@ -1,1 +1,1 @@
-json.partial! "links/link", link: @link
+json.partial!('links/link', link: @link)
