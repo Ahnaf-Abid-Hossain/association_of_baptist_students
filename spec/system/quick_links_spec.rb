@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe('Quick Links') do
   before do
     driven_by(:rack_test)
-    
+
     # Sign in
     user = FactoryBot.create(:user)
     sign_in user
@@ -18,7 +18,7 @@ RSpec.describe('Quick Links') do
     visit '/'
 
     # Test for link
-    expect(page).to have_link(link.label, href: link.url)
+    expect(page).to(have_link(link.label, href: link.url))
   end
 
   pending 'displays links in order'
