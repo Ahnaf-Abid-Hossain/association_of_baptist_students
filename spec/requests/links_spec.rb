@@ -25,6 +25,10 @@ RSpec.describe "/links", type: :request do
     skip("Add a hash of attributes invalid for your model")
   }
 
+  before(:each) do
+    sign_in FactoryBot.create(:user)
+  end
+
   describe "GET /index" do
     it "renders a successful response" do
       Link.create! valid_attributes
