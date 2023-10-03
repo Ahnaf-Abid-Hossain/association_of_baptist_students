@@ -1,5 +1,7 @@
 class LinksController < ApplicationController
   before_action :set_link, only: %i[show edit update destroy]
+  before_action :forbid_non_admin, only: %i[create update destroy]
+  before_action :redirect_non_admin, only: %i[index show new edit]
 
   # GET /links or /links.json
   def index
@@ -65,5 +67,17 @@ class LinksController < ApplicationController
   # Only allow a list of trusted parameters through.
   def link_params
     params.require(:link).permit(:label, :url, :order)
+  end
+
+  def forbid_non_admin
+    if not current_user.is_admin
+      return head(:forbidden)
+    end
+  end
+
+  def redirect_non_admin
+    if not current_user.is_admin
+      redirect_to root_path
+    end
   end
 end

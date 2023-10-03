@@ -25,7 +25,7 @@ RSpec.describe('/links') do
   end
 
   before do
-    sign_in FactoryBot.create(:user)
+    sign_in FactoryBot.create(:admin_user)
   end
 
   describe 'GET /index' do

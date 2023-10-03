@@ -3,7 +3,7 @@
     <%= link_to "Home", root_path %>
     <%= link_to "Prayer Requests", prayer_requests_path %>
     <% @links.each do |link| %>
-      <%= link_to link.label, link.url, target: :blank %>
+      <%= sanitize link_to(link.label, link.url, target: :blank) %>
     <% end %>
   </div>
   <div>

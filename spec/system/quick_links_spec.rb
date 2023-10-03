@@ -21,5 +21,83 @@ RSpec.describe('Quick Links') do
     expect(page).to(have_link(link.label, href: link.url))
   end
 
+  it 'allows admins to try to make new links' do
+    # Promote ourself to admin
+    admin = FactoryBot.create(:admin_user)
+    sign_in admin
+
+    # GET new link page
+    get '/links/new'
+
+    # Expect to be allowed into the new page
+    expect(response).to(have_http_status(:ok))
+  end
+
+  it 'disallows non-admins from trying to make new links' do
+    # GET new link page
+    get '/links/new'
+
+    # Expect to be directed away
+    expect(response).to(redirect_to('/'))
+  end
+
+  it 'allows admins to create links' do
+    # Promote ourself to admin
+    admin = FactoryBot.create(:admin_user)
+    sign_in admin
+
+    # POST to links page
+    post '/links', params: {
+      link: {
+        label: 'Test',
+        url: 'https://test.com',
+        order: 800000
+      }
+    }
+
+    # Expect to be able to create link
+    expect(response).to(have_http_status(:found))
+  end
+
+  it 'disallows non-admins from creating links' do
+    # POST to links page
+    post '/links', params: {
+      link: {
+        label: 'Test',
+        url: 'https://test.com',
+        order: 800000
+      }
+    }
+
+    # Expect to be forbidden
+    expect(response).to(have_http_status(:forbidden))
+  end
+
+  it 'allows admins to delete links' do
+    # Promote ourself to admin
+    admin = FactoryBot.create(:admin_user)
+    sign_in admin
+    
+    # Create link to delete
+    link = Link.create(label: 'Test', url: 'https://test.com', order: 800000)
+
+    # DELETE to link
+    delete link_path(link)
+
+    # Expect to be forbidden
+    expect(response).to(have_http_status(:found))
+  end
+
+  it 'disallows non-admins from deleting links' do
+    # Create link to delete
+    link = Link.create(label: 'Test', url: 'https://test.com', order: 800000)
+
+    # DELETE to link
+    delete link_path(link)
+
+    # Expect to be forbidden
+    expect(response).to(have_http_status(:forbidden))
+  end
+
   pending 'displays links in order'
 end
