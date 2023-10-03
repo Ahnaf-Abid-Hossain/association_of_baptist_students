@@ -51,7 +51,7 @@ RSpec.describe('Quick Links') do
       link: {
         label: 'Test',
         url: 'https://test.com',
-        order: 800000
+        order: 800_000
       }
     }
 
@@ -65,7 +65,7 @@ RSpec.describe('Quick Links') do
       link: {
         label: 'Test',
         url: 'https://test.com',
-        order: 800000
+        order: 800_000
       }
     }
 
@@ -77,9 +77,9 @@ RSpec.describe('Quick Links') do
     # Promote ourself to admin
     admin = FactoryBot.create(:admin_user)
     sign_in admin
-    
+
     # Create link to delete
-    link = Link.create(label: 'Test', url: 'https://test.com', order: 800000)
+    link = Link.create!(label: 'Test', url: 'https://test.com', order: 800_000)
 
     # DELETE to link
     delete link_path(link)
@@ -90,7 +90,7 @@ RSpec.describe('Quick Links') do
 
   it 'disallows non-admins from deleting links' do
     # Create link to delete
-    link = Link.create(label: 'Test', url: 'https://test.com', order: 800000)
+    link = Link.create!(label: 'Test', url: 'https://test.com', order: 800_000)
 
     # DELETE to link
     delete link_path(link)

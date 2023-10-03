@@ -70,14 +70,10 @@ class LinksController < ApplicationController
   end
 
   def forbid_non_admin
-    if not current_user.is_admin
-      return head(:forbidden)
-    end
+    head(:forbidden) unless current_user.is_admin
   end
 
   def redirect_non_admin
-    if not current_user.is_admin
-      redirect_to root_path
-    end
+    redirect_to(root_path) unless current_user.is_admin
   end
 end
