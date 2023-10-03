@@ -1,3 +1,13 @@
-<% if current_user != nil %>
-    <h3 style="text-align:right; border-bottom: 1px solid black">Logged in as: <%= current_user.full_name %> | <%= link_to "Log out", destroy_user_session_path %></h3>
-<% end %>
+<div class="user-bar">
+  <div class="quick-links">
+    <%= link_to "Home", root_path %>
+    <%= link_to "Prayer Requests", prayer_requests_path %>
+    <a href="#">Donate</a>
+    <a href="#">Student Site</a>
+  </div>
+  <div>
+    <% if current_user != nil %>
+      <h3 class="login-text">Logged in as: <%= current_user.full_name %> | <%= link_to "Log out", destroy_user_session_path %></h3>
+    <% end %>
+  </div>
+</div>
