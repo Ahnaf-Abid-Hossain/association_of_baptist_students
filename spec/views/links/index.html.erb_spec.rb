@@ -11,7 +11,7 @@ RSpec.describe('links/index') do
       Link.create!(
         label: 'Label',
         url: 'Url',
-        order: 2
+        order: 3
       )
     ]
     )
@@ -22,6 +22,7 @@ RSpec.describe('links/index') do
     cell_selector = Rails::VERSION::STRING >= '7' ? 'div>p' : 'tr>td'
     assert_select cell_selector, text: Regexp.new('Label'.to_s), count: 2
     assert_select cell_selector, text: Regexp.new('Url'.to_s), count: 2
-    assert_select cell_selector, text: Regexp.new(2.to_s), count: 2
+    assert_select cell_selector, text: Regexp.new(2.to_s), count: 1
+    assert_select cell_selector, text: Regexp.new(3.to_s), count: 1
   end
 end
