@@ -1,19 +1,24 @@
 Rails.application.routes.draw do
-  # Old routing
-  # devise_for :admins
-  # root 'books#index'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resources :prayer_requests
+  resources :meeting_notes
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  # TODO: update this with only the routes we need
+  resources :links
 
   # -=-=-=-=-
   # New routing
-  root 'books#index'
-  resources :books
-  devise_for :admins, controllers: { omniauth_callbacks: 'admins/omniauth_callbacks' }
-  devise_scope :admin do
-    get 'admins/sign_in', to: 'admins/sessions#new', as: :new_admin_session
-    get 'admins/sign_out', to: 'admins/sessions#destroy', as: :destroy_admin_session
+  root 'alumnis#index'
+
+  resources :alumnis do
+    resources :meeting_notes
+  end
+
+  resources :alumnis
+  get '/search', to: 'alumnis#temp_search', as: :search_alumni
+
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_scope :user do
+    get 'users/sign_in', to: 'users/sessions#new', as: :new_user_session
+    get 'users/sign_out', to: 'users/sessions#destroy', as: :destroy_user_session
   end
 end
