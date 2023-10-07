@@ -1,5 +1,7 @@
 class User < ApplicationRecord
-  has_one :alumni
+  has_one :user
+  has_many :prayer_requests
+  has_many :meeting_note
 
   devise :omniauthable, omniauth_providers: [:google_oauth2]
 

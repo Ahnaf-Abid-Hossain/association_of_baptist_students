@@ -3,6 +3,6 @@ FactoryBot.define do
     title { "MyString" }
     content { "MyText" }
     date { "2023-09-25" }
-    alumni { nil }
+    user { nil }
   end
 end

@@ -7,12 +7,12 @@ RSpec.describe "prayer_requests/index", type: :view do
       PrayerRequest.create!(
         request: "Request",
         status: "Status",
-        alumni: nil
+        user: nil
       ),
       PrayerRequest.create!(
         request: "Request",
         status: "Status",
-        alumni: nil
+        user: nil
       )
     ])
   end

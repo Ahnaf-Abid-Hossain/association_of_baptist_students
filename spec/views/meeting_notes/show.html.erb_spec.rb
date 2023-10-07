@@ -5,7 +5,7 @@ RSpec.describe "meeting_notes/show", type: :view do
     assign(:meeting_note, MeetingNote.create!(
       title: "Title",
       content: "MyText",
-      alumni: nil
+      user: nil
     ))
   end
 

@@ -1,0 +1,35 @@
+<!-- Render user bar -->
+<%= render partial: "shared/user_bar" %>
+
+<p style="color: green"><%= notice %></p>
+
+<%= render @user %>
+
+<div>
+
+  <%= link_to "Back to Directory", users_path %>
+  <% if current_user.email == @user.email %>
+    | <%= link_to "Edit your profile", edit_user_path(@user) %>
+  <% end %>
+  <% if current_user && current_user.is_admin? %>
+    <%= link_to "Edit this user", edit_user_path(@user) %>
+    <%= button_to "Destroy this user", @user, method: :delete %>
+  <% end %>
+
+  <br>
+  <%= link_to "New Meeting Note", new_user_meeting_note_path(@user) %>
+  <br>
+  <%= link_to "View Meeting Notes", user_meeting_notes_path(@user) %>
+
+
+  <h2>Meeting Notes for <%= @user.user_first_name %></h2>
+  <ul>
+    <% @meeting_notes.each do |meeting_note| %>
+      <li>
+        <strong><%= meeting_note.title %></strong><br>
+        Date: <%= meeting_note.date %><br>
+        Content: <%= meeting_note.content %>
+      </li>
+    <% end %>
+  </ul>
+</div>

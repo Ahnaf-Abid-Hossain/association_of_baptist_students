@@ -5,7 +5,7 @@ RSpec.describe "meeting_notes/new", type: :view do
     assign(:meeting_note, MeetingNote.new(
       title: "MyString",
       content: "MyText",
-      alumni: nil
+      user: nil
     ))
   end
 
@@ -18,7 +18,7 @@ RSpec.describe "meeting_notes/new", type: :view do
 
       assert_select "textarea[name=?]", "meeting_note[content]"
 
-      assert_select "input[name=?]", "meeting_note[alumni_id]"
+      assert_select "input[name=?]", "meeting_note[id]"
     end
   end
 end

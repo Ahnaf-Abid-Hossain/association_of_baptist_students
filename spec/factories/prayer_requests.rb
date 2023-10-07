@@ -3,13 +3,13 @@ FactoryBot.define do
     request { "Please pray for me." }
     status { "pending" }
 
-    # If alumni is not present, create a new transient Alumni
+    # If user is not present, create a new transient user
     transient do
-      alumni { FactoryBot.build(:alumni) }
+      user { FactoryBot.build(:user) }
     end
 
     after(:build) do |prayer_request, evaluator|
-      prayer_request.alumni = evaluator.alumni
+      prayer_request.user = evaluator.user
     end
 
     # If you want to generate a valid prayer_request with specific attributes

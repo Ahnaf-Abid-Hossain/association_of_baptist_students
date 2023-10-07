@@ -1,19 +1,19 @@
 require 'rails_helper'
 
-RSpec.describe "alumnis/edit", type: :view do
-  let(:alumni) {
+RSpec.describe "users/edit", type: :view do
+  let(:user) {
     user = User.create!(email: "test@gmail.com")
-    Alumni.create!(user: user)
+    user.create!(user: user)
   }
 
   before(:each) do
-    assign(:alumni, alumni)
+    assign(:user, user)
   end
 
-  it "renders the edit alumni form" do
+  it "renders the edit user form" do
     render
 
-    assert_select "form[action=?][method=?]", alumni_path(alumni), "post" do
+    assert_select "form[action=?][method=?]", user_path(user), "post" do
     end
   end
 end

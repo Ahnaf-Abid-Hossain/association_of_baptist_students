@@ -6,12 +6,12 @@ RSpec.describe "meeting_notes/index", type: :view do
       MeetingNote.create!(
         title: "Title",
         content: "MyText",
-        alumni: nil
+        user: nil
       ),
       MeetingNote.create!(
         title: "Title",
         content: "MyText",
-        alumni: nil
+        user: nil
       )
     ])
   end

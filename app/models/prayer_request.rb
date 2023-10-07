@@ -1,3 +1,3 @@
 class PrayerRequest < ApplicationRecord
-  belongs_to :alumni
+  belongs_to :user
 end

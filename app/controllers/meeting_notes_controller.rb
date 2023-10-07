@@ -22,7 +22,7 @@ class MeetingNotesController < ApplicationController
   # POST /meeting_notes or /meeting_notes.json
   def create
     @meeting_note = MeetingNote.new(meeting_note_params)
-    @meeting_note.alumni_id = current_user.alumni.id
+    @meeting_note.user_id = current_user.id # current_user.user.id? was .id
     respond_to do |format|
       if @meeting_note.save
         format.html { redirect_to meeting_note_url(@meeting_note), notice: "Meeting note was successfully created." }
@@ -65,6 +65,6 @@ class MeetingNotesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def meeting_note_params
-      params.require(:meeting_note).permit(:title, :content, :date, :alumni_id)
+      params.require(:meeting_note).permit(:title, :content, :date, :id)
     end
 end

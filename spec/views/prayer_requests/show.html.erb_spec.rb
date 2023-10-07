@@ -6,7 +6,7 @@ RSpec.describe "prayer_requests/show", type: :view do
     assign(:prayer_request, PrayerRequest.create!(
       request: "Request",
       status: "Status",
-      alumni: nil
+      user: nil
     ))
   end
 

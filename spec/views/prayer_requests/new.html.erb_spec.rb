@@ -6,7 +6,7 @@ RSpec.describe "prayer_requests/new", type: :view do
     assign(:prayer_request, PrayerRequest.new(
       request: "MyString",
       status: "MyString",
-      alumni: nil
+      user: nil
     ))
   end
 
@@ -19,7 +19,7 @@ RSpec.describe "prayer_requests/new", type: :view do
 
       assert_select "input[name=?]", "prayer_request[status]"
 
-      assert_select "input[name=?]", "prayer_request[alumni_id]"
+      assert_select "input[name=?]", "prayer_request[id]"
     end
   end
 end
