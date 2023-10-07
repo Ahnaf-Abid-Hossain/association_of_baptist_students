@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   resources :prayer_requests
   resources :meeting_notes
+
+  # TODO: update this with only the routes we need
+  resources :links
+
   # -=-=-=-=-
   # New routing
   root 'users#index'

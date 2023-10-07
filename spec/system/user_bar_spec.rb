@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe "User Bar", type: :system do
+RSpec.describe('User Bar') do
   before do
     driven_by(:rack_test)
   end
 
-  it 'should display the name of the logged in user' do
+  it 'displays the name of the logged in user' do
     # Sign in
     user = FactoryBot.create(:user)
     sign_in user
@@ -14,10 +14,10 @@ RSpec.describe "User Bar", type: :system do
     visit "/users"
 
     # Expect User Bar to contain user's full name
-    expect(page).to have_css('h3', text: 'Logged in as: ' + user.full_name)
+    expect(page).to(have_css('h3', text: "Logged in as: #{user.full_name}"))
   end
 
-  it 'should log out the user when Log Out is pressed' do
+  it 'logs out the user when Log Out is pressed' do
     # Sign in
     user = FactoryBot.create(:user)
     sign_in user
@@ -32,6 +32,6 @@ RSpec.describe "User Bar", type: :system do
     get "/users"
 
     # Expect to be logged out
-    expect(response).to redirect_to("/users/sign_in")
+    expect(response).to(redirect_to('/users/sign_in'))
   end
 end

@@ -1,19 +1,19 @@
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
-  it 'should allow gmail accounts to log in' do
-    user = User.from_google(email: 'test@gmail.com', uid: '00000', full_name: 'Test User', avatar_url: '/')
-    expect(user).to_not eq(nil)
+RSpec.describe(User) do
+  it 'allows gmail accounts to log in' do
+    user = described_class.from_google(email: 'test@gmail.com', uid: '00000', full_name: 'Test User', avatar_url: '/')
+    expect(user).not_to(be_nil)
   end
 
-  it 'should disallow tamu accounts from logging in' do
-    user = User.from_google(email: 'test@tamu.edu', uid: '00000', full_name: 'Test User', avatar_url: '/')
-    expect(user).to eq(nil)
+  it 'disallows tamu accounts from logging in' do
+    user = described_class.from_google(email: 'test@tamu.edu', uid: '00000', full_name: 'Test User', avatar_url: '/')
+    expect(user).to(be_nil)
   end
 
-  it 'should correctly report if it has a profile' do
+  it 'correctly reports if it has a profile' do
     # Make a user
-    user = User.from_google(email: 'test@gmail.com', uid: '00000', full_name: 'Test User', avatar_url: '/')
+    user = described_class.from_google(email: 'test@gmail.com', uid: '00000', full_name: 'Test User', avatar_url: '/')
 
     # Make a profile for the user
     user_profile = user.new(
@@ -34,16 +34,16 @@ RSpec.describe User, type: :model do
     user_profile.save
 
     # User should report has_profile
-    expect(user.user).to be user_profile
+    expect(user).to be user_profile
   end
 
-  it 'should correctly report if it does NOT have a profile' do
+  it 'correctly reports if it does NOT have a profile' do
     # Make a user
-    user = User.from_google(email: 'test@gmail.com', uid: '00000', full_name: 'Test User', avatar_url: '/')
+    user = described_class.from_google(email: 'test@gmail.com', uid: '00000', full_name: 'Test User', avatar_url: '/')
 
     # Do not make a profile for the user
 
     # User should report has_profile
-    expect(user.user).to be_nil
+    expect(user).to be_nil
   end
 end

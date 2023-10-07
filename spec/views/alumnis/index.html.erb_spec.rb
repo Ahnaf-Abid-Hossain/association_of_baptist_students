@@ -12,6 +12,6 @@ RSpec.describe "users/index", type: :view do
 
   it "renders a list of users" do
     render
-    cell_selector = Rails::VERSION::STRING >= '7' ? 'div>p' : 'tr>td'
+    Rails::VERSION::STRING >= '7' ? 'div>p' : 'tr>td'
   end
 end

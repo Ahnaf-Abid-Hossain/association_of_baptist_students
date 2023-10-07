@@ -34,7 +34,7 @@ RSpec.describe "users/show", type: :view do
     @meeting_notes = meeting_note_test
   end
 
-  it "renders attributes in <p>" do
+  it 'renders attributes in <p>' do
     render
   end
 end
