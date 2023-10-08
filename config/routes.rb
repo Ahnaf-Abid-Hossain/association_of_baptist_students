@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
+  get 'approvals/index'
   resources :prayer_requests
   resources :meeting_notes
 
   # TODO: update this with only the routes we need
   resources :links
-
+    # Add this route for the approval page
+  get 'approvals/index'
   # -=-=-=-=-
   # New routing
   root 'alumnis#index'
