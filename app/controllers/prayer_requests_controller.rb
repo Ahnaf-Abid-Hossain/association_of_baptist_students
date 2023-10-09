@@ -6,7 +6,8 @@ class PrayerRequestsController < ApplicationController
     @prayer_requests = if current_user.is_admin?
                          PrayerRequest.all
                        else
-                         current_user.prayer_requests # current_user.user.prayer_requests?
+                         # current_user.user.prayer_requests?
+                         current_user.prayer_requests
                        end
   end
 
@@ -27,7 +28,8 @@ class PrayerRequestsController < ApplicationController
 
   # POST /prayer_requests or /prayer_requests.json
   def create
-    @prayer_request = current_user.prayer_requests.build(prayer_request_params) # current_user.user.prayer_requests?
+    # current_user.user.prayer_requests?
+    @prayer_request = current_user.prayer_requests.build(prayer_request_params)
     @prayer_request.status = 'not_read' unless current_user.is_admin?
 
     respond_to do |format|

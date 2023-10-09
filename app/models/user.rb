@@ -1,7 +1,7 @@
 class User < ApplicationRecord
-  has_one :user
-  has_many :prayer_requests
-  has_many :meeting_note
+  has_one :user, dependent: nil
+  has_many :prayer_requests, dependent: nil
+  has_many :meeting_note, dependent: nil
 
   devise :omniauthable, omniauth_providers: [:google_oauth2]
 
