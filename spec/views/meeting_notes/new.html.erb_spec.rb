@@ -2,11 +2,7 @@ require 'rails_helper'
 
 RSpec.describe('meeting_notes/new') do
   before do
-    assign(:meeting_note, MeetingNote.new(
-      title: "MyString",
-      content: "MyText",
-      user: nil
-    ))
+    assign(:meeting_note, FactoryBot.create(:meeting_note))
   end
 
   it 'renders new meeting_note form' do

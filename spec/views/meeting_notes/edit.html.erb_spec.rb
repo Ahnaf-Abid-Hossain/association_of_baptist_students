@@ -7,6 +7,7 @@ RSpec.describe('meeting_notes/edit') do
 
   before do
     assign(:meeting_note, meeting_note)
+    sign_in FactoryBot.create(:user)
   end
 
   it 'renders the edit meeting_note form' do

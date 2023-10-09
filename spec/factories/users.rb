@@ -5,7 +5,6 @@ FactoryBot.define do
     full_name { 'Test User' }
     avatar_url { '/' }
     is_admin { false }
-    # alumni { nil }
     user_first_name { 'Test'}
     user_last_name { 'User'}
     user_contact_email { 'test@gmail.com' }
@@ -22,7 +21,6 @@ FactoryBot.define do
       full_name { 'Admin User' }
       avatar_url { '/' }
       is_admin { true }
-      # alumni { nil }
       user_first_name { 'Test'}
       user_last_name { 'User'}
       user_contact_email { 'test@gmail.com' }

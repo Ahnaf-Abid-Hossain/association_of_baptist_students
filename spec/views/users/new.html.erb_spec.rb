@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "users/new", type: :view do
   before(:each) do
-    user = User.create!(email: "test@gmail.com")
-    assign(:user, user.new(user: user))
+    assign(:user, FactoryBot.create(:user))
   end
 
   it "renders new user form" do

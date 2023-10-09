@@ -2,12 +2,9 @@ require 'rails_helper'
 
 RSpec.describe "users/index", type: :view do
   before(:each) do
-    user1 = User.create!(email: "test1@gmail.com")
-    user2 = User.create!(email: "test2@gmail.com")
-    assign(:users, [
-      user.create!(user: user1),
-      user.create!(user: user2)
-    ])
+    user1 = FactoryBot.create(:user, email: "test1@gmail.com")
+    user2 = FactoryBot.create(:user, email: "test2@gmail.com")
+    assign(:users, [user1, user2])
   end
 
   it "renders a list of users" do

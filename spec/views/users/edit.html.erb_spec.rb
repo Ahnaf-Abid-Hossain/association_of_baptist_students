@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "users/edit", type: :view do
   let(:user) {
-    user = User.create!(email: "test@gmail.com")
-    user.create!(user: user)
+    user = FactoryBot.create(:user)
   }
 
   before(:each) do
