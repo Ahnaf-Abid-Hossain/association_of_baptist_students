@@ -18,9 +18,9 @@ RSpec.describe('meeting_notes/edit') do
 
       assert_select 'textarea[name=?]', 'meeting_note[content]'
 
-      assert_select "textarea[name=?]", "meeting_note[content]"
+      assert_select 'textarea[name=?]', 'meeting_note[content]'
 
-      assert_select "input[name=?]", "meeting_note[id]"
+      assert_select 'input[name=?]', 'meeting_note[id]'
     end
   end
 end

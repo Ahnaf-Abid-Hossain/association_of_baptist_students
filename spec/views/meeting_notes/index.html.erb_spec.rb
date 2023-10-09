@@ -7,16 +7,17 @@ RSpec.describe('meeting_notes/index') do
 
     assign(:meeting_notes, [
       MeetingNote.create!(
-        title: "Title",
-        content: "MyText",
+        title: 'Title',
+        content: 'MyText',
         user: author
       ),
       MeetingNote.create!(
-        title: "Title",
-        content: "MyText",
+        title: 'Title',
+        content: 'MyText',
         user: author
       )
-    ])
+    ]
+    )
   end
 
   it 'renders a list of meeting_notes' do

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe "users/new", type: :view do
-  before(:each) do
+RSpec.describe('users/new') do
+  before do
     assign(:user, FactoryBot.create(:user))
   end
 
