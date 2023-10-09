@@ -2,6 +2,7 @@
   <div class="quick-links">
     <%= link_to "Home", root_path %>
     <%= link_to "Prayer Requests", prayer_requests_path %>
+    <%= link_to "Approvals", approvals_index_path  %>
     <% @links.each do |link| %>
       <%= sanitize link_to(link.label, link.url, target: :blank) %>
     <% end %>
