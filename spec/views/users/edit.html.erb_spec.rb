@@ -7,6 +7,7 @@ RSpec.describe "users/edit", type: :view do
 
   before(:each) do
     assign(:user, user)
+    sign_in user
   end
 
   it "renders the edit user form" do

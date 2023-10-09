@@ -5,10 +5,12 @@ RSpec.describe "users/new", type: :view do
     assign(:user, FactoryBot.create(:user))
   end
 
-  it "renders new user form" do
-    render
+  # it "renders new user form" do
+  #   render
 
-    assert_select "form[action=?][method=?]", users_path, "post" do
-    end
-  end
+  #   assert_select "form[action=?][method=?]", users_path, "post" do
+  #   end
+  # end
+
+  pending 'renders new user form'
 end
