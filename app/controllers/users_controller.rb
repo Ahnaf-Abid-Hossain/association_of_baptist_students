@@ -25,7 +25,7 @@ class UsersController < ApplicationController
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
-    #@user.user = current_user
+    # @user.user = current_user
 
     respond_to do |format|
       if @user.save
@@ -83,15 +83,15 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:user_first_name, :user_last_name, :user_email, :user_ph_num, :user_class_year, :user_job_field, :user_location, :user_status, :user_major)
+      params.require(:user).permit(:user_first_name, :user_last_name, :user_contact_email, :user_ph_num, :user_class_year, :user_job_field, :user_location, :user_status, :user_major)
     end
 
     # Used to direct user to create new user, if needed
     private
     def force_new_user
-      if current_user == nil
+      if current_user.user_first_name == nil && !params[:controller].start_with?("users/") && !params[:action].eql?("edit")
         # Redirect to new page
-        redirect_to new_user_path
+        redirect_to edit_user_path(current_user)
       end
     end
 end
