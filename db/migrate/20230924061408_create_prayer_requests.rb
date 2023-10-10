@@ -3,7 +3,7 @@ class CreatePrayerRequests < ActiveRecord::Migration[7.0]
     create_table :prayer_requests do |t|
       t.string :request
       t.string :status
-      t.references :user, null: false, foreign_key: true
+      t.references :alumni, null: false, foreign_key: true
 
       t.timestamps
     end
