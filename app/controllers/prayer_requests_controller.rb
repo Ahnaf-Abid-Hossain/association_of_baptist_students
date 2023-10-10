@@ -3,11 +3,12 @@ class PrayerRequestsController < ApplicationController
 
   # GET /prayer_requests or /prayer_requests.json
   def index
-    if current_user.is_admin?
-      @prayer_requests = PrayerRequest.all
-    else
-      @prayer_requests = current_user.prayer_requests # current_user.user.prayer_requests?
-    end
+    @prayer_requests = if current_user.is_admin?
+                         PrayerRequest.all
+                       else
+                         # current_user.user.prayer_requests?
+                         current_user.prayer_requests
+                       end
   end
 
   # GET /prayer_requests/1 or /prayer_requests/1.json
@@ -27,10 +28,9 @@ class PrayerRequestsController < ApplicationController
 
   # POST /prayer_requests or /prayer_requests.json
   def create
-    @prayer_request = current_user.prayer_requests.build(prayer_request_params) # current_user.user.prayer_requests?
-    if !current_user.is_admin?
-      @prayer_request.status = "not_read"
-    end
+    # current_user.user.prayer_requests?
+    @prayer_request = current_user.prayer_requests.build(prayer_request_params)
+    @prayer_request.status = 'not_read' unless current_user.is_admin?
 
     respond_to do |format|
       if @prayer_request.save
@@ -87,8 +87,6 @@ class PrayerRequestsController < ApplicationController
   def authorize_prayer_request(prayer_request)
     return if current_user.is_admin?
 
-      unless prayer_request.user_id == current_user.id
-        redirect_to prayer_requests_path, alert: 'You are not authorized to perform this action.'
-      end
-    end
+    redirect_to(prayer_requests_path, alert: 'You are not authorized to perform this action.') unless prayer_request.user_id == current_user.id
+  end
 end

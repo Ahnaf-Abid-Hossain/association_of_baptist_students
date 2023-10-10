@@ -11,7 +11,7 @@ RSpec.describe('User Bar') do
     sign_in user
 
     # Go to the directory page
-    visit "/users"
+    visit '/users'
 
     # Expect User Bar to contain user's full name
     expect(page).to(have_css('h3', text: "Logged in as: #{user.full_name}"))
@@ -23,13 +23,13 @@ RSpec.describe('User Bar') do
     sign_in user
 
     # Go to the directory page
-    visit "/users"
+    visit '/users'
 
     # Press Log Out
     click_link 'Log out'
 
     # Go back to the directory page
-    get "/users"
+    get '/users'
 
     # Expect to be logged out
     expect(response).to(redirect_to('/users/sign_in'))

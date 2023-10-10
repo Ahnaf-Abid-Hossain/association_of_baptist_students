@@ -1,19 +1,19 @@
 require 'rails_helper'
 
-RSpec.describe "users/edit", type: :view do
-  let(:user) {
-    user = User.create!(email: "test@gmail.com")
-    user.create!(user: user)
-  }
-
-  before(:each) do
-    assign(:user, user)
+RSpec.describe('users/edit') do
+  let(:user) do
+    FactoryBot.create(:user)
   end
 
-  it "renders the edit user form" do
+  before do
+    assign(:user, user)
+    sign_in user
+  end
+
+  it 'renders the edit user form' do
     render
 
-    assert_select "form[action=?][method=?]", user_path(user), "post" do
-    end
+    assert_select 'form[action=?][method=?]', user_path(user), 'post'
+    # ... do end
   end
 end
