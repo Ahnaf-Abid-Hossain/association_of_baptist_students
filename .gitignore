@@ -32,3 +32,4 @@
 
 # Ignore SimpleCov output
 /coverage
+/config/master.key
