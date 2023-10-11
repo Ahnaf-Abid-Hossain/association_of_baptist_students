@@ -10,24 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_03_172256) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_07_043341) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "alumnis", force: :cascade do |t|
-    t.string "alum_first_name"
-    t.string "alum_last_name"
-    t.string "alum_email"
-    t.string "alum_ph_num"
-    t.integer "alum_class_year"
-    t.string "alum_job_field"
-    t.string "alum_location"
-    t.string "alum_status"
-    t.string "alum_major"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "user_id"
-  end
 
   create_table "books", force: :cascade do |t|
     t.string "title"
@@ -50,19 +35,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_03_172256) do
     t.string "title"
     t.text "content"
     t.date "date"
-    t.bigint "alumni_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["alumni_id"], name: "index_meeting_notes_on_alumni_id"
+    t.index ["user_id"], name: "index_meeting_notes_on_user_id"
   end
 
   create_table "prayer_requests", force: :cascade do |t|
     t.string "request"
     t.string "status"
-    t.bigint "alumni_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["alumni_id"], name: "index_prayer_requests_on_alumni_id"
+    t.index ["user_id"], name: "index_prayer_requests_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -73,9 +58,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_03_172256) do
     t.boolean "is_admin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "user_first_name"
+    t.string "user_last_name"
+    t.string "user_contact_email"
+    t.string "user_ph_num"
+    t.integer "user_class_year"
+    t.string "user_job_field"
+    t.string "user_location"
+    t.string "user_status"
+    t.string "user_major"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "meeting_notes", "alumnis"
-  add_foreign_key "prayer_requests", "alumnis"
+  add_foreign_key "meeting_notes", "users", on_delete: :cascade
+  add_foreign_key "prayer_requests", "users", on_delete: :cascade
 end

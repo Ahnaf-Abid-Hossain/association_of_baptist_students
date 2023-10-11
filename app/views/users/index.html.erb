@@ -1,0 +1,23 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Associate of Baptist Student's user Directory</h1>
+
+<%= link_to "Search Directory", search_user_path %>
+<!--<hr style="border: none; background-color: maroon; height: 3px; width: 25%; margin-left: 0;">-->
+
+<div id="users">
+  <% @users.each_with_index do |user, index| %>
+    <div class=user-item">
+      <p>
+        <%= user.user_first_name %> <%= user.user_last_name %> <br>
+        <%= link_to "View Profile", user %>
+      </p>
+    </div>
+    <% unless index == @users.size - 1 %>
+      <hr>
+    <% end %>
+  <% end %>
+</div>
+<% if current_user && current_user.is_admin? %>
+  <%= link_to "New user", new_user_path %>
+<% end %>
