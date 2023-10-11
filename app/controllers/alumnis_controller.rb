@@ -2,6 +2,21 @@ class AlumnisController < ApplicationController
   before_action :set_alumni, only: %i[show edit update destroy]
   before_action :force_new_alumni, only: %i[index show edit]
 
+  def approve
+    @alumni = Alumni.find(params[:id])
+    @alumni.update(alum_status: 'approved')
+    redirect_to alumni_approval_path, notice: 'Alumni approved successfully.'
+  end
+
+  def decline
+    @alumni = Alumni.find(params[:id])
+    @alumni.update(alum_status: 'declined')
+    redirect_to alumni_approval_path, notice: 'Alumni declined successfully.'
+  end
+
+
+
+
   # GET /alumnis or /alumnis.json
   def index
     @alumnis = Alumni.all

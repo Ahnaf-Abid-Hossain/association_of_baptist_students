@@ -13,6 +13,10 @@ Rails.application.routes.draw do
 
   resources :alumnis do
     resources :meeting_notes
+    member do
+      patch 'approve'
+      patch 'decline'
+    end
   end
 
   resources :alumnis

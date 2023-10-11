@@ -1,7 +1,13 @@
 <h1>Alumni Approval Page</h1>
 <ul>
   <% @non_admin_alumni.each do |alumni| %>
-    <li><%= alumni.alum_first_name %></li>
+    <li>
+      <strong>Name:</strong> <%= alumni.alum_first_name %> <%= alumni.alum_last_name %>
+      <br>
+      <strong>Status:</strong> <%= alumni.alum_status %>
+      <%= button_to "Approve", approve_alumni_path(alumni), method: :patch, class: 'btn btn-success' %>
+      <%= button_to "Decline", decline_alumni_path(alumni), method: :patch, class: 'btn btn-danger' %>
+    </li>
     <!-- Display other alumni information as needed -->
   <% end %>
 </ul>
