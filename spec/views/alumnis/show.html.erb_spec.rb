@@ -1,12 +1,21 @@
 require 'rails_helper'
 
-RSpec.describe "alumnis/show", type: :view do
-  before(:each) do
-    user = User.create!(email: "test@gmail.com")
-    assign(:alumni, Alumni.create!(user: user))
+RSpec.describe('alumnis/show') do
+  before do
+    # Create an alumni
+    alumni = FactoryBot.create(:alumni)
+
+    # Attach it to the view
+    assign(:alumni, alumni)
+
+    # Attach empty meeting notes list to view
+    assign(:meeting_notes, [])
+
+    # Sign in as this alumni's user
+    sign_in alumni.user
   end
 
-  it "renders attributes in <p>" do
+  it 'renders attributes in <p>' do
     render
   end
 end
