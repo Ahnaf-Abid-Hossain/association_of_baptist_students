@@ -29,13 +29,19 @@
   <%= submit_tag 'Search', class: 'btn btn-primary' %>
 <% end %>
 
+<br>
+<%= link_to "Back to Directory", users_path %>
+<br>
+<br>
+
 <% if @results %>
   <% if @results.empty? %>
     <p> No results found.</p>
   <% else %>
     <h2>Search Results</h2>
     <div>
-      <% @results.each_with_index do |user, index| %>
+      <% sorted_results = @results.sort_by { |user| user.user_last_name} %>
+      <% sorted_results.each_with_index do |user, index| %>
         <p>
           <%= user.user_first_name %> <%= user.user_last_name %> <br>
           <%= link_to "View Profile", user %>
