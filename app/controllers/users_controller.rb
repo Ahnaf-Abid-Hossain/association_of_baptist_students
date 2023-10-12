@@ -65,16 +65,22 @@ class UsersController < ApplicationController
     @first_name = nil
     @last_name = nil
 
-    if @search_name.include?(' ')
-      @first_name, @last_name = @search_name.split(' ', 2)
-    else
-      @first_name = @last_name = @search_name
+    if @search_name.present?
+      if @search_name.include?(' ')
+        @first_name, @last_name = @search_name.split(' ', 2)
+      else
+        @first_name = @last_name = @search_name
+      end
     end
 
-    @results = if @search_name.include?(' ')
-                 User.where('user_first_name ILIKE ? AND user_last_name ILIKE ?', "%#{@first_name}%", "%#{@last_name}%")
+    @results = if @search_name.present?
+                  if @search_name.include?(' ')
+                    User.where('user_first_name ILIKE ? AND user_last_name ILIKE ?', "%#{@first_name}%", "%#{@last_name}%")
+                  else
+                    User.where('user_first_name ILIKE ? OR user_last_name ILIKE ?', "%#{@first_name}%", "%#{@last_name}%")
+                  end
                else
-                 User.where('user_first_name ILIKE ? OR user_last_name ILIKE ?', "%#{@first_name}%", "%#{@last_name}%")
+                  result = []
                end
 
   end
