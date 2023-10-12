@@ -1,0 +1,17 @@
+<% if current_user.user_first_name.nil? %>
+  <h1>Create Profile<h1>
+<% else %>
+  <h1>Editing user</h1>
+<% end %>
+
+<%= render "form", user: @user %>
+
+<br>
+
+<% if current_user.user_first_name.nil? %>
+<% else %>
+  <div>
+    <%= link_to "Show this user", @user %> |
+    <%= link_to "Back to users", users_path %>
+  </div>
+<% end %>
