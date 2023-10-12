@@ -15,7 +15,7 @@ RSpec.describe('Advanced Search') do
     visit '/search'
 
     # fill in data
-    fill_in "First Name:", with: "Test"
+    fill_in ":search_name", with: "Test"
     click_button "Search"
 
     # Expect User Bar to contain user's full name
@@ -32,15 +32,15 @@ RSpec.describe('Advanced Search') do
     visit '/search'
 
     # fill in data
-    fill_in "Last Name:", with: "User"
+    fill_in ":search_name", with: "User"
     click_button "Search"
 
     # Expect User Bar to contain user's full name
     expect(page).to have_content("Test User")
   end
 
-  # Class Year search test
-  it 'displays the name of the logged in user, when given class year' do
+  # Full Name search test
+  it 'displays the name of the logged in user, when given full name' do
     # Sign in
     user = FactoryBot.create(:user)
     sign_in user
@@ -49,41 +49,7 @@ RSpec.describe('Advanced Search') do
     visit '/search'
 
     # fill in data
-    fill_in "Class Year:", with: 2024
-    click_button "Search"
-
-    # Expect User Bar to contain user's full name
-    expect(page).to have_content("Test User")
-  end
-
-  # Major search test
-  it 'displays the name of the logged in user, when given major' do
-    # Sign in
-    user = FactoryBot.create(:user)
-    sign_in user
-
-    # Go to the search page
-    visit '/search'
-
-    # fill in data
-    fill_in "Major:", with: "Computer Science"
-    click_button "Search"
-
-    # Expect User Bar to contain user's full name
-    expect(page).to have_content("Test User")
-  end
-
-  # Current city search test
-  it 'displays the name of the logged in user, when given current city' do
-    # Sign in
-    user = FactoryBot.create(:user)
-    sign_in user
-
-    # Go to the search page
-    visit '/search'
-
-    # fill in data
-    fill_in "First Name:", with: "city"
+    fill_in ":search_name", with: "Test User"
     click_button "Search"
 
     # Expect User Bar to contain user's full name
