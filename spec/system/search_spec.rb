@@ -14,7 +14,7 @@ RSpec.describe('Advanced Search') do
     visit '/search'
 
     # fill in data
-    fill_in "First Name", with: "John"
+    fill_in "First Name:", with: "John"
     click_button "Search"
 
     # Expect User Bar to contain user's full name
