@@ -25,7 +25,8 @@ Rails.application.routes.draw do
 
   resources :users
   get '/search', to: 'users#temp_search', as: :search_user
-  
+  get '/basic_serach', to: 'users#basic_search', as: :basic_search_user
+
   resources :users do
     get '/profile', on: :member, to: 'users#profile'
   end

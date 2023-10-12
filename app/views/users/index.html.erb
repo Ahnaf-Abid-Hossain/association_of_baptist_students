@@ -1,12 +1,20 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Associate of Baptist Student's user Directory</h1>
+<h1>Association of Baptist Student's Alumni Directory</h1>
 
-<%= link_to "Search Directory", search_user_path %>
+
+    <%= form_tag(basic_search_user_path, method: :get, class: 'form-inline') do %>
+      <div class="form-group">
+        <%= text_field_tag(:search_name, params[:search_name], class: 'form-control', placeholder: 'Enter Name') %>
+        <%= submit_tag('Search', class: 'btn btn-primary') %>
+        </div>
+    <% end %>
+<%= link_to "Advanced Search", search_user_path %>
 <!--<hr style="border: none; background-color: maroon; height: 3px; width: 25%; margin-left: 0;">-->
 
 <div id="users">
-  <% @users.each_with_index do |user, index| %>
+  <% sorted_users = @users.sort_by { |user| user.user_last_name} %>
+  <% sorted_users.each_with_index do |user, index| %>
     <div class=user-item">
       <p>
         <%= user.user_first_name %> <%= user.user_last_name %> <br>
