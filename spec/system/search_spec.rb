@@ -20,3 +20,4 @@ RSpec.describe('Advanced Search') do
     # Expect User Bar to contain user's full name
     expect(page).to have_content("John Doe")
   end
+end
