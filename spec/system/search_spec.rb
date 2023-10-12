@@ -11,7 +11,7 @@ RSpec.describe('Advanced Search') do
     sign_in user
 
     # Go to the search page
-    visit '/users/search'
+    visit '/search'
 
     # fill in data
     fill_in "First Name", with: "John"
