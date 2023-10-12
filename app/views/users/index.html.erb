@@ -5,7 +5,7 @@
 
     <%= form_tag(basic_search_user_path, method: :get, class: 'form-inline') do %>
       <div class="form-group">
-        <%= text_field_tag(:search_name, params[:search_name], class: 'form-control', placeholder: 'Enter Name') %>
+        <%= text_field_tag(:search_name, params[:search_name], class: 'form-control', placeholder: 'Enter Alumni Name') %>
         <%= submit_tag('Search', class: 'btn btn-primary') %>
         </div>
     <% end %>
