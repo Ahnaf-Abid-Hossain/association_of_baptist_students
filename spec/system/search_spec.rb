@@ -14,10 +14,10 @@ RSpec.describe('Advanced Search') do
     visit '/search'
 
     # fill in data
-    fill_in "First Name:", with: "John"
+    fill_in "First Name:", with: "Test"
     click_button "Search"
 
     # Expect User Bar to contain user's full name
-    expect(page).to have_content("John Doe")
+    expect(page).to have_content("Test User")
   end
 end
