@@ -60,13 +60,47 @@ class UsersController < ApplicationController
     end
   end
 
+  def basic_search
+    @search_name = params[:search_name]
+    @first_name = nil
+    @last_name = nil
+
+    if @search_name.present?
+      if @search_name.include?(' ')
+        @first_name, @last_name = @search_name.split(' ', 2)
+      else
+        @first_name = @last_name = @search_name
+      end
+    end
+
+    @results = if @search_name.present?
+                  if @search_name.include?(' ')
+                    User.where('user_first_name ILIKE ? AND user_last_name ILIKE ?', "%#{@first_name}%", "%#{@last_name}%")
+                  else
+                    User.where('user_first_name ILIKE ? OR user_last_name ILIKE ?', "%#{@first_name}%", "%#{@last_name}%")
+                  end
+               else
+                  result = []
+               end
+
+  end
+
   def temp_search
     @first_name = params[:first_name]
     @last_name = params[:last_name]
+    @class_year = params[:class_year]
+    @major = params[:major]
+    @current_city = params[:current_city]
     @results = User.all
 
-    @results = if @first_name.present? || @last_name.present?
-                 User.where('user_first_name ILIKE ? AND user_last_name ILIKE ?', "%#{@first_name}%", "%#{@last_name}%")
+
+
+    @results = if @first_name.present? || @last_name.present? || @class_year.present? || @major.present? || @current_city.present?
+                  if @class_year.present?
+                    User.where('user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_class_year = ? AND user_major ILIKE ? AND user_location ILIKE ?', "%#{@first_name}%", "%#{@last_name}%", @class_year.to_i, "%#{@major}%", "%#{@current_city}%")
+                  else
+                    User.where('user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_major ILIKE ? AND user_location ILIKE ?', "%#{@first_name}%", "%#{@last_name}%", "%#{@major}%", "%#{@current_city}%")
+                  end
                else
                  []
                end

@@ -36,7 +36,9 @@
 
   <div>
     <%= form.label :user_class_year, "Class Year", style: "display: block" %>
-    <%= form.text_field :user_class_year %>
+    <!-- <%= form.text_field :user_class_year %> -->
+    <% current_year = Date.today.year %>
+    <%= form.select :user_class_year, options_for_select((current_year - 100..current_year + 4).map { |year| [year.to_s, year] }, @user.user_class_year) %>
   </div>
 
   
