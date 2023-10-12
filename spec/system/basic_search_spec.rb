@@ -12,7 +12,7 @@ RSpec.describe('Advanced Search') do
     sign_in user
 
     # Go to the search page
-    visit '/search'
+    visit '/basic_search'
 
     # fill in data
     fill_in "search_name", with: "Test"
@@ -29,7 +29,7 @@ RSpec.describe('Advanced Search') do
     sign_in user
 
     # Go to the search page
-    visit '/search'
+    visit '/basic_search'
 
     # fill in data
     fill_in "search_name", with: "User"
@@ -46,7 +46,7 @@ RSpec.describe('Advanced Search') do
     sign_in user
 
     # Go to the search page
-    visit '/search'
+    visit '/basic_search'
 
     # fill in data
     fill_in "search_name", with: "Test User"
