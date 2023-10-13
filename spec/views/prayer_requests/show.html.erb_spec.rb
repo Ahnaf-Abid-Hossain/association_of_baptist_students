@@ -5,7 +5,7 @@
 #     assign(:prayer_request, PrayerRequest.create!(
 #       request: "Request",
 #       status: "Status",
-#       alumni: nil
+#       user: nil
 #     ))
 #   end
 #

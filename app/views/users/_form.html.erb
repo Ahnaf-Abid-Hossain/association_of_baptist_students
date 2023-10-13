@@ -1,0 +1,71 @@
+<%= form_with(model: user) do |form| %>
+  <% if user.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div>
+    <%= form.label :user_first_name, "First Name", style: "display: block" %>
+    <%= form.text_field :user_first_name %>
+  </div>
+
+
+  <div>
+    <%= form.label :user_last_name, "Last Name", style: "display: block" %>
+    <%= form.text_field :user_last_name %>
+  </div>
+
+  <div>
+    <%= form.label :user_contact_email, "Email", style: "display: block" %>
+    <%= form.text_field :user_contact_email %>
+  </div>
+  
+  
+  <div>
+    <%= form.label :user_ph_num, "Phone Number", style: "display: block" %>
+    <%= form.text_field :user_ph_num %>
+  </div>
+
+
+  <div>
+    <%= form.label :user_class_year, "Class Year", style: "display: block" %>
+    <!-- <%= form.text_field :user_class_year %> -->
+    <% current_year = Date.today.year %>
+    <%= form.select :user_class_year, options_for_select((current_year - 100..current_year + 4).map { |year| [year.to_s, year] }, @user.user_class_year) %>
+  </div>
+
+  
+  <div>
+    <%= form.label :user_job_field, "Current Job Title", style: "display: block" %>
+    <%= form.text_field :user_job_field %>
+  </div>
+
+
+  <div>
+    <%= form.label :user_location, "Current City", style: "display: block" %>
+    <%= form.text_field :user_location %>
+  </div>
+
+
+  <div>
+    <%= form.label :user_status, "Status", style: "display: block" %>
+    <%= form.text_field :user_status %>
+  </div>
+
+
+  <div>
+    <%= form.label :user_major, "College Major", style: "display: block" %>
+    <%= form.text_field :user_major %>
+  </div>
+
+  <div>
+    <%= form.submit "Save Profile" %>
+  </div>
+<% end %>

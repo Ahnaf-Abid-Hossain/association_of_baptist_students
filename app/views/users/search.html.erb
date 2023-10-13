@@ -1,0 +1,55 @@
+<h1>Advanced Search</h1>
+
+<%= form_tag search_user_path, method: :get do %>
+  <div class="form-group">
+    <%= label_tag 'first_name', 'First Name:' %>
+    <%= text_field_tag 'first_name', params[:first_name], class: 'form-control', placeholder: 'Enter First Name' %>
+  </div>
+  
+  <div class="form-group">
+    <%= label_tag 'last_name', 'Last Name:' %>
+    <%= text_field_tag 'last_name', params[:last_name], class: 'form-control', placeholder: 'Enter Last Name' %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag 'class_year', 'Class Year:' %>
+    <%= text_field_tag 'class_year', params[:class_year], class: 'form-control', placeholder: 'Enter Class Year' %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag 'major', 'Major:' %>
+    <%= text_field_tag 'major', params[:major], class: 'form-control', placeholder: 'Enter Major' %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag 'current_city', 'Current City:' %>
+    <%= text_field_tag 'current_city', params[:current_city], class: 'form-control', placeholder: 'Enter Current City' %>
+  </div>
+
+  <%= submit_tag 'Search', class: 'btn btn-primary' %>
+<% end %>
+
+<br>
+<%= link_to "Back to Directory", users_path %>
+<br>
+<br>
+
+<% if @results %>
+  <% if @results.empty? %>
+    <p> No results found.</p>
+  <% else %>
+    <h2>Search Results</h2>
+    <div>
+      <% sorted_results = @results.sort_by { |user| user.user_last_name} %>
+      <% sorted_results.each_with_index do |user, index| %>
+        <p>
+          <%= user.user_first_name %> <%= user.user_last_name %> <br>
+          <%= link_to "View Profile", user %>
+        </p>
+        <% unless index == @results.size - 1 %>
+          <hr>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

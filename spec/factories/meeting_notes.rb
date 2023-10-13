@@ -4,13 +4,13 @@ FactoryBot.define do
     content { 'MyText' }
     date { '2023-09-25' }
 
-    # If alumni is not present, create a new transient Alumni
+    # If user is not present, create a new transient user
     transient do
-      alumni { FactoryBot.create(:alumni) }
+      user { FactoryBot.build(:user) }
     end
 
     after(:build) do |prayer_request, evaluator|
-      prayer_request.alumni = evaluator.alumni
+      prayer_request.user = evaluator.user
     end
   end
 end

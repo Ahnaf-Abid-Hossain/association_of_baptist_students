@@ -1,0 +1,7 @@
+<h1>Alumni Approval Page</h1>
+<ul>
+  <% @non_admins.each do |alumni| %>
+    <li><%= alumni.user_first_name %></li>
+    <!-- Display other alumni information as needed -->
+  <% end %>
+</ul>
