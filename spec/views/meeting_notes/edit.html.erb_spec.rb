@@ -7,6 +7,7 @@ RSpec.describe('meeting_notes/edit') do
 
   before do
     assign(:meeting_note, meeting_note)
+    sign_in meeting_note.user
   end
 
   it 'renders the edit meeting_note form' do
@@ -17,7 +18,9 @@ RSpec.describe('meeting_notes/edit') do
 
       assert_select 'textarea[name=?]', 'meeting_note[content]'
 
-      assert_select 'input[name=?]', 'meeting_note[alumni_id]'
+      assert_select 'textarea[name=?]', 'meeting_note[content]'
+
+      assert_select 'input[name=?]', 'meeting_note[id]'
     end
   end
 end

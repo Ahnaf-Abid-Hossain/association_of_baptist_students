@@ -3,19 +3,19 @@ require 'rails_helper'
 RSpec.describe('meeting_notes/index') do
   before do
     # Create an alumni to be the author of the notes
-    author = FactoryBot.create(:alumni)
+    author = FactoryBot.create(:user)
 
     assign(:meeting_notes, [
-      FactoryBot.build(:meeting_note,
-                       title: 'Title',
-                       content: 'MyText',
-                       alumni: author
-                      ),
-      FactoryBot.build(:meeting_note,
-                       title: 'Title',
-                       content: 'MyText',
-                       alumni: author
-                      )
+      MeetingNote.create!(
+        title: 'Title',
+        content: 'MyText',
+        user: author
+      ),
+      MeetingNote.create!(
+        title: 'Title',
+        content: 'MyText',
+        user: author
+      )
     ]
     )
   end

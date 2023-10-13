@@ -12,9 +12,9 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe('/alumnis') do
+RSpec.describe('/users') do
   # This should return the minimal set of attributes required to create a valid
-  # Alumni. As you add validations to Alumni, be sure to
+  # user. As you add validations to user, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
     skip('Add a hash of attributes valid for your model')
@@ -26,60 +26,60 @@ RSpec.describe('/alumnis') do
 
   describe 'GET /index' do
     it 'renders a successful response' do
-      Alumni.create!(valid_attributes)
-      get alumnis_url
+      User.create!(valid_attributes)
+      get users_url
       expect(response).to(be_successful)
     end
   end
 
   describe 'GET /show' do
     it 'renders a successful response' do
-      alumni = Alumni.create!(valid_attributes)
-      get alumni_url(alumni)
+      user = User.create!(valid_attributes)
+      get user_url(user)
       expect(response).to(be_successful)
     end
   end
 
   describe 'GET /new' do
     it 'renders a successful response' do
-      # custom_url_new_alumni = "/alumnis/new"
-      # get custom_url_new_alumni
-      get new_alumni_url
+      # custom_url_new_user = "/users/new"
+      # get custom_url_new_user
+      get new_user_url
       expect(response).to(have_http_status(:found))
     end
   end
 
   describe 'GET /edit' do
     it 'renders a successful response' do
-      alumni = Alumni.create!(valid_attributes)
-      get edit_alumni_url(alumni)
+      user = User.create!(valid_attributes)
+      get edit_user_url(user)
       expect(response).to(be_successful)
     end
   end
 
   describe 'POST /create' do
     context 'with valid parameters' do
-      it 'creates a new Alumni' do
+      it 'creates a new user' do
         expect do
-          post(alumnis_url, params: { alumni: valid_attributes })
-        end.to(change(Alumni, :count).by(1))
+          post(users_url, params: { user: valid_attributes })
+        end.to(change(User, :count).by(1))
       end
 
-      it 'redirects to the created alumni' do
-        post alumnis_url, params: { alumni: valid_attributes }
-        expect(response).to(redirect_to(alumni_url(Alumni.last)))
+      it 'redirects to the created user' do
+        post users_url, params: { user: valid_attributes }
+        expect(response).to(redirect_to(user_url(User.last)))
       end
     end
 
     context 'with invalid parameters' do
-      it 'does not create a new Alumni' do
+      it 'does not create a new user' do
         expect do
-          post(alumnis_url, params: { alumni: invalid_attributes })
-        end.not_to(change(Alumni, :count))
+          post(users_url, params: { user: invalid_attributes })
+        end.not_to(change(User, :count))
       end
 
       it "renders a response with 422 status (i.e. to display the 'new' template)" do
-        post alumnis_url, params: { alumni: invalid_attributes }
+        post users_url, params: { user: invalid_attributes }
         expect(response).to(have_http_status(:unprocessable_entity))
       end
     end
@@ -91,42 +91,42 @@ RSpec.describe('/alumnis') do
         skip('Add a hash of attributes valid for your model')
       end
 
-      it 'updates the requested alumni' do
-        alumni = Alumni.create!(valid_attributes)
-        patch alumni_url(alumni), params: { alumni: new_attributes }
-        alumni.reload
+      it 'updates the requested user' do
+        user = User.create!(valid_attributes)
+        patch user_url(user), params: { user: new_attributes }
+        user.reload
         skip('Add assertions for updated state')
       end
 
-      it 'redirects to the alumni' do
-        alumni = Alumni.create!(valid_attributes)
-        patch alumni_url(alumni), params: { alumni: new_attributes }
-        alumni.reload
-        expect(response).to(redirect_to(alumni_url(alumni)))
+      it 'redirects to the user' do
+        user = User.create!(valid_attributes)
+        patch user_url(user), params: { user: new_attributes }
+        user.reload
+        expect(response).to(redirect_to(user_url(user)))
       end
     end
 
     context 'with invalid parameters' do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
-        alumni = Alumni.create!(valid_attributes)
-        patch alumni_url(alumni), params: { alumni: invalid_attributes }
+        user = User.create!(valid_attributes)
+        patch user_url(user), params: { user: invalid_attributes }
         expect(response).to(have_http_status(:unprocessable_entity))
       end
     end
   end
 
   describe 'DELETE /destroy' do
-    it 'destroys the requested alumni' do
-      alumni = Alumni.create!(valid_attributes)
+    it 'destroys the requested user' do
+      user = User.create!(valid_attributes)
       expect do
-        delete(alumni_url(alumni))
-      end.to(change(Alumni, :count).by(-1))
+        delete(user_url(user))
+      end.to(change(user, :count).by(-1))
     end
 
-    it 'redirects to the alumnis list' do
-      alumni = Alumni.create!(valid_attributes)
-      delete alumni_url(alumni)
-      expect(response).to(redirect_to(alumnis_url))
+    it 'redirects to the users list' do
+      user = User.create!(valid_attributes)
+      delete user_url(user)
+      expect(response).to(redirect_to(users_url))
     end
   end
 end

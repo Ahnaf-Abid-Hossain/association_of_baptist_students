@@ -10,23 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_03_172256) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_13_025725) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "alumnis", force: :cascade do |t|
-    t.string "alum_first_name"
-    t.string "alum_last_name"
-    t.string "alum_email"
-    t.string "alum_ph_num"
-    t.integer "alum_class_year"
-    t.string "alum_job_field"
-    t.string "alum_location"
-    t.string "alum_status"
-    t.string "alum_major"
+  create_table "admins", force: :cascade do |t|
+    t.string "email", null: false
+    t.string "full_name"
+    t.string "uid"
+    t.string "avatar_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
+    t.index ["email"], name: "index_admins_on_email", unique: true
   end
 
   create_table "books", force: :cascade do |t|
@@ -50,37 +45,41 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_03_172256) do
     t.string "title"
     t.text "content"
     t.date "date"
-    t.bigint "alumni_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["alumni_id"], name: "index_meeting_notes_on_alumni_id"
+    t.index ["user_id"], name: "index_meeting_notes_on_user_id"
   end
 
   create_table "prayer_requests", force: :cascade do |t|
     t.string "request"
     t.string "status"
-    t.bigint "alumni_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["alumni_id"], name: "index_prayer_requests_on_alumni_id"
+    t.index ["user_id"], name: "index_prayer_requests_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "is_admin"
+    t.string "email", null: false
     t.string "full_name"
     t.string "uid"
     t.string "avatar_url"
+    t.boolean "is_admin"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "user_first_name"
+    t.string "user_last_name"
+    t.string "user_contact_email"
+    t.string "user_ph_num"
+    t.integer "user_class_year"
+    t.string "user_job_field"
+    t.string "user_location"
+    t.string "user_status"
+    t.string "user_major"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "meeting_notes", "alumnis"
-  add_foreign_key "prayer_requests", "alumnis"
+  add_foreign_key "meeting_notes", "users", on_delete: :cascade
+  add_foreign_key "prayer_requests", "users", on_delete: :cascade
 end
