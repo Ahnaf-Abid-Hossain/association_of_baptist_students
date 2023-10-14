@@ -109,11 +109,45 @@ RSpec.describe('Quick Links') do
 
   context 'editing links' do
     pending 'allows admins to try to edit links'
-    pending 'prevents non-admins from trying to edit links'
+    it 'prevents non-admins from trying to edit links' do
+      # Create link to edit
+      link = Link.create!(label: 'Test', url: 'https://test.com', order: 800_000)
+
+      # GET link edit page
+      get edit_link_path(link)
+
+      # Expect to be directed away
+      expect(response).to(redirect_to('/'))
+    end
 
     pending 'allows admins to actually edit links'
-    pending 'allows admins to actually edit links href'
+    pending 'allows admins to actually edit links url'
     pending 'allows admins to actually edit links title'
-    pending 'prevents non-admins from actually editing links'
+    pending 'allows admins to actually edit links order'
+    it 'prevents non-admins from actually editing links' do
+      # Create link to edit
+      link = Link.create!(label: 'Test', url: 'https://test.com', order: 800_000)
+
+      # Create edit data
+      data = {
+        link: {
+          label: 'New Test',
+          url: 'http://silly.gov',
+          order: 80
+        }
+      }
+
+      # PATCH link edit page
+      patch link_path(link), params: data
+
+      # Expect to be forbidden
+      expect(response).to(have_http_status(:forbidden))
+
+      # PUT link edit page
+      put link_path(link), params: data
+
+      # Expect to be forbidden
+      expect(response).to(have_http_status(:forbidden))
+    end
   end
 end
