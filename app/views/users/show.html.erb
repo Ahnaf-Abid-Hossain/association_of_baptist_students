@@ -7,6 +7,7 @@
     <%= button_to "Back to Directory", users_path, method: :get %>
     <% if current_user.email == @user.email %>
       | <%= button_to "Edit Profile", edit_user_path(@user), method: :get %>
+      | <%= button_to "Privacy Settings", privacy_settings_user_path(@user), method: :get %>
       | <%= button_to "Delete Your Profile", @user, method: :delete, form: { data: { turbo_confirm: "Are you sure you want to delete your profile?" } } %>
     <% end %>
   </div>
