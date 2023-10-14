@@ -2,6 +2,20 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
   before_action :force_new_user, only: %i[index show edit]
 
+  def approve
+    @alumni = User.find(params[:id])
+    @alumni.update(user_status: 'approved')
+    redirect_to alumni_approval_path, notice: 'Alumni approved successfully.'
+  end
+
+  def decline
+    @alumni = User.find(params[:id])
+    @alumni.update(alum_status: 'declined')
+    redirect_to alumni_approval_path, notice: 'Alumni declined successfully.'
+  end
+
+
+
   # GET /users or /users.json
   def index
     @users = User.all
