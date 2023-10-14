@@ -82,6 +82,27 @@ RSpec.describe('Quick Links') do
       # Expect to be forbidden
       expect(response).to(have_http_status(:forbidden))
     end
+
+    it 'handles bad link creations' do
+      # Promote ourself to admin
+      admin = FactoryBot.create(:admin_user)
+      sign_in admin
+
+      # Create (bad) link data
+      data = {
+        link: {
+          label: 'Test',
+          url: 'https://test.com',
+          order: -8
+        }
+      }
+
+      # POST link create page
+      post links_path, params: data
+
+      # Expect to be OK
+      expect(response).to(have_http_status(:unprocessable_entity))
+    end
   end
 
   context 'deleting links' do
@@ -171,9 +192,56 @@ RSpec.describe('Quick Links') do
       expect(link.url).to(eq('http://silly.gov'))
     end
 
-    pending 'allows admins to actually edit links title'
+    it 'allows admins to actually edit links label' do
+      # Promote ourself to admin
+      admin = FactoryBot.create(:admin_user)
+      sign_in admin
+
+      # Create link to edit
+      link = Link.create!(label: 'Test', url: 'https://test.com', order: 800_000)
+
+      # Create edit data
+      data = {
+        link: {
+          label: 'Hello'
+        }
+      }
+
+      # PATCH link edit page
+      patch link_path(link), params: data
+
+      # Expect to be OK
+      expect(response).to(have_http_status(:found))
+      
+      # Expect link to now have label Hello
+      link = Link.find(link.id)
+      expect(link).to_not(be(nil))
+      expect(link.label).to(eq('Hello'))
+    end
 
     pending 'allows admins to actually edit links order'
+
+    it 'handles bad link edits' do
+      # Promote ourself to admin
+      admin = FactoryBot.create(:admin_user)
+      sign_in admin
+
+      # Create link to edit
+      link = Link.create!(label: 'Test', url: 'https://test.com', order: 800_000)
+
+      # Create (bad) edit data
+      data = {
+        link: {
+          order: -8
+        }
+      }
+
+      # PATCH link edit page
+      patch link_path(link), params: data
+
+      # Expect to be OK
+      expect(response).to(have_http_status(:unprocessable_entity))
+    end
 
     it 'prevents non-admins from actually editing links' do
       # Create link to edit
