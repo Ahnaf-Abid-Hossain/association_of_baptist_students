@@ -51,17 +51,22 @@ RSpec.describe('Quick Links') do
       admin = FactoryBot.create(:admin_user)
       sign_in admin
 
-      # POST to links page
-      post '/links', params: {
-        link: {
-          label: 'Test',
-          url: 'https://test.com',
-          order: 800_000
-        }
-      }
+      # Ensure we actually created one Link
+      expect {
 
-      # Expect to be able to create link
-      expect(response).to(have_http_status(:found))
+        # POST to links page
+        post '/links', params: {
+          link: {
+            label: 'Test',
+            url: 'https://test.com',
+            order: 800_000
+          }
+        }
+    
+        # Expect to be able to create link
+        expect(response).to(have_http_status(:found))
+
+      }.to change(Link, :count).by(1)
     end
 
     it 'prevents non-admins from creating links' do
@@ -84,15 +89,20 @@ RSpec.describe('Quick Links') do
       # Promote ourself to admin
       admin = FactoryBot.create(:admin_user)
       sign_in admin
-
+  
       # Create link to delete
       link = Link.create!(label: 'Test', url: 'https://test.com', order: 800_000)
-
-      # DELETE to link
-      delete link_path(link)
-
-      # Expect to be forbidden
-      expect(response).to(have_http_status(:found))
+  
+      # Ensure that deletion does remove one Link
+      expect {
+  
+        # DELETE to link
+        delete link_path(link)
+  
+        # Expect to be accepted
+        expect(response).to(have_http_status(:found))
+  
+      }.to change(Link, :count).by(-1)
     end
 
     it 'prevents non-admins from deleting links' do
@@ -108,7 +118,21 @@ RSpec.describe('Quick Links') do
   end
 
   context 'editing links' do
-    pending 'allows admins to try to edit links'
+    it 'allows admins to try to edit links' do
+      # Promote ourself to admin
+      admin = FactoryBot.create(:admin_user)
+      sign_in admin
+
+      # Create link to edit
+      link = Link.create!(label: 'Test', url: 'https://test.com', order: 800_000)
+
+      # GET link edit page
+      get edit_link_path(link)
+
+      # Expect to be allowed into the edit page
+      expect(response).to(have_http_status(:ok))
+    end
+
     it 'prevents non-admins from trying to edit links' do
       # Create link to edit
       link = Link.create!(label: 'Test', url: 'https://test.com', order: 800_000)
@@ -120,10 +144,37 @@ RSpec.describe('Quick Links') do
       expect(response).to(redirect_to('/'))
     end
 
-    pending 'allows admins to actually edit links'
-    pending 'allows admins to actually edit links url'
+    it 'allows admins to actually edit links url' do
+      # Promote ourself to admin
+      admin = FactoryBot.create(:admin_user)
+      sign_in admin
+
+      # Create link to edit
+      link = Link.create!(label: 'Test', url: 'https://test.com', order: 800_000)
+
+      # Create edit data
+      data = {
+        link: {
+          url: 'http://silly.gov'
+        }
+      }
+
+      # PATCH link edit page
+      patch link_path(link), params: data
+
+      # Expect to be OK
+      expect(response).to(have_http_status(:found))
+      
+      # Expect link to now have URL silly.gov
+      link = Link.find(link.id)
+      expect(link).to_not(be(nil))
+      expect(link.url).to(eq('http://silly.gov'))
+    end
+
     pending 'allows admins to actually edit links title'
+
     pending 'allows admins to actually edit links order'
+
     it 'prevents non-admins from actually editing links' do
       # Create link to edit
       link = Link.create!(label: 'Test', url: 'https://test.com', order: 800_000)
