@@ -32,7 +32,7 @@ Rails.application.routes.draw do
   end
 
   resources :users do
-    get 'privacy_settings', on: :member
+    get '/privacy_settings', on: :member, to: 'users#privacy_settings'
   end
 
 end
