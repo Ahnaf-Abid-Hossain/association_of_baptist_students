@@ -1,0 +1,40 @@
+<%= form_for @user do |form| %>
+  <% if user.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <h2>Privacy Settings</h2>
+  <div style="display: flex;" class="privacy-settings">
+    <div style="flex: 1; padding: 10px;" class="left-column">
+      <p><strong>Field Name</strong></p>
+      <p>Contact Email</p>
+      <p>Phone Number</p>
+      <p>Class Year</p>
+      <p>Job Field</p>
+      <p>Location</p>
+      <p>Status</p>
+      <p>Major</p>
+    </div>
+
+    <div style="flex: 1; padding: 10px;" class="right-column">
+      <p><strong>Do you want this field to be private?</strong></p>
+      <p><%= form.check_box :is_contact_email_private %></p>
+      <p><%= form.check_box :is_ph_num_private %></p>
+      <p><%= form.check_box :is_class_year_private %></p>
+      <p><%= form.check_box :is_job_field_private %></p>
+      <p><%= form.check_box :is_location_private %></p>
+      <p><%= form.check_box :is_status_private %></p>
+      <p><%= form.check_box :is_major_private %></p>
+    </div>
+  </div>
+
+  <%= form.submit "Save Privacy Settings", class: "btn btn-primary" %>
+<% end %>

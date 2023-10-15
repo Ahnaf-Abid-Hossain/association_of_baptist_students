@@ -1,12 +1,30 @@
 <div id="<%= dom_id user %>">
 <h1></h1>
   <p>
-
     <strong>Name:</strong> <%= user.user_first_name %> <%= user.user_last_name %> <br>
-    <strong>Email:</strong> <%= user.user_contact_email %> <br>
-    <strong>Phone Number:</strong> <%= user.user_ph_num %> <br>
-    <strong>Class Year:</strong> <%= user.user_class_year %> <br>
-    <strong>Major:</strong> <%= user.user_major %> <br>
-    <strong>Current Job:</strong> <%= user.user_job_field %> <br>
-    <strong>Current City:</strong> <%= user.user_location %> <br>
+    <% unless user.is_contact_email_private %>
+      <strong>Contact Email:</strong> <%= user.user_contact_email %> <br>
+    <% end %>
+
+    <% unless user.is_ph_num_private %>
+      <strong>Phone Number:</strong> <%= user.user_ph_num %> <br>
+    <% end %>
+
+    <% unless user.is_class_year_private %>
+      <strong>Class Year:</strong> <%= user.user_class_year %> <br>
+    <% end %>
+
+    <% unless user.is_major_private %>
+      <strong>Major:</strong> <%= user.user_major %> <br>
+    <% end %>
+
+    <% unless user.is_job_field_private %>
+      <strong>Current Job:</strong> <%= user.user_job_field %> <br>
+    <% end %>
+
+    <% unless user.is_location_private %>
+      <strong>Current City:</strong> <%= user.user_location %> <br>
+    <% end %>
+
+  </p>
 </div>
