@@ -9,7 +9,7 @@ RSpec.describe('Private Fields') do
     it 'displays the user contact email' do
       # create users
       user = FactoryBot.create(:user)
-      user2 = FactoryBot.create(:user)
+      user2 = FactoryBot.create(:user2)
 
       # Sign in as user2
       sign_in user2
