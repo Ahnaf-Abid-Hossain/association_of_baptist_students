@@ -14,9 +14,10 @@
   <% end %>
 
   <br>
-  <%= link_to "New Meeting Note", new_user_meeting_note_path(@user) %>
-  <br>
-  <%= link_to "View Meeting Notes", user_meeting_notes_path(@user) %>
+  <% if current_user && current_user.is_admin? %>
+    <%= link_to "New Meeting Note", new_user_meeting_note_path(@user) %>
+    <br>
+    <%= link_to "View Meeting Notes", user_meeting_notes_path(@user) %>
 
 
   <h2>Meeting Notes for <%= @user.user_first_name %></h2>
@@ -29,4 +30,5 @@
       </li>
     <% end %>
   </ul>
+  <%end%>
 </div>
