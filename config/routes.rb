@@ -21,11 +21,16 @@ Rails.application.routes.draw do
 
   resources :users do
     resources :meeting_notes
+    member do
+      patch 'approve'
+      patch 'decline'
+    end
   end
 
   resources :users
   get '/search', to: 'users#temp_search', as: :search_user
-  
+  get '/basic_search', to: 'users#basic_search', as: :basic_search_user
+
   resources :users do
     get '/profile', on: :member, to: 'users#profile'
   end
