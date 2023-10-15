@@ -1,12 +1,48 @@
 <div id="<%= dom_id user %>">
-<h1></h1>
-  <p>
+<body>
+<div class="wrapper">
+<main role = "main" id = "contentarea" class = "content">
+<div class ="floating-box--wide">
+<div class="floating-form">
+<div class="result-listing">
 
-    <strong>Name:</strong> <%= user.user_first_name %> <%= user.user_last_name %> <br>
-    <strong>Email:</strong> <%= user.user_contact_email %> <br>
-    <strong>Phone Number:</strong> <%= user.user_ph_num %> <br>
-    <strong>Class Year:</strong> <%= user.user_class_year %> <br>
-    <strong>Major:</strong> <%= user.user_major %> <br>
-    <strong>Current Job:</strong> <%= user.user_job_field %> <br>
-    <strong>Current City:</strong> <%= user.user_location %> <br>
+
+    <h2> <%= user.user_first_name %> <%= user.user_last_name %> </h2> <br>
+    <div class="result-listing__details">
+    <div class="contact-info">
+
+    <p>
+            
+            
+          <a href="mailto:<%= user.user_contact_email %> "><%= user.user_contact_email %> </a><br>
+      
+      
+      
+    </p>
+    </div>
+        
+    <div class="additional-info">
+
+    <ul class = "no-bullets">
+
+            <li><h3 class="identification-title">Phone Number</h3> <%= user.user_ph_num %></li>
+        
+        
+            <li><h3 class="identification-title">Class Year</h3><%= user.user_class_year %></li>
+            <li><h3 class="identification-title">Major</h3> <%= user.user_major %></li>
+        
+        
+            <li><h3 class="identification-title">Current Job</h3><%= user.user_job_field %></li>
+            <li><h3 class="identification-title">Current City</h3> <%= user.user_location %></li>
+
+        </ul>
+
 </div>
+
+
+
+
+</div>
+</main>
+</div>
+</body>
