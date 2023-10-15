@@ -4,14 +4,14 @@ class UsersController < ApplicationController
 
   def approve
     @alumni = User.find(params[:id])
-    @alumni.update(user_status: 'approved')
-    redirect_to alumni_approval_path, notice: 'Alumni approved successfully.'
+    @alumni.update(approval_status: 1)
+    redirect_to users_path, notice: 'Alumni approved successfully.'
   end
 
   def decline
     @alumni = User.find(params[:id])
-    @alumni.update(alum_status: 'declined')
-    redirect_to alumni_approval_path, notice: 'Alumni declined successfully.'
+    @alumni.update(approval_status: -1)
+    redirect_to users_path, notice: 'Alumni declined successfully.'
   end
 
 
