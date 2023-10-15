@@ -21,6 +21,10 @@ Rails.application.routes.draw do
 
   resources :users do
     resources :meeting_notes
+    member do
+      patch 'approve'
+      patch 'decline'
+    end
   end
 
   resources :users

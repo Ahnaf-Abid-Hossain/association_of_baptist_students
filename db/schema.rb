@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_14_195232) do
+
+ActiveRecord::Schema[7.0].define(version: 2023_10_15_002449) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -84,6 +85,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_14_195232) do
     t.boolean "is_location_private", default: false
     t.boolean "is_status_private", default: false
     t.boolean "is_major_private", default: false
+    t.integer "approval_status", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

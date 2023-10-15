@@ -2,6 +2,20 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
   before_action :force_new_user, only: %i[index show edit]
 
+  def approve
+    @alumni = User.find(params[:id])
+    @alumni.update(approval_status: 1)
+    redirect_to users_path, notice: 'Alumni approved successfully.'
+  end
+
+  def decline
+    @alumni = User.find(params[:id])
+    @alumni.update(approval_status: -1)
+    redirect_to users_path, notice: 'Alumni declined successfully.'
+  end
+
+
+
   # GET /users or /users.json
   def index
     @users = User.all
@@ -25,7 +39,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     # @user.user = current_user
-
+    #@user.approval_status = 3
     respond_to do |format|
       if @user.save
         format.html { redirect_to(user_url(@user), notice: 'user was successfully created.') }
@@ -122,7 +136,7 @@ class UsersController < ApplicationController
   # Only allow a list of trusted parameters through.
   def user_params
     params.require(:user).permit(:user_first_name, :user_last_name, :user_contact_email, :user_ph_num, :user_class_year, :user_job_field,
-                                 :user_location, :user_status, :user_major, :is_contact_email_private, :is_ph_num_private, :is_class_year_private, :is_job_field_private, :is_location_private, :is_status_private, :is_major_private
+                                 :user_location, :user_status, :user_major, :is_contact_email_private, :is_ph_num_private, :is_class_year_private, :is_job_field_private, :is_location_private, :is_status_private, :is_major_private, :approval_status
     )
   end
 

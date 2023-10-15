@@ -2,6 +2,13 @@
 <ul>
   <% @non_admins.each do |alumni| %>
     <li><%= alumni.user_first_name %></li>
+    <li>
+      <strong>Name:</strong> <%= alumni.user_first_name %> <%= alumni.user_last_name %>
+      <br>
+      <strong>Status:</strong> <%= alumni.user_status %>
+      <%= button_to "Approve", approve_user_path(alumni), method: :patch, class: 'btn btn-success' %>
+      <%= button_to "Decline", decline_user_path(alumni), method: :patch, class: 'btn btn-danger' %>
+    </li>
     <!-- Display other alumni information as needed -->
   <% end %>
 </ul>
