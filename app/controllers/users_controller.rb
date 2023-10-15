@@ -74,6 +74,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def privacy_settings
+    @user = User.find(params[:id])
+    # You can add code here to handle displaying and updating privacy settings
+  end
+
   def basic_search
     @search_name = params[:search_name]
     @first_name = nil
@@ -89,9 +94,9 @@ class UsersController < ApplicationController
 
     @results = if @search_name.present?
                   if @search_name.include?(' ')
-                    User.where('user_first_name ILIKE ? AND user_last_name ILIKE ?', "%#{@first_name}%", "%#{@last_name}%")
+                    User.where('user_first_name ILIKE ? AND user_last_name ILIKE ? AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%")
                   else
-                    User.where('user_first_name ILIKE ? OR user_last_name ILIKE ?', "%#{@first_name}%", "%#{@last_name}%")
+                    User.where('user_first_name ILIKE ? OR user_last_name ILIKE ? AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%")
                   end
                else
                   result = []
@@ -111,9 +116,9 @@ class UsersController < ApplicationController
 
     @results = if @first_name.present? || @last_name.present? || @class_year.present? || @major.present? || @current_city.present?
                   if @class_year.present?
-                    User.where('user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_class_year = ? AND user_major ILIKE ? AND user_location ILIKE ?', "%#{@first_name}%", "%#{@last_name}%", @class_year.to_i, "%#{@major}%", "%#{@current_city}%")
+                    User.where('user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_class_year = ? AND user_major ILIKE ? AND user_location ILIKE ? AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%", @class_year.to_i, "%#{@major}%", "%#{@current_city}%")
                   else
-                    User.where('user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_major ILIKE ? AND user_location ILIKE ?', "%#{@first_name}%", "%#{@last_name}%", "%#{@major}%", "%#{@current_city}%")
+                    User.where('user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_major ILIKE ? AND user_location ILIKE ? AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%", "%#{@major}%", "%#{@current_city}%")
                   end
                else
                  []
@@ -130,8 +135,23 @@ class UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(:user_first_name, :user_last_name, :user_contact_email, :user_ph_num, :user_class_year, :user_job_field,
-                                 :user_location, :user_status, :user_major, :approval_status
+    params.require(:user).permit(:user_first_name, 
+                                 :user_last_name, 
+                                 :user_contact_email, 
+                                 :user_ph_num, 
+                                 :user_class_year, 
+                                 :user_job_field,
+                                 :user_location, 
+                                 :user_status, 
+                                 :user_major, 
+                                 :is_contact_email_private, 
+                                 :is_ph_num_private, 
+                                 :is_class_year_private, 
+                                 :is_job_field_private, 
+                                 :is_location_private, 
+                                 :is_status_private, 
+                                 :is_major_private, 
+                                 :approval_status
     )
   end
 

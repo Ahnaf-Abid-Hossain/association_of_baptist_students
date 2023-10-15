@@ -34,4 +34,9 @@ Rails.application.routes.draw do
   resources :users do
     get '/profile', on: :member, to: 'users#profile'
   end
+
+  resources :users do
+    get '/privacy_settings', on: :member, to: 'users#privacy_settings'
+  end
+
 end

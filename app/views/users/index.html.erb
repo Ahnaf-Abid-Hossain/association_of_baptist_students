@@ -1,5 +1,3 @@
-<p style="color: green"><%= notice %></p>
-
 <h1>Association of Baptist Student's Alumni Directory</h1>
 
 
@@ -13,7 +11,8 @@
 <!--<hr style="border: none; background-color: maroon; height: 3px; width: 25%; margin-left: 0;">-->
 
 <div id="users">
-  <% sorted_users = @users.sort_by { |user| user.user_last_name} %>
+  <% approved_users = @users.select { |user| user.approval_status == 1 } %>
+  <% sorted_users = approved_users.sort_by { |user| user.user_last_name} %>
   <% sorted_users.each_with_index do |user, index| %>
     <div class=user-item">
       <p>

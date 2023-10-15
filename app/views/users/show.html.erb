@@ -1,14 +1,17 @@
-
-<p style="color: green"><%= notice %></p>
-
+>
+=======
 <%= render @user %>
 
 <div>
+  <div class="button-group" style="display: flex; gap: 5px;">
+    <%= button_to "Back to Directory", users_path, method: :get %>
+    <% if current_user.email == @user.email %>
+      | <%= button_to "Edit Profile", edit_user_path(@user), method: :get %>
+      | <%= button_to "Privacy Settings", privacy_settings_user_path(@user), method: :get %>
+      | <%= button_to "Delete Your Profile", @user, method: :delete, form: { data: { turbo_confirm: "Are you sure you want to delete your profile?" } } %>
+    <% end %>
+  </div>
 
-
-  <% if current_user.email == @user.email %>
-    | <%= link_to "Edit your profile", edit_user_path(@user), class: "custom-link"%>
-  <% end %>
   <% if current_user && current_user.is_admin? %>
 
     <%= link_to "Edit this user", edit_user_path(@user) , class: "custom-link"%>
