@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe('Advanced Search') do
+RSpec.describe('Private Fields') do
   before do
     driven_by(:rack_test)
   end
