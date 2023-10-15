@@ -16,7 +16,7 @@ RSpec.describe('Private Fields') do
 
       # Access the user's profile and check if the contact email is displayed
       visit user_path(user)
-      expect(page).to have_content(user.contact_email)
+      expect(page).to have_content(user.user_contact_email)
     end
   end
 
@@ -35,7 +35,7 @@ RSpec.describe('Private Fields') do
 
       # Access the user's profile and check if the contact email is NOT displayed
       #visit user_path(user)
-      #expect(page).not_to have_content(user.contact_email)
+      #expect(page).not_to have_content(user.user_contact_email)
     #end
   #end
 end
