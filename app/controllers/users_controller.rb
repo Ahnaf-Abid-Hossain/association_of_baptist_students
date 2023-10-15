@@ -39,7 +39,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     # @user.user = current_user
-
+    #@user.approval_status = 3
     respond_to do |format|
       if @user.save
         format.html { redirect_to(user_url(@user), notice: 'user was successfully created.') }
@@ -131,7 +131,7 @@ class UsersController < ApplicationController
   # Only allow a list of trusted parameters through.
   def user_params
     params.require(:user).permit(:user_first_name, :user_last_name, :user_contact_email, :user_ph_num, :user_class_year, :user_job_field,
-                                 :user_location, :user_status, :user_major
+                                 :user_location, :user_status, :user_major, :approval_status
     )
   end
 
