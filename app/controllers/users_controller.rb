@@ -94,9 +94,9 @@ class UsersController < ApplicationController
 
     @results = if @search_name.present?
                   if @search_name.include?(' ')
-                    User.where('user_first_name ILIKE ? AND user_last_name ILIKE ?', "%#{@first_name}%", "%#{@last_name}%")
+                    User.where('user_first_name ILIKE ? AND user_last_name ILIKE ? AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%")
                   else
-                    User.where('user_first_name ILIKE ? OR user_last_name ILIKE ?', "%#{@first_name}%", "%#{@last_name}%")
+                    User.where('user_first_name ILIKE ? OR user_last_name ILIKE ? AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%")
                   end
                else
                   result = []
@@ -116,9 +116,9 @@ class UsersController < ApplicationController
 
     @results = if @first_name.present? || @last_name.present? || @class_year.present? || @major.present? || @current_city.present?
                   if @class_year.present?
-                    User.where('user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_class_year = ? AND user_major ILIKE ? AND user_location ILIKE ?', "%#{@first_name}%", "%#{@last_name}%", @class_year.to_i, "%#{@major}%", "%#{@current_city}%")
+                    User.where('user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_class_year = ? AND user_major ILIKE ? AND user_location ILIKE ? AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%", @class_year.to_i, "%#{@major}%", "%#{@current_city}%")
                   else
-                    User.where('user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_major ILIKE ? AND user_location ILIKE ?', "%#{@first_name}%", "%#{@last_name}%", "%#{@major}%", "%#{@current_city}%")
+                    User.where('user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_major ILIKE ? AND user_location ILIKE ? AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%", "%#{@major}%", "%#{@current_city}%")
                   end
                else
                  []
