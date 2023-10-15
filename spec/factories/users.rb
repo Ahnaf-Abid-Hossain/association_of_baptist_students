@@ -32,21 +32,4 @@ FactoryBot.define do
       user_major { 'Computer Science' }
     end
   end
-
-  factory :user2, class: 'User' do
-    email { 'test2@gmail.com' }
-    uid { '00001' }
-    full_name { 'Test2 User2' }
-    avatar_url { '/' }
-    is_admin { false }
-    user_first_name { 'Test2' }
-    user_last_name { 'User2' }
-    user_contact_email { 'test2@gmail.com' }
-    user_ph_num { '123-456-7890' }
-    user_class_year { 2024 }
-    user_job_field { 'testjob2' }
-    user_location { 'city2' }
-    user_status { 'alumni' }
-    user_major { 'Computer Engineering' }
-  end
 end
