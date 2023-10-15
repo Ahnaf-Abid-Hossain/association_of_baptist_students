@@ -39,5 +39,3 @@ RSpec.describe('Advanced Search') do
     #end
   #end
 end
-
-end
