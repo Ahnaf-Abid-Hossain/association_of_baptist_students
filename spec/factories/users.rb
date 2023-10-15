@@ -10,7 +10,7 @@ FactoryBot.define do
     user_contact_email { 'test@gmail.com' }
     user_ph_num { '123-456-7890' }
     user_class_year { 24 }
-    user_job_field { 'test' }
+    user_job_field { 'testjob' }
     user_location { 'city' }
     user_status { 'alumni' }
     user_major { 'Computer Science' }
@@ -26,7 +26,7 @@ FactoryBot.define do
       user_contact_email { 'test@gmail.com' }
       user_ph_num { '123-456-7890' }
       user_class_year { 2024 }
-      user_job_field { 'test' }
+      user_job_field { 'test_job_admin' }
       user_location { 'city' }
       user_status { 'alumni' }
       user_major { 'Computer Science' }
@@ -44,7 +44,7 @@ FactoryBot.define do
     user_contact_email { 'test2@gmail.com' }
     user_ph_num { '123-456-7890' }
     user_class_year { 2024 }
-    user_job_field { 'test2' }
+    user_job_field { 'testjob2' }
     user_location { 'city2' }
     user_status { 'alumni' }
     user_major { 'Computer Engineering' }
