@@ -5,9 +5,8 @@
   <%= submit_tag('Search', class: 'btn btn-primary') %>
   </div>
 <% end %>
-
+<%= link_to "Advanced Search", search_user_path %>
 <%= button_to "Back to Directory", users_path, method: :get %><br>
-<br>
 
 <% if @results %>
   <% if @results.empty? %>
