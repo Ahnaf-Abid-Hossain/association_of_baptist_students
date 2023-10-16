@@ -1,16 +1,18 @@
 <h1>Association of Baptist Student's Alumni Directory</h1>
 
 
-    <%= form_tag(basic_search_user_path, method: :get, class: 'form-inline') do %>
-      <div class="form-group">
-        <%= text_field_tag(:search_name, params[:search_name], class: 'form-control', placeholder: 'Enter Alumni Name') %>
-        <%= submit_tag('Search', class: 'btn btn-primary') %>
-        </div>
-    <% end %>
+<%= form_tag(basic_search_user_path, method: :get, class: 'form-inline') do %>
+  <div class="form-group">
+    <%= text_field_tag(:search_name, params[:search_name], class: 'form-control', placeholder: 'Enter Alumni Name') %>
+    <%= submit_tag('Search', class: 'btn btn-primary') %>
+    </div>
+<% end %>
+
 <%= link_to "Advanced Search", search_user_path %>
-<!--<hr style="border: none; background-color: maroon; height: 3px; width: 25%; margin-left: 0;">-->
+
 <br>
 <br>
+
 <div id="users">
   <% approved_users = @users.select { |user| user.approval_status == 1 } %>
   <% sorted_users = approved_users.sort_by { |user| user.user_last_name} %>
@@ -26,6 +28,9 @@
     <% end %>
   <% end %>
 </div>
+
+<br>
+
 <% if current_user && current_user.is_admin? %>
   <%= link_to "New user", new_user_path %>
 <% end %>
