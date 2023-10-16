@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   get '/search', to: 'users#temp_search', as: :search_user
   get '/basic_search', to: 'users#basic_search', as: :basic_search_user
 
+  
   resources :users do
     get '/profile', on: :member, to: 'users#profile'
   end
@@ -39,8 +40,13 @@ Rails.application.routes.draw do
     get '/privacy_settings', on: :member, to: 'users#privacy_settings'
   end
 
+  resources :meeting_notes
+  get '/search_meeting', to: 'meeting_notes#basic_search', as: :basic_search_meeting_note
+
+
   resources :users
   get '/account_created', to: 'users#account_created'
   
+
 
 end

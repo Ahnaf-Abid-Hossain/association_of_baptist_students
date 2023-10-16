@@ -10,6 +10,8 @@ class MeetingNotesController < ApplicationController
     end
   end  
 
+  
+
   def account_created
     render 'account_created'
   end
@@ -69,6 +71,14 @@ class MeetingNotesController < ApplicationController
     end
   end
 
+  def search_meeting
+    if params[:search_date]
+      @meeting_notes2 = MeetingNote.where(date: Date.parse(params[:search_date]))
+    else
+      @meeting_notes2 = MeetingNote.all
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -80,4 +90,7 @@ class MeetingNotesController < ApplicationController
   def meeting_note_params
     params.require(:meeting_note).permit(:title, :content, :date, :id)
   end
+
+
 end
+
