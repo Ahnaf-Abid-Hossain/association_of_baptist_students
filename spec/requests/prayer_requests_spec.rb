@@ -203,7 +203,7 @@ RSpec.describe('/prayer_requests') do
           post(prayer_requests_url, params: { prayer_request: prayer_request.attributes })
         end.to(change(PrayerRequest, :count).by(1))
         latest_prayer_request = PrayerRequest.last
-        expect(latest_prayer_request.user).to eq(@admin)
+        expect(latest_prayer_request.user).to(eq(@admin))
       end
     end
 
@@ -215,7 +215,7 @@ RSpec.describe('/prayer_requests') do
           post(prayer_requests_url, params: { prayer_request: prayer_request.attributes })
         end.to(change(PrayerRequest, :count).by(1))
         latest_prayer_request = PrayerRequest.last
-        expect(latest_prayer_request.user).to eq(@user1)
+        expect(latest_prayer_request.user).to(eq(@user1))
       end
     end
   end

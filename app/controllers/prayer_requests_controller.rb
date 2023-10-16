@@ -85,11 +85,7 @@ class PrayerRequestsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def prayer_request_params_create
-    if current_user.is_admin?
-      params.require(:prayer_request).permit(:request, :is_anonymous)
-    else
-      params.require(:prayer_request).permit(:request, :is_anonymous)
-    end
+    params.require(:prayer_request).permit(:request, :is_anonymous)
   end
 
   def prayer_request_params_update
