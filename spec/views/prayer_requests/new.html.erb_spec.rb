@@ -12,7 +12,7 @@ RSpec.describe('prayer_requests/new') do
   end
 
   context 'admin creating their own prayer request' do
-    it 'renders the edit prayer_request form' do
+    it 'renders the create prayer_request form' do
       sign_in @admin
       prayer_request = PrayerRequest.new
       assign(:prayer_request, prayer_request)
@@ -30,7 +30,7 @@ RSpec.describe('prayer_requests/new') do
   end
 
   context 'user creating their own prayer request' do
-    it 'renders the edit prayer_request form' do
+    it 'renders the create prayer_request form' do
       sign_in @user1
       prayer_request = PrayerRequest.new
       assign(:prayer_request, prayer_request)
