@@ -15,11 +15,11 @@ RSpec.describe('Advanced Search') do
     visit '/search'
 
     # fill in data
-    fill_in "First Name:", with: "Test"
-    click_button "Search"
+    fill_in 'First Name:', with: 'Test'
+    click_button 'Search'
 
     # Expect User Bar to contain user's full name
-    expect(page).to have_content("Test User")
+    expect(page).to(have_content('Test User'))
   end
 
   # Last Name search test
@@ -32,11 +32,11 @@ RSpec.describe('Advanced Search') do
     visit '/search'
 
     # fill in data
-    fill_in "Last Name:", with: "User"
-    click_button "Search"
+    fill_in 'Last Name:', with: 'User'
+    click_button 'Search'
 
     # Expect User Bar to contain user's full name
-    expect(page).to have_content("Test User")
+    expect(page).to(have_content('Test User'))
   end
 
   # Class Year search test
@@ -49,11 +49,11 @@ RSpec.describe('Advanced Search') do
     visit '/search'
 
     # fill in data
-    fill_in "Class Year:", with: 2024
-    click_button "Search"
+    fill_in 'Class Year:', with: 2024
+    click_button 'Search'
 
     # Expect User Bar to contain user's full name
-    expect(page).to have_content("Test User")
+    expect(page).to(have_content('Test User'))
   end
 
   # Major search test
@@ -66,11 +66,11 @@ RSpec.describe('Advanced Search') do
     visit '/search'
 
     # fill in data
-    fill_in "Major:", with: "Computer Science"
-    click_button "Search"
+    fill_in 'Major:', with: 'Computer Science'
+    click_button 'Search'
 
     # Expect User Bar to contain user's full name
-    expect(page).to have_content("Test User")
+    expect(page).to(have_content('Test User'))
   end
 
   # Current city search test
@@ -83,10 +83,10 @@ RSpec.describe('Advanced Search') do
     visit '/search'
 
     # fill in data
-    fill_in "First Name:", with: "city"
-    click_button "Search"
+    fill_in 'First Name:', with: 'city'
+    click_button 'Search'
 
     # Expect User Bar to contain user's full name
-    expect(page).to have_content("Test User")
+    expect(page).to(have_content('Test User'))
   end
 end

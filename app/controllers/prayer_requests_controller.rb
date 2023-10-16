@@ -13,7 +13,10 @@ class PrayerRequestsController < ApplicationController
 
   # GET /prayer_requests/1 or /prayer_requests/1.json
   def show
-    authorize_prayer_request(@prayer_request)
+    prayer_request_id = params[:id]
+    if !current_user.is_admin? && PrayerRequest.find(prayer_request_id).user_id != current_user.id
+      redirect_to(prayer_requests_path, alert: 'You are not authorized to perform this action. LOL')
+    end
   end
 
   # GET /prayer_requests/new
@@ -23,7 +26,10 @@ class PrayerRequestsController < ApplicationController
 
   # GET /prayer_requests/1/edit
   def edit
-    authorize_prayer_request(@prayer_request)
+    prayer_request_id = params[:id]
+    if !current_user.is_admin? && PrayerRequest.find(prayer_request_id).user_id != current_user.id
+      redirect_to(prayer_requests_path, alert: 'You are not authorized to perform this action.')
+    end
   end
 
   # POST /prayer_requests or /prayer_requests.json
@@ -45,9 +51,8 @@ class PrayerRequestsController < ApplicationController
 
   # PATCH/PUT /prayer_requests/1 or /prayer_requests/1.json
   def update
-    authorize_prayer_request(@prayer_request)
     respond_to do |format|
-      if @prayer_request.update(prayer_request_params)
+      if (current_user.is_admin? || @prayer_request.user_id == current_user.id) && @prayer_request.update(prayer_request_params)
         format.html { redirect_to(prayer_request_url(@prayer_request), notice: 'Prayer request was successfully updated.') }
         format.json { render(:show, status: :ok, location: @prayer_request) }
       else
@@ -59,12 +64,15 @@ class PrayerRequestsController < ApplicationController
 
   # DELETE /prayer_requests/1 or /prayer_requests/1.json
   def destroy
-    authorize_prayer_request(@prayer_request)
-    @prayer_request.destroy!
+    if current_user.is_admin? || @prayer_request.user_id == current_user.id
+      @prayer_request.destroy!
 
-    respond_to do |format|
-      format.html { redirect_to(prayer_requests_url, notice: 'Prayer request was successfully destroyed.') }
-      format.json { head(:no_content) }
+      respond_to do |format|
+        format.html { redirect_to(prayer_requests_url, notice: 'Prayer request was successfully destroyed.') }
+        format.json { head(:no_content) }
+      end
+    else
+      redirect_to(prayer_requests_path, alert: 'You are not authorized to perform this action.')
     end
   end
 
@@ -82,11 +90,5 @@ class PrayerRequestsController < ApplicationController
     else
       params.require(:prayer_request).permit(:request)
     end
-  end
-
-  def authorize_prayer_request(prayer_request)
-    return if current_user.is_admin?
-
-    redirect_to(prayer_requests_path, alert: 'You are not authorized to perform this action.') unless prayer_request.user_id == current_user.id
   end
 end
