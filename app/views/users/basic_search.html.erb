@@ -6,9 +6,7 @@
   </div>
 <% end %>
 
-<br>
-<%= link_to "Back to Directory", users_path %>
-<br>
+<%= button_to "Back to Directory", users_path, method: :get %><br>
 <br>
 
 <% if @results %>
