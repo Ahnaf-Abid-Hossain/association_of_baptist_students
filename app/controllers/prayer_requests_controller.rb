@@ -64,12 +64,15 @@ class PrayerRequestsController < ApplicationController
 
   # DELETE /prayer_requests/1 or /prayer_requests/1.json
   def destroy
-    authorize_prayer_request(@prayer_request)
-    @prayer_request.destroy!
+    if current_user.is_admin? || @prayer_request.user_id == current_user.id
+      @prayer_request.destroy!
 
-    respond_to do |format|
-      format.html { redirect_to(prayer_requests_url, notice: 'Prayer request was successfully destroyed.') }
-      format.json { head(:no_content) }
+      respond_to do |format|
+        format.html { redirect_to(prayer_requests_url, notice: 'Prayer request was successfully destroyed.') }
+        format.json { head(:no_content) }
+      end
+    else
+      redirect_to(prayer_requests_path, alert: 'You are not authorized to perform this action.')
     end
   end
 

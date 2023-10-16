@@ -18,13 +18,6 @@ RSpec.describe "/prayer_requests", type: :request do
   # This should return the minimal set of attributes required to create a valid
   # PrayerRequest. As you add validations to PrayerRequest, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
-
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
 
   before do
     @user1 = FactoryBot.create(:user, email: 'user1@gmail.com')
@@ -232,7 +225,7 @@ RSpec.describe "/prayer_requests", type: :request do
     context "admin with valid parameters self editing" do
       it "updates the requested prayer_request" do
         sign_in @admin
-        prayer_request = FactoryBot.create(:prayer_request)
+        prayer_request = FactoryBot.create(:prayer_request, user: @admin)
         updated_request = "Updated request"
         updated_status = "Read"
         updated_prayer_request = FactoryBot.build(:prayer_request, request: updated_request, status: updated_status)
@@ -246,7 +239,7 @@ RSpec.describe "/prayer_requests", type: :request do
 
       it "redirects to the prayer_request" do
         sign_in @admin
-        prayer_request = FactoryBot.create(:prayer_request)
+        prayer_request = FactoryBot.create(:prayer_request, user: @admin)
         updated_request = "Updated request"
         updated_status = "Read"
         updated_prayer_request = FactoryBot.build(:prayer_request, request: updated_request, status: updated_status)
@@ -261,7 +254,7 @@ RSpec.describe "/prayer_requests", type: :request do
     context "admin with invalid parameters (no request) self editing" do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
         sign_in @admin
-        prayer_request = FactoryBot.create(:prayer_request)
+        prayer_request = FactoryBot.create(:prayer_request, user: @admin)
         updated_request = nil
         updated_status = "Read"
         updated_prayer_request = FactoryBot.build(:prayer_request, request: updated_request, status: updated_status)
@@ -276,7 +269,7 @@ RSpec.describe "/prayer_requests", type: :request do
     context "admin with invalid parameters (no status) self editing" do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
         sign_in @admin
-        prayer_request = FactoryBot.create(:prayer_request)
+        prayer_request = FactoryBot.create(:prayer_request, user: @admin)
         updated_request = "Updated request"
         updated_status = nil
         updated_prayer_request = FactoryBot.build(:prayer_request, request: updated_request, status: updated_status)
@@ -291,7 +284,7 @@ RSpec.describe "/prayer_requests", type: :request do
     context "admin with valid parameters editing user prayer request" do
       it "updates the requested prayer_request" do
         sign_in @user1
-        prayer_request = FactoryBot.create(:prayer_request)
+        prayer_request = FactoryBot.create(:prayer_request, user: @admin)
         sign_in @admin
         updated_request = "Updated request"
         updated_status = "Read"
@@ -306,7 +299,7 @@ RSpec.describe "/prayer_requests", type: :request do
 
       it "redirects to the prayer_request" do
         sign_in @user1
-        prayer_request = FactoryBot.create(:prayer_request)
+        prayer_request = FactoryBot.create(:prayer_request, user: @admin)
         sign_in @admin
         updated_request = "Updated request"
         updated_status = "Read"
@@ -322,7 +315,7 @@ RSpec.describe "/prayer_requests", type: :request do
     context "admin with invalid parameters (no request) editing user prayer request" do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
         sign_in @user1
-        prayer_request = FactoryBot.create(:prayer_request)
+        prayer_request = FactoryBot.create(:prayer_request, user: @admin)
         sign_in @admin
         updated_request = nil
         updated_status = "Read"
@@ -335,10 +328,10 @@ RSpec.describe "/prayer_requests", type: :request do
       end
     end
 
-    context "admin with invalid parameters (no status) self editing user prayer request" do
+    context "admin with invalid parameters (no status) editing user prayer request" do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
         sign_in @user1
-        prayer_request = FactoryBot.create(:prayer_request)
+        prayer_request = FactoryBot.create(:prayer_request, user: @user1)
         sign_in @admin
         updated_request = "Updated request"
         updated_status = nil
@@ -354,73 +347,101 @@ RSpec.describe "/prayer_requests", type: :request do
     context "user with valid parameters self editing" do
       it "updates the requested prayer_request" do
         sign_in @user1
-        prayer_request = FactoryBot.create(:prayer_request)
+        prayer_request = FactoryBot.create(:prayer_request, user: @user1)
+        updated_request = "Updated request"
+        updated_prayer_request = FactoryBot.build(:prayer_request, request: updated_request)
+
+        patch prayer_request_url(prayer_request), params: { prayer_request: updated_prayer_request.attributes }
+        prayer_request.reload
+        sign_in @user1
+
+        expect(prayer_request.request).to eq(updated_request)
+      end
+
+      it "redirects to the prayer_request" do
+        sign_in @user1
+        prayer_request = FactoryBot.create(:prayer_request, user: @user1)
         updated_request = "Updated request"
         updated_prayer_request = FactoryBot.build(:prayer_request, request: updated_request)
 
         patch prayer_request_url(prayer_request), params: { prayer_request: updated_prayer_request.attributes }
         prayer_request.reload
 
-        expect(prayer_request.request).to eq(updated_request)
+        expect(response).to redirect_to(prayer_request_url(prayer_request))
       end
-
-      # it "redirects to the prayer_request" do
-      #   sign_in @user1
-      #   prayer_request = FactoryBot.create(:prayer_request)
-      #   updated_request = "Updated request"
-      #   updated_prayer_request = FactoryBot.build(:prayer_request, request: updated_request)
-
-      #   patch prayer_request_url(prayer_request), params: { prayer_request: updated_prayer_request.attributes }
-      #   prayer_request.reload
-
-      #   expect(response).to redirect_to(prayer_request_url(prayer_request))
-      # end
     end
 
-    # context "user with invalid parameters (no request) self editing user prayer request" do
-    #   it "renders a response with 422 status (i.e. to display the 'edit' template)" do
-    #     sign_in @user1
-    #     prayer_request = FactoryBot.create(:prayer_request)
-    #     updated_request = nil
-    #     updated_status = "not_read"
-    #     updated_prayer_request = FactoryBot.build(:prayer_request, request: updated_request, status: updated_status)
+    context "user with invalid parameters (no request) self editing" do
+      it "renders a response with 422 status (i.e. to display the 'edit' template)" do
+        sign_in @user1
+        prayer_request = FactoryBot.create(:prayer_request, user: @user1)
+        updated_request = nil
+        updated_prayer_request = FactoryBot.build(:prayer_request, request: updated_request)
 
-    #     patch prayer_request_url(prayer_request), params: { prayer_request: updated_prayer_request.attributes }
-    #     prayer_request.reload
+        patch prayer_request_url(prayer_request), params: { prayer_request: updated_prayer_request.attributes }
+        prayer_request.reload
 
-    #     expect(response).to have_http_status(:unprocessable_entity)
-    #   end
-    # end
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
     
-    # context "user attempting to edit other user's prayer request" do
-    #   it "renders a response with 422 status (i.e. to display the 'edit' template)" do
-    #     sign_in @user1
-    #     prayer_request = FactoryBot.create(:prayer_request)
-    #     sign_in @user2
-    #     updated_request = "Updated request"
-    #     updated_status = "not_read"
-    #     updated_prayer_request = FactoryBot.build(:prayer_request, request: updated_request, status: updated_status)
+    context "user attempting to edit other user's prayer request" do
+      it "renders a response with 422 status (i.e. to display the 'edit' template)" do
+        sign_in @user1
+        prayer_request = FactoryBot.create(:prayer_request, user: @user1)
+        sign_in @user2
+        updated_request = "Updated request"
+        updated_prayer_request = FactoryBot.build(:prayer_request, request: updated_request)
 
-    #     patch prayer_request_url(prayer_request), params: { prayer_request: updated_prayer_request.attributes }
-    #     prayer_request.reload
+        patch prayer_request_url(prayer_request), params: { prayer_request: updated_prayer_request.attributes }
+        prayer_request.reload
 
-    #     expect(response).to have_http_status(:unprocessable_entity)
-    #   end
-    # end
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
   end
 
   describe "DELETE /destroy" do
-    it "destroys the requested prayer_request" do
-      prayer_request = PrayerRequest.create! valid_attributes
-      expect {
-        delete prayer_request_url(prayer_request)
-      }.to change(PrayerRequest, :count).by(-1)
+    context "admin destroys their prayer request" do
+      it "successfully destroys" do
+        sign_in @admin
+        prayer_request = FactoryBot.create(:prayer_request, user: @admin)
+        expect {
+          delete prayer_request_url(prayer_request)
+        }.to change(PrayerRequest, :count).by(-1)
+      end
     end
 
-    it "redirects to the prayer_requests list" do
-      prayer_request = PrayerRequest.create! valid_attributes
-      delete prayer_request_url(prayer_request)
-      expect(response).to redirect_to(prayer_requests_url)
+    context "admin destroys a user's prayer request" do
+      it "successfully destroys" do
+        sign_in @user1
+        prayer_request = FactoryBot.create(:prayer_request, user: @user1)
+        sign_in @admin
+        expect {
+          delete prayer_request_url(prayer_request)
+        }.to change(PrayerRequest, :count).by(-1)
+      end
+    end
+
+    context "user destroys their prayer request" do
+      it "successfully destroys" do
+        sign_in @user1
+        prayer_request = FactoryBot.create(:prayer_request, user: @user1)
+        expect {
+          delete prayer_request_url(prayer_request)
+        }.to change(PrayerRequest, :count).by(-1)
+      end
+    end
+
+    context "user destroys another user's prayer request" do
+      it "fails to destroy" do
+        sign_in @user1
+        prayer_request = FactoryBot.create(:prayer_request, user: @user1)
+        sign_in @user2
+        expect {
+          delete prayer_request_url(prayer_request)
+        }.to change(PrayerRequest, :count).by(0)
+      end
     end
   end
 end
