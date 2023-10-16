@@ -27,7 +27,13 @@ body {
   padding-bottom: 15px;
   padding-left: 5px;
   padding-right: 5px;
+  background: #500000;
+  color: #fff;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
+
+
 
 .quick-links {
   align-items: center;
@@ -36,7 +42,7 @@ body {
 }
 
 .quick-links a {
-  color: #888888;
+  color: #fff;
   font-family: sans-serif;
   font-size: 14pt;
   text-decoration: none;
@@ -56,3 +62,7 @@ body {
   margin-bottom: 0;
   margin-left: auto;
 }
+
+
+
+

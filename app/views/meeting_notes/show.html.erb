@@ -1,6 +1,7 @@
 <%= render @meeting_note %>
 
 <div>
+  <%= link_to "Back to Directory", users_path %>
   <%= link_to "Edit this meeting note", edit_meeting_note_path(@meeting_note) %> |
   <%= link_to "Back to meeting notes", meeting_notes_path %>
 
