@@ -161,23 +161,6 @@ RSpec.describe('/prayer_requests') do
       end
     end
 
-    context 'admin with invalid parameters no status' do
-      it 'does not create a new PrayerRequest' do
-        sign_in @admin
-        prayer_request = FactoryBot.build(:invalid_prayer_request_no_status)
-        expect do
-          post(prayer_requests_url, params: { prayer_request: prayer_request.attributes })
-        end.not_to(change(PrayerRequest, :count))
-      end
-
-      it "renders a response with 422 status (i.e. to display the 'new' template)" do
-        sign_in @admin
-        prayer_request = FactoryBot.build(:invalid_prayer_request_no_status)
-        post prayer_requests_url, params: { prayer_request: prayer_request.attributes }
-        expect(response).to(have_http_status(:unprocessable_entity))
-      end
-    end
-
     context 'admin with invalid parameters no request' do
       it 'does not create a new PrayerRequest' do
         sign_in @admin

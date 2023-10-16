@@ -3,6 +3,7 @@ FactoryBot.define do
     request { 'Please pray for me.' }
     status { 'pending' }
     user
+    is_anonymous { true }
 
     factory :invalid_prayer_request_no_request do
       # Invalid because request is required

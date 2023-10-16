@@ -35,8 +35,8 @@ class PrayerRequestsController < ApplicationController
   # POST /prayer_requests or /prayer_requests.json
   def create
     # current_user.user.prayer_requests?
-    @prayer_request = current_user.prayer_requests.build(prayer_request_params)
-    @prayer_request.status = 'not_read' unless current_user.is_admin?
+    @prayer_request = current_user.prayer_requests.build(prayer_request_params_create)
+    @prayer_request.status = 'not_read'
 
     respond_to do |format|
       if @prayer_request.save
@@ -52,7 +52,7 @@ class PrayerRequestsController < ApplicationController
   # PATCH/PUT /prayer_requests/1 or /prayer_requests/1.json
   def update
     respond_to do |format|
-      if (current_user.is_admin? || @prayer_request.user_id == current_user.id) && @prayer_request.update(prayer_request_params)
+      if (current_user.is_admin? || @prayer_request.user_id == current_user.id) && @prayer_request.update(prayer_request_params_update)
         format.html { redirect_to(prayer_request_url(@prayer_request), notice: 'Prayer request was successfully updated.') }
         format.json { render(:show, status: :ok, location: @prayer_request) }
       else
@@ -84,11 +84,19 @@ class PrayerRequestsController < ApplicationController
   end
 
   # Only allow a list of trusted parameters through.
-  def prayer_request_params
+  def prayer_request_params_create
+    if current_user.is_admin?
+      params.require(:prayer_request).permit(:request, :is_anonymous)
+    else
+      params.require(:prayer_request).permit(:request, :is_anonymous)
+    end
+  end
+
+  def prayer_request_params_update
     if current_user.is_admin?
       params.require(:prayer_request).permit(:request, :status)
     else
-      params.require(:prayer_request).permit(:request)
+      params.require(:prayer_request).permit(:request, :is_anonymous)
     end
   end
 end
