@@ -16,7 +16,7 @@
     <%= form.text_field :request %>
   </div>
 
-  <% if current_user.is_admin? %>
+  <% if current_user.is_admin? && !prayer_request.new_record? %>
     <div>
       <%= form.label :status, style: "display: block" %>
       <%= form.text_field :status %>

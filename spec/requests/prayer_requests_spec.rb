@@ -194,6 +194,30 @@ RSpec.describe('/prayer_requests') do
         expect(response).to(have_http_status(:unprocessable_entity))
       end
     end
+
+    context 'admin attempts to create a PrayerRequest for a user' do
+      it 'does not create a new PrayerRequest for the user and instead creates it for the admin' do
+        sign_in @admin
+        prayer_request = FactoryBot.build(:prayer_request, user: @user1)
+        expect do
+          post(prayer_requests_url, params: { prayer_request: prayer_request.attributes })
+        end.to(change(PrayerRequest, :count).by(1))
+        latest_prayer_request = PrayerRequest.last
+        expect(latest_prayer_request.user).to eq(@admin)
+      end
+    end
+
+    context 'user1 attempts to create a PrayerRequest for user2' do
+      it 'does not create a new PrayerRequest for the user2 and instead creates it for user1' do
+        sign_in @user1
+        prayer_request = FactoryBot.build(:prayer_request, user: @user2)
+        expect do
+          post(prayer_requests_url, params: { prayer_request: prayer_request.attributes })
+        end.to(change(PrayerRequest, :count).by(1))
+        latest_prayer_request = PrayerRequest.last
+        expect(latest_prayer_request.user).to eq(@user1)
+      end
+    end
   end
 
   describe 'PATCH /update' do
