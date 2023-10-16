@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :prayer_request do
     request { 'Please pray for me.' }
     status { 'pending' }
-    association :user
+    user
 
     factory :invalid_prayer_request_no_request do
       # Invalid because request is required

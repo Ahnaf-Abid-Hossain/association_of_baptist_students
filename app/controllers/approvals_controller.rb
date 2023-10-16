@@ -6,10 +6,9 @@ class ApprovalsController < ApplicationController
   end
 
   def require_admin
-    unless current_user && current_user.is_admin
-      flash[:alert] = "You do not have permission to access this page."
-      redirect_to root_path # or any other path you prefer
+    unless current_user&.is_admin
+      flash[:alert] = 'You do not have permission to access this page.'
+      redirect_to(root_path) # or any other path you prefer
     end
   end
-  
 end

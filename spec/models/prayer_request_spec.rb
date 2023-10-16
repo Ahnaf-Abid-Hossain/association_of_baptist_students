@@ -1,22 +1,22 @@
 require 'rails_helper'
 
-RSpec.describe PrayerRequest, type: :model do
+RSpec.describe(PrayerRequest) do
   describe 'validations' do
     it 'requires the request to be present' do
       prayer_request = FactoryBot.build(:invalid_prayer_request_no_request)
-      expect(prayer_request).not_to be_valid
+      expect(prayer_request).not_to(be_valid)
     end
 
     it 'requires the status to be present' do
       prayer_request = FactoryBot.build(:invalid_prayer_request_no_status)
-      expect(prayer_request).not_to be_valid
+      expect(prayer_request).not_to(be_valid)
     end
   end
 
   describe 'associations' do
     it 'belongs to a user' do
       association = described_class.reflect_on_association(:user)
-      expect(association.macro).to eq(:belongs_to)
+      expect(association.macro).to(eq(:belongs_to))
     end
   end
 
@@ -27,8 +27,8 @@ RSpec.describe PrayerRequest, type: :model do
         prayer_request = FactoryBot.create(:prayer_request)
 
         # Check if the prayer requests are valid
-        expect(prayer_request).to be_valid
-        prayer_request.destroy
+        expect(prayer_request).to(be_valid)
+        prayer_request.destroy!
       end
     end
 
@@ -39,8 +39,8 @@ RSpec.describe PrayerRequest, type: :model do
         prayer_request_no_status = FactoryBot.build(:invalid_prayer_request_no_status)
 
         # Check if the prayer requests are not valid
-        expect(prayer_request_no_request).not_to be_valid
-        expect(prayer_request_no_status).not_to be_valid
+        expect(prayer_request_no_request).not_to(be_valid)
+        expect(prayer_request_no_status).not_to(be_valid)
       end
     end
   end
