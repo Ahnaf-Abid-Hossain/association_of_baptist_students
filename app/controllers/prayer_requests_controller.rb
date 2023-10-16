@@ -2,18 +2,6 @@ class PrayerRequestsController < ApplicationController
   before_action :set_prayer_request, only: %i[show edit update destroy]
   before_action :check_approval_status
 
-  # ensure only approved users access content
-  def check_approval_status
-    unless current_user.approval_status == 1 || request.fullpath == '/account_created'
-      flash[:alert] = "You are not approved to access this page. Please wait to be approved by an admin."
-      redirect_to('/account_created')
-    end
-  end  
-
-  def account_created
-    render 'account_created'
-  end
-
   # GET /prayer_requests or /prayer_requests.json
   def index
     @prayer_requests = if current_user.is_admin?
