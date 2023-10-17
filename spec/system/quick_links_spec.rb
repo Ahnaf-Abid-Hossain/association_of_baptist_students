@@ -22,6 +22,14 @@ RSpec.describe('Quick Links') do
       expect(page).to(have_link(link.label, href: link.url))
     end
 
+    it 'displays links bar with CSS' do
+      # Visit home page
+      visit '/'
+
+      # Test for .quick-links element
+      expect(page).to(have_css('div.quick-links'))
+    end
+
     pending 'displays links in order'
   end
 
