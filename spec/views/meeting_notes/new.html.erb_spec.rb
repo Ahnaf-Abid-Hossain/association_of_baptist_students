@@ -18,8 +18,6 @@ RSpec.describe('meeting_notes/new') do
       assert_select 'input[name=?]', 'meeting_note[title]'
 
       assert_select 'textarea[name=?]', 'meeting_note[content]'
-
     end
   end
-
 end
