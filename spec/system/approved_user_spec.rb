@@ -20,8 +20,8 @@ RSpec.describe('Approved User') do
       # Yes
       # Did I do this because the other methods I tried were being dumb and not working? (Probably just me being dumb)
       # Also yes
-      expect(page).to have_text('Your account has been created!')
-      expect(page).to have_text('You must wait for an administrator to approve your account before accessing the website')
+      expect(page).to(have_text('Your account has been created!'))
+      expect(page).to(have_text('You must wait for an administrator to approve your account before accessing the website'))
     end
   end
 end

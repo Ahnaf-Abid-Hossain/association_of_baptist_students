@@ -24,9 +24,9 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @meeting_notes = @user.meeting_note
-    #if current_user.approval_status != 1
-      #redirect_to(prayer_requests_path, alert: 'You are not authorized to perform this action. Please wait for an admin to approve you.')
-    #end
+    # if current_user.approval_status != 1
+    # redirect_to(prayer_requests_path, alert: 'You are not authorized to perform this action. Please wait for an admin to approve you.')
+    # end
   end
 
   # GET /users/new
