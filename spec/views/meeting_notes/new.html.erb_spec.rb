@@ -2,20 +2,24 @@ require 'rails_helper'
 
 RSpec.describe('meeting_notes/new') do
   before do
-    assign(:meeting_note, FactoryBot.create(:meeting_note))
+    @admin = FactoryBot.create(:admin_user, email: 'admin@gmail.com')
   end
-
-  # it 'renders new meeting_note form' do
-  #   render
-
-  #   assert_select 'form[action=?][method=?]', meeting_notes_path, 'post' do
-  #     assert_select 'input[name=?]', 'meeting_note[title]'
-
-  #     assert_select 'textarea[name=?]', 'meeting_note[content]'
-
-  #     assert_select 'input[name=?]', 'meeting_note[id]'
-  #   end
+  # before do
+  #   assign(:meeting_note, FactoryBot.create(:meeting_note))
   # end
 
-  pending 'renders new meeting_note form'
+  it 'renders new meeting_note form' do
+    sign_in @admin
+    meeting_note = MeetingNote.new
+    assign(:meeting_note, meeting_note)
+    render
+
+    assert_select 'form[action=?][method=?]', meeting_notes_path, 'post' do
+      assert_select 'input[name=?]', 'meeting_note[title]'
+
+      assert_select 'textarea[name=?]', 'meeting_note[content]'
+
+    end
+  end
+
 end
