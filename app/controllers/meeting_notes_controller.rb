@@ -1,5 +1,6 @@
 class MeetingNotesController < ApplicationController
   before_action :set_meeting_note, only: %i[show edit update destroy]
+  before_action :check_approval_status
 
   # GET /meeting_notes or /meeting_notes.json
   def index

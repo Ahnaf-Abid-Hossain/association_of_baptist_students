@@ -14,10 +14,10 @@ RSpec.describe('Quick Links') do
       # Create a link
       next_order = (Link.maximum(:order) || 0) + 1
       link = Link.create!(label: 'Test Link 77', url: 'testlink77.edu', order: next_order)
-  
+
       # Visit home page
       visit '/'
-  
+
       # Test for link
       expect(page).to(have_link(link.label, href: link.url))
     end
@@ -52,21 +52,20 @@ RSpec.describe('Quick Links') do
       sign_in admin
 
       # Ensure we actually created one Link
-      expect {
-
+      expect do
         # POST to links page
-        post '/links', params: {
+        post('/links', params: {
           link: {
             label: 'Test',
             url: 'https://test.com',
             order: 800_000
           }
         }
-    
+        )
+
         # Expect to be able to create link
         expect(response).to(have_http_status(:found))
-
-      }.to change(Link, :count).by(1)
+      end.to(change(Link, :count).by(1))
     end
 
     it 'prevents non-admins from creating links' do
@@ -110,20 +109,18 @@ RSpec.describe('Quick Links') do
       # Promote ourself to admin
       admin = FactoryBot.create(:admin_user)
       sign_in admin
-  
+
       # Create link to delete
       link = Link.create!(label: 'Test', url: 'https://test.com', order: 800_000)
-  
+
       # Ensure that deletion does remove one Link
-      expect {
-  
+      expect do
         # DELETE to link
-        delete link_path(link)
-  
+        delete(link_path(link))
+
         # Expect to be accepted
         expect(response).to(have_http_status(:found))
-  
-      }.to change(Link, :count).by(-1)
+      end.to(change(Link, :count).by(-1))
     end
 
     it 'prevents non-admins from deleting links' do
@@ -185,10 +182,10 @@ RSpec.describe('Quick Links') do
 
       # Expect to be OK
       expect(response).to(have_http_status(:found))
-      
+
       # Expect link to now have URL silly.gov
       link = Link.find(link.id)
-      expect(link).to_not(be(nil))
+      expect(link).not_to(be_nil)
       expect(link.url).to(eq('http://silly.gov'))
     end
 
@@ -212,10 +209,10 @@ RSpec.describe('Quick Links') do
 
       # Expect to be OK
       expect(response).to(have_http_status(:found))
-      
+
       # Expect link to now have label Hello
       link = Link.find(link.id)
-      expect(link).to_not(be(nil))
+      expect(link).not_to(be_nil)
       expect(link.label).to(eq('Hello'))
     end
 
@@ -239,10 +236,10 @@ RSpec.describe('Quick Links') do
 
       # Expect to be OK
       expect(response).to(have_http_status(:found))
-      
+
       # Expect link to now have order 80
       link = Link.find(link.id)
-      expect(link).to_not(be(nil))
+      expect(link).not_to(be_nil)
       expect(link.order).to(eq(80))
     end
 

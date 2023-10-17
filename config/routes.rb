@@ -39,4 +39,8 @@ Rails.application.routes.draw do
     get '/privacy_settings', on: :member, to: 'users#privacy_settings'
   end
 
+  resources :users
+  get '/account_created', to: 'users#account_created'
+  
+
 end
