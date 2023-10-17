@@ -15,11 +15,11 @@ RSpec.describe('Advanced Search') do
     visit '/basic_search'
 
     # fill in data
-    fill_in "Enter Alumni Name", with: "Test"
-    click_button "Search"
+    fill_in 'Enter Alumni Name', with: 'Test'
+    click_button 'Search'
 
     # Expect User Bar to contain user's full name
-    expect(page).to have_content("Test User")
+    expect(page).to(have_content('Test User'))
   end
 
   # Last Name search test
@@ -32,11 +32,11 @@ RSpec.describe('Advanced Search') do
     visit '/basic_search'
 
     # fill in data
-    fill_in "Enter Alumni Name", with: "User"
-    click_button "Search"
+    fill_in 'Enter Alumni Name', with: 'User'
+    click_button 'Search'
 
     # Expect User Bar to contain user's full name
-    expect(page).to have_content("Test User")
+    expect(page).to(have_content('Test User'))
   end
 
   # Full Name search test
@@ -49,10 +49,10 @@ RSpec.describe('Advanced Search') do
     visit '/basic_search'
 
     # fill in data
-    fill_in "Enter Alumni Name", with: "Test User"
-    click_button "Search"
+    fill_in 'Enter Alumni Name', with: 'Test User'
+    click_button 'Search'
 
     # Expect User Bar to contain user's full name
-    expect(page).to have_content("Test User")
+    expect(page).to(have_content('Test User'))
   end
 end

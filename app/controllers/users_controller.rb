@@ -1,20 +1,19 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
   before_action :force_new_user, only: %i[index show edit]
+  before_action :check_approval_status, except: %i[edit update]
 
   def approve
     @alumni = User.find(params[:id])
-    @alumni.update(approval_status: 1)
-    redirect_to users_path, notice: 'Alumni approved successfully.'
+    @alumni.update!(approval_status: 1)
+    redirect_to(users_path, notice: 'Alumni approved successfully.')
   end
 
   def decline
     @alumni = User.find(params[:id])
-    @alumni.update(approval_status: -1)
-    redirect_to users_path, notice: 'Alumni declined successfully.'
+    @alumni.update!(approval_status: -1)
+    redirect_to(users_path, notice: 'Alumni declined successfully.')
   end
-
-
 
   # GET /users or /users.json
   def index
@@ -25,6 +24,9 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @meeting_notes = @user.meeting_note
+    #if current_user.approval_status != 1
+      #redirect_to(prayer_requests_path, alert: 'You are not authorized to perform this action. Please wait for an admin to approve you.')
+    #end
   end
 
   # GET /users/new
@@ -39,7 +41,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     # @user.user = current_user
-    #@user.approval_status = 3
+    # @user.approval_status = 3
     respond_to do |format|
       if @user.save
         format.html { redirect_to(user_url(@user), notice: 'user was successfully created.') }
@@ -93,15 +95,14 @@ class UsersController < ApplicationController
     end
 
     @results = if @search_name.present?
-                  if @search_name.include?(' ')
-                    User.where('user_first_name ILIKE ? AND user_last_name ILIKE ? AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%")
-                  else
-                    User.where('user_first_name ILIKE ? OR user_last_name ILIKE ? AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%")
-                  end
+                 if @search_name.include?(' ')
+                   User.where('user_first_name ILIKE ? AND user_last_name ILIKE ? AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%")
+                 else
+                   User.where('user_first_name ILIKE ? OR user_last_name ILIKE ? AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%")
+                 end
                else
-                  result = []
+                 []
                end
-
   end
 
   def temp_search
@@ -112,14 +113,18 @@ class UsersController < ApplicationController
     @current_city = params[:current_city]
     @results = User.all
 
-
-
     @results = if @first_name.present? || @last_name.present? || @class_year.present? || @major.present? || @current_city.present?
-                  if @class_year.present?
-                    User.where('user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_class_year = ? AND user_major ILIKE ? AND user_location ILIKE ? AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%", @class_year.to_i, "%#{@major}%", "%#{@current_city}%")
-                  else
-                    User.where('user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_major ILIKE ? AND user_location ILIKE ? AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%", "%#{@major}%", "%#{@current_city}%")
-                  end
+                 if @class_year.present?
+                   User.where(
+                     'user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_class_year = ? AND user_major ILIKE ? AND user_location ILIKE ? AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%", Integer(
+                                                                                                                                                                                                                     @class_year, 10
+                                                                                                                                                                                                                   ), "%#{@major}%", "%#{@current_city}%"
+                   )
+                 else
+                   User.where(
+                     'user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_major ILIKE ? AND user_location ILIKE ? AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%", "%#{@major}%", "%#{@current_city}%"
+                   )
+                 end
                else
                  []
                end
@@ -135,24 +140,24 @@ class UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(:user_first_name, 
-                                 :user_last_name, 
-                                 :user_contact_email, 
-                                 :user_ph_num, 
-                                 :user_class_year, 
+    params.require(:user).permit(:user_first_name,
+                                 :user_last_name,
+                                 :user_contact_email,
+                                 :user_ph_num,
+                                 :user_class_year,
                                  :user_job_field,
-                                 :user_location, 
-                                 :user_status, 
-                                 :user_major, 
-                                 :is_contact_email_private, 
-                                 :is_ph_num_private, 
-                                 :is_class_year_private, 
-                                 :is_job_field_private, 
-                                 :is_location_private, 
-                                 :is_status_private, 
-                                 :is_major_private, 
+                                 :user_location,
+                                 :user_status,
+                                 :user_major,
+                                 :is_contact_email_private,
+                                 :is_ph_num_private,
+                                 :is_class_year_private,
+                                 :is_job_field_private,
+                                 :is_location_private,
+                                 :is_status_private,
+                                 :is_major_private,
                                  :approval_status
-    )
+                                )
   end
 
   # Used to direct user to create new user, if needed
