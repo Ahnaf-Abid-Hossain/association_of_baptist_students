@@ -14,6 +14,7 @@ FactoryBot.define do
     user_location { 'city' }
     user_status { 'alumni' }
     user_major { 'Computer Science' }
+    approval_status { 1 }
 
     factory :admin_user do
       email { 'admin@gmail.com' }
@@ -30,6 +31,7 @@ FactoryBot.define do
       user_location { 'city' }
       user_status { 'alumni' }
       user_major { 'Computer Science' }
+      approval_status { 1 }
     end
   end
 end

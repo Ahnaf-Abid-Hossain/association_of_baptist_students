@@ -33,8 +33,6 @@ RSpec.describe('prayer_requests/edit') do
         assert_select 'input[name=?]', 'prayer_request[status]'
       end
     end
-
-    # Additional admin-related tests
   end
 
   context 'admin editing anonymous user prayer request' do
@@ -50,8 +48,6 @@ RSpec.describe('prayer_requests/edit') do
         assert_select 'input[type=?][name=?]', 'checkbox', 'prayer_request[is_anonymous]', count: 0
       end
     end
-
-    # Additional admin-related tests
   end
 
   context 'user editing their prayer request' do
@@ -78,8 +74,6 @@ RSpec.describe('prayer_requests/edit') do
         assert_select 'input[name=?]', 'prayer_request[status]', count: 0
       end
     end
-
-    # Additional user-related tests
   end
 
   context 'user editing their own anonymous prayer request' do
@@ -95,8 +89,6 @@ RSpec.describe('prayer_requests/edit') do
         assert_select 'input[type=?][name=?]', 'checkbox', 'prayer_request[is_anonymous]'
       end
     end
-
-    # Additional user-related tests
   end
 
   context 'user editing their own non-anonymous prayer request' do
@@ -113,7 +105,5 @@ RSpec.describe('prayer_requests/edit') do
         assert_select 'input[type=?][name=?]', 'checkbox', 'prayer_request[is_anonymous]'
       end
     end
-
-    # Additional user-related tests
   end
 end

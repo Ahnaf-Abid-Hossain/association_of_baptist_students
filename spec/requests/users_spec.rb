@@ -129,4 +129,28 @@ RSpec.describe('/users') do
       expect(response).to(redirect_to(users_url))
     end
   end
+
+  describe 'POST #approve' do
+    it 'approves the user and shows a success flash message' do
+      user = User.create!(valid_attributes) # Create an unapproved user using your factory or fixture
+
+      post :approve, params: { id: user.id }
+
+      expect(user.reload.approval_status).to(be(true)) # Check if the user is approved
+      expect(flash[:success]).to(eq('Alumni approved successfully.')) # Check if the flash message is set
+      expect(response).to(redirect_to(users_path)) # Check if it redirects to the expected path
+    end
+  end
+
+  describe 'POST #decline' do
+    it 'approves the user and shows a success flash message' do
+      user = User.create!(valid_attributes) # Create an unapproved user using your factory or fixture
+
+      post :approve, params: { id: user.id }
+
+      expect(user.reload.approval_status).to(be(-1)) # Check if the user is approved
+      expect(flash[:success]).to(eq('Alumni declined successfully.')) # Check if the flash message is set
+      expect(response).to(redirect_to(users_path)) # Check if it redirects to the expected path
+    end
+  end
 end

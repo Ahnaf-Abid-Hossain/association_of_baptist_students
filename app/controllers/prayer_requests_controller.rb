@@ -1,5 +1,6 @@
 class PrayerRequestsController < ApplicationController
   before_action :set_prayer_request, only: %i[show edit update destroy]
+  before_action :check_approval_status
 
   # GET /prayer_requests or /prayer_requests.json
   def index
@@ -35,7 +36,7 @@ class PrayerRequestsController < ApplicationController
   # POST /prayer_requests or /prayer_requests.json
   def create
     # current_user.user.prayer_requests?
-    @prayer_request = current_user.prayer_requests.build(create_prayer_requests)
+    @prayer_request = current_user.prayer_requests.build(create_prayer_requests_params)
     @prayer_request.status = 'not_read'
 
     respond_to do |format|
@@ -84,7 +85,7 @@ class PrayerRequestsController < ApplicationController
   end
 
   # Only allow a list of trusted parameters through.
-  def create_prayer_requests
+  def create_prayer_requests_params
     params.require(:prayer_request).permit(:request, :is_anonymous)
   end
 
@@ -96,7 +97,7 @@ class PrayerRequestsController < ApplicationController
                          params.require(:prayer_request).permit(:request, :status, :is_anonymous)
                        when user_with_own_request?
                          params.require(:prayer_request).permit(:request, :is_anonymous)
-                       else
+                       when user_with_other_user?
                          return false
                        end
 
@@ -113,5 +114,9 @@ class PrayerRequestsController < ApplicationController
 
   def user_with_own_request?
     @prayer_request.user_id == current_user.id
+  end
+
+  def user_with_other_user?
+    @prayer_request.user_id != current_user.id
   end
 end

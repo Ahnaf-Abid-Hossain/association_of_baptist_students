@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
   before_action :force_new_user, only: %i[index show edit]
+  before_action :check_approval_status, except: %i[edit update]
 
   def approve
     @alumni = User.find(params[:id])
@@ -23,6 +24,9 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @meeting_notes = @user.meeting_note
+    # if current_user.approval_status != 1
+    # redirect_to(prayer_requests_path, alert: 'You are not authorized to perform this action. Please wait for an admin to approve you.')
+    # end
   end
 
   # GET /users/new

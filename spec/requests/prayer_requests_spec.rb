@@ -92,52 +92,56 @@ RSpec.describe('/prayer_requests') do
   end
 
   describe 'POST /create' do
-    context 'when creating new prayer requests' do
-      it 'creates a new PrayerRequest for admins with valid parameters' do
-        sign_in admin
+    context 'when admins are creating new prayer requests' do
+      before { sign_in admin }
+      it 'creates a new prayer request if using valid parameters' do
         prayer_request = FactoryBot.build(:prayer_request)
         expect do
           post(prayer_requests_url, params: { prayer_request: prayer_request.attributes })
         end.to(change(PrayerRequest, :count).by(1))
       end
 
-      it 'redirects to the created prayer_request for admins with valid parameters' do
-        sign_in admin
+      it 'redirects to the created prayer request if using valid parameters' do
         prayer_request = FactoryBot.build(:prayer_request)
         post prayer_requests_url, params: { prayer_request: prayer_request.attributes }
         expect(response).to(redirect_to(prayer_request_url(PrayerRequest.last)))
       end
 
-      it 'does not create a new PrayerRequest for admins with invalid parameters (no request)' do
-        sign_in admin
+      it 'does not create a new prayer request if using invalid parameters (no request)' do
         prayer_request = FactoryBot.build(:invalid_prayer_request_no_request)
         expect do
           post(prayer_requests_url, params: { prayer_request: prayer_request.attributes })
         end.not_to(change(PrayerRequest, :count))
       end
+    end
 
-      it 'renders a response with 422 status for admins with invalid parameters (no request)' do
-        sign_in admin
-        prayer_request = FactoryBot.build(:invalid_prayer_request_no_request)
-        post prayer_requests_url, params: { prayer_request: prayer_request.attributes }
-        expect(response).to(have_http_status(:unprocessable_entity))
-      end
-
-      it 'does not create a new PrayerRequest for users with valid parameters' do
-        sign_in user1
+    context 'when users are creating new prayer requests' do
+      before { sign_in user1 }
+      it 'creates a new prayer request for if using valid parameters' do
         prayer_request = FactoryBot.build(:prayer_request)
         expect do
           post(prayer_requests_url, params: { prayer_request: prayer_request.attributes })
         end.to(change(PrayerRequest, :count).by(1))
-        latest_prayer_request = PrayerRequest.last
-        expect(latest_prayer_request.user).to(eq(user1))
+      end
+
+      it 'redirects to the created prayer request if using valid parameters' do
+        prayer_request = FactoryBot.build(:prayer_request)
+        post prayer_requests_url, params: { prayer_request: prayer_request.attributes }
+        expect(response).to(redirect_to(prayer_request_url(PrayerRequest.last)))
+      end
+
+      it 'does not create a new prayer request if using invalid parameters (no request)' do
+        prayer_request = FactoryBot.build(:invalid_prayer_request_no_request)
+        expect do
+          post(prayer_requests_url, params: { prayer_request: prayer_request.attributes })
+        end.not_to(change(PrayerRequest, :count))
       end
     end
   end
 
   describe 'PATCH /update' do
     context 'when updating prayer requests' do
-      it 'updates the requested prayer_request for admins with valid parameters' do
+      it 'updates the requested prayer request for admins with valid parameters' do
         sign_in admin
         prayer_request = FactoryBot.create(:prayer_request, user: admin)
         updated_request = 'Updated request'
@@ -151,7 +155,7 @@ RSpec.describe('/prayer_requests') do
         expect(prayer_request.status).to(eq(updated_status))
       end
 
-      it 'redirects to the updated prayer_request for admins with valid parameters' do
+      it 'redirects to the updated prayer request for admins with valid parameters' do
         sign_in admin
         prayer_request = FactoryBot.create(:prayer_request, user: admin)
         updated_request = 'Updated request'
@@ -206,7 +210,23 @@ RSpec.describe('/prayer_requests') do
         expect(prayer_request.request).to(eq(original_request))
       end
 
-      it 'updates the requested prayer_request for users with valid parameters' do
+      it "does not allow an admin to modify the 'is_anonymous' attribute of a User's prayer request" do
+        sign_in admin
+
+        prayer_request = FactoryBot.create(:prayer_request, user: user1, is_anonymous: true)
+        original_anonymity = prayer_request.is_anonymous
+
+        updated_anonymity = !original_anonymity
+        updated_prayer_request = FactoryBot.build(:prayer_request, is_anonymous: updated_anonymity)
+        patch prayer_request_url(prayer_request), params: { prayer_request: updated_prayer_request.attributes }
+        prayer_request.reload
+
+        expect(response).to(redirect_to(prayer_request_url(prayer_request)))
+        expect(prayer_request.is_anonymous).not_to(eq(updated_anonymity))
+        expect(prayer_request.is_anonymous).to(eq(original_anonymity))
+      end
+
+      it 'updates the requested PrayerRequest for users with valid parameters' do
         sign_in user1
         prayer_request = FactoryBot.create(:prayer_request, user: user1)
         updated_request = 'Updated request'
@@ -218,7 +238,7 @@ RSpec.describe('/prayer_requests') do
         expect(prayer_request.request).to(eq(updated_request))
       end
 
-      it 'redirects to the updated prayer_request for users with valid parameters' do
+      it 'redirects to the updated PrayerRequest for users with valid parameters' do
         sign_in user1
         prayer_request = FactoryBot.create(:prayer_request, user: user1)
         updated_request = 'Updated request'

@@ -68,7 +68,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_16_040903) do
     t.string "user_location"
     t.string "user_status"
     t.string "user_major"
-    t.integer "approval_status", default: 0
     t.boolean "is_contact_email_private", default: false
     t.boolean "is_ph_num_private", default: false
     t.boolean "is_class_year_private", default: false
@@ -76,6 +75,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_16_040903) do
     t.boolean "is_location_private", default: false
     t.boolean "is_status_private", default: false
     t.boolean "is_major_private", default: false
+    t.integer "approval_status", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
