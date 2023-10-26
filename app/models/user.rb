@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_one :user, dependent: nil
   has_many :prayer_requests, dependent: nil
   has_many :meeting_note, dependent: nil
+  has_many :links, dependent: nil
 
   validates :user_first_name, presence: true, if: :editing_profile?
   validates :user_last_name, presence: true, if: :editing_profile?
