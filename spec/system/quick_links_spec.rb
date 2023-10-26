@@ -2,14 +2,14 @@ require 'rails_helper'
 
 # Used for creating a factory bot link w/ admin user
 def make_link(**kwargs)
-  admin_user = User.find_by(email: "admin@gmail.com")
+  admin_user = User.find_by(email: 'admin@gmail.com')
   FactoryBot.create(:link, user: admin_user, **kwargs)
 end
 
 # Used to sign in as admin
 def sign_in_admin
-  admin_user = User.find_by(email: "admin@gmail.com")
-  sign_in admin_user
+  admin_user = User.find_by(email: 'admin@gmail.com')
+  sign_in(admin_user)
 end
 
 RSpec.describe('Quick Links') do
@@ -21,7 +21,7 @@ RSpec.describe('Quick Links') do
     sign_in user
 
     # Create an admin user for testing
-    admin_user = FactoryBot.create(:admin_user, email: "admin@gmail.com")
+    FactoryBot.create(:admin_user, email: 'admin@gmail.com')
   end
 
   context 'viewing links' do
