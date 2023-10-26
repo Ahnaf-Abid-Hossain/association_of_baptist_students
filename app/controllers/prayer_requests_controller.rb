@@ -2,18 +2,6 @@ class PrayerRequestsController < ApplicationController
   before_action :set_prayer_request, only: %i[show edit update destroy]
   before_action :check_approval_status
 
-  # ensure only approved users access content
-  def check_approval_status
-    unless current_user.approval_status == 1 || request.fullpath == '/account_created'
-      flash[:alert] = "You are not approved to access this page. Please wait to be approved by an admin."
-      redirect_to('/account_created')
-    end
-  end  
-
-  def account_created
-    render 'account_created'
-  end
-
   # GET /prayer_requests or /prayer_requests.json
   def index
     @prayer_requests = if current_user.is_admin?
@@ -48,8 +36,8 @@ class PrayerRequestsController < ApplicationController
   # POST /prayer_requests or /prayer_requests.json
   def create
     # current_user.user.prayer_requests?
-    @prayer_request = current_user.prayer_requests.build(prayer_request_params)
-    @prayer_request.status = 'not_read' unless current_user.is_admin?
+    @prayer_request = current_user.prayer_requests.build(prayer_request_params_create)
+    @prayer_request.status = 'not_read'
 
     respond_to do |format|
       if @prayer_request.save
@@ -65,7 +53,7 @@ class PrayerRequestsController < ApplicationController
   # PATCH/PUT /prayer_requests/1 or /prayer_requests/1.json
   def update
     respond_to do |format|
-      if (current_user.is_admin? || @prayer_request.user_id == current_user.id) && @prayer_request.update(prayer_request_params)
+      if (current_user.is_admin? || @prayer_request.user_id == current_user.id) && @prayer_request.update(prayer_request_params_update)
         format.html { redirect_to(prayer_request_url(@prayer_request), notice: 'Prayer request was successfully updated.') }
         format.json { render(:show, status: :ok, location: @prayer_request) }
       else
@@ -97,11 +85,15 @@ class PrayerRequestsController < ApplicationController
   end
 
   # Only allow a list of trusted parameters through.
-  def prayer_request_params
+  def prayer_request_params_create
+    params.require(:prayer_request).permit(:request, :is_anonymous)
+  end
+
+  def prayer_request_params_update
     if current_user.is_admin?
       params.require(:prayer_request).permit(:request, :status)
     else
-      params.require(:prayer_request).permit(:request)
+      params.require(:prayer_request).permit(:request, :is_anonymous)
     end
   end
 end

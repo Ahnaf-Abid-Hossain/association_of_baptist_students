@@ -9,9 +9,22 @@
     <%= prayer_request.status %>
   </p>
 
-  <p>
-    <strong>user:</strong>
-    <%= prayer_request.user_id %>
-  </p>
+  <% if !prayer_request.is_anonymous %>
+    <p>
+      <strong>Requester's Name:</strong>
+      <%= prayer_request.user.full_name %>
+    </p>
+  <% else %>
+    <p>
+      <strong>Anonymous Prayer Request</strong>
+    </p>
+  <% end %>
+
+  <% if !prayer_request.is_anonymous && current_user.is_admin?%>
+    <p>
+      <strong>User ID:</strong>
+      <%= prayer_request.user_id %>
+    </p>
+  <% end %>
 
 </div>
