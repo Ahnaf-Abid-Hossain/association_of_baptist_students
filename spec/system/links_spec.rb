@@ -94,6 +94,21 @@ RSpec.describe('Links') do
       end.to(change(Link, :count).by(1))
     end
 
+    it 'shows the author of a link' do
+      # Promote ourself to admin
+      admin_user = sign_in_admin
+
+      # Create a link
+      link = make_link
+
+      # View link
+      visit link_path(link)
+
+      # Expect to see a link to the author
+      author_name = link.user.user_first_name + " " + link.user.user_last_name
+      expect(page).to(have_link(author_name, href: user_path(link.user)))
+    end
+
     it 'prevents non-admins from creating links' do
       # POST to links page
       post '/links', params: {
