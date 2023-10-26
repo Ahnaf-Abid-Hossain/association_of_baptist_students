@@ -6,7 +6,7 @@ RSpec.describe('links/show') do
                     label: 'Label',
                     url: 'Url',
                     order: 2,
-                    user: FactoryBot.create(:admin_user)
+                    user: FactoryBot.create(:admin_user, user_first_name: "Show", user_last_name: "Test")
                   )
     )
   end
@@ -16,5 +16,6 @@ RSpec.describe('links/show') do
     expect(rendered).to(match(/Label/))
     expect(rendered).to(match(/Url/))
     expect(rendered).to(match(/2/))
+    expect(rendered).to(match(/Show Test/))
   end
 end
