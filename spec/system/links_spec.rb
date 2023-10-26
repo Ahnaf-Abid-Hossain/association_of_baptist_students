@@ -10,6 +10,7 @@ end
 def sign_in_admin
   admin_user = User.find_by(email: 'admin@gmail.com')
   sign_in(admin_user)
+  admin_user
 end
 
 RSpec.describe('Links') do
@@ -70,7 +71,7 @@ RSpec.describe('Links') do
 
     it 'allows admins to create links' do
       # Promote ourself to admin
-      sign_in_admin
+      admin_user = sign_in_admin
 
       # Ensure we actually created one Link
       expect do
@@ -86,6 +87,10 @@ RSpec.describe('Links') do
 
         # Expect to be able to create link
         expect(response).to(have_http_status(:found))
+
+        # Expect the latest link to be authored by us
+        link = Link.last
+        expect(link.user).to(eq(admin_user))
       end.to(change(Link, :count).by(1))
     end
 
