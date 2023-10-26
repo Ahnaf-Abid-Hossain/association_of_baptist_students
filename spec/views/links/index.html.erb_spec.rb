@@ -2,17 +2,12 @@ require 'rails_helper'
 
 RSpec.describe('links/index') do
   before do
+    # Create user for authorship
+    admin_user = FactoryBot.create(:admin_user)
+
     assign(:links, [
-      Link.create!(
-        label: 'Label',
-        url: 'Url',
-        order: 2
-      ),
-      Link.create!(
-        label: 'Label',
-        url: 'Url',
-        order: 3
-      )
+      FactoryBot.create(:link, user: admin_user, order: 2),
+      FactoryBot.create(:link, user: admin_user, order: 3)
     ]
     )
   end

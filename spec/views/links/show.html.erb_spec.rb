@@ -5,7 +5,8 @@ RSpec.describe('links/show') do
     assign(:link, Link.create!(
                     label: 'Label',
                     url: 'Url',
-                    order: 2
+                    order: 2,
+                    user: FactoryBot.create(:admin_user)
                   )
     )
   end
