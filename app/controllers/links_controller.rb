@@ -1,6 +1,6 @@
 class LinksController < ApplicationController
   before_action :set_link, only: %i[show edit update destroy up down]
-  before_action :forbid_non_admin, only: %i[create update destroy]
+  before_action :forbid_non_admin, only: %i[create update destroy up down]
   before_action :redirect_non_admin, only: %i[index show new edit]
 
   # GET /links or /links.json

@@ -4,13 +4,13 @@ RSpec.describe('links/index') do
   before do
     assign(:links, [
       Link.create!(
-        label: 'Label',
-        url: 'Url',
+        label: 'XLabel',
+        url: 'XUrl',
         order: 2
       ),
       Link.create!(
-        label: 'Label',
-        url: 'Url',
+        label: 'XLabel',
+        url: 'XUrl',
         order: 3
       )
     ]
@@ -19,9 +19,9 @@ RSpec.describe('links/index') do
 
   it 'renders a list of links' do
     render
-    cell_selector = Rails::VERSION::STRING >= '7' ? 'div>p' : 'tr>td'
-    assert_select cell_selector, text: Regexp.new('Label'.to_s), count: 2
-    assert_select cell_selector, text: Regexp.new('Url'.to_s), count: 2
+    cell_selector = 'tr>td'
+    assert_select cell_selector, text: Regexp.new('XLabel'.to_s), count: 2
+    assert_select cell_selector, text: Regexp.new('XUrl'.to_s), count: 2
     assert_select cell_selector, text: Regexp.new(2.to_s), count: 1
     assert_select cell_selector, text: Regexp.new(3.to_s), count: 1
   end
