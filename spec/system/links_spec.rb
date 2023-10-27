@@ -304,5 +304,76 @@ RSpec.describe('Links') do
       # Expect to be forbidden
       expect(response).to(have_http_status(:forbidden))
     end
+
+    it 'allows admins to move a link up/down' do
+      # Sign in as admin
+      sign_in_admin
+
+      # Create four links
+      # Expect links to not be nil
+      link1 = make_link(order: 1)
+      expect(link1).to_not(be(nil))
+
+      link2 = make_link(order: 2)
+      expect(link2).to_not(be(nil))
+
+      link3 = make_link(order: 3)
+      expect(link3).to_not(be(nil))
+
+      link4 = make_link(order: 4)
+      expect(link4).to_not(be(nil))
+
+      # Store original order
+      order2_original = link2.order
+      expect(order2_original).to(eq(2))
+
+      order3_original = link3.order
+      expect(order3_original).to(eq(3))
+
+      # Try to move link3 up (swap 2<->3)
+      patch up_link_path(link3)
+
+      # Expect to be "redirected" to links
+      expect(response).to(redirect_to(links_path))
+
+      # Expect 2<->3 order swapped
+      order2_new = Link.find(link2.id).order
+      order3_new = Link.find(link3.id).order
+      expect(order2_new).to(eq(order3_original))
+      expect(order2_new).to(eq(3))
+      expect(order3_new).to(eq(order2_original))
+      expect(order3_new).to(eq(2))
+
+      # Try to move link3 back down
+      patch down_link_path(link3)
+
+      # Expect to be "redirected" to links
+      expect(response).to(redirect_to(links_path))
+
+      # Expect 2<->3 order to be returned to original
+      order2_new2 = Link.find(link2.id).order
+      order3_new2 = Link.find(link3.id).order
+      expect(order2_new2).to(eq(order2_original))
+      expect(order2_new2).to(eq(2))
+      expect(order3_new2).to(eq(order3_original))
+      expect(order3_new2).to(eq(3))
+    end
+
+    it 'disallows non-admins from moving a link up/down' do
+      # Create a link to edit
+      link = make_link
+
+      # Try to move link up
+      patch up_link_path(link)
+
+      # Expect to be forbidden
+      expect(response).to(have_http_status(:forbidden))
+
+      # Try to move link down
+      patch down_link_path(link)
+
+      # Expect to be forbidden
+      expect(response).to(have_http_status(:forbidden))
+    end
   end
 end
