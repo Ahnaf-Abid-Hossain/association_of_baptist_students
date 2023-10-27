@@ -94,6 +94,7 @@ RSpec.describe('/prayer_requests') do
   describe 'POST /create' do
     context 'when admins are creating new prayer requests' do
       before { sign_in admin }
+
       it 'creates a new prayer request if using valid parameters' do
         prayer_request = FactoryBot.build(:prayer_request)
         expect do
@@ -117,6 +118,7 @@ RSpec.describe('/prayer_requests') do
 
     context 'when users are creating new prayer requests' do
       before { sign_in user1 }
+
       it 'creates a new prayer request for if using valid parameters' do
         prayer_request = FactoryBot.build(:prayer_request)
         expect do
