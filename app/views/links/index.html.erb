@@ -9,6 +9,7 @@
   <tr>
     <th>Label</th>
     <th>URL</th>
+    <th>Author</th>
     <th>Edit</th>
     <th>Delete</th>
     <th>Reorder</th>
@@ -17,6 +18,11 @@
     <tr>
       <td><%= link.label %></td>
       <td><%= link.url %></td>
+      <% if link.user == nil %>
+        <td>Unknown Author</td>
+      <% else %>
+        <td><%= link_to(link.user.user_first_name + " " + link.user.user_last_name, user_path(link.user)) %></td>
+      <% end %>
       <td><%= link_to "Edit this link", edit_link_path(link) %></td>
       <!-- TODO: add a destroy path? -->
       <td><%= button_to "Delete this link", link_path(link), method: :delete %></td>
