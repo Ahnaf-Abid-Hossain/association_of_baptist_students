@@ -15,6 +15,7 @@ class LinksController < ApplicationController
   # GET /links/new
   def new
     @link = Link.new
+    @link.order = Link.get_next_order
   end
 
   # GET /links/1/edit
