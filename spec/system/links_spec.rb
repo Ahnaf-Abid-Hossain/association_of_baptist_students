@@ -359,6 +359,34 @@ RSpec.describe('Links') do
       expect(order3_new2).to(eq(3))
     end
 
+    it 'ignores attempts to move links past end of list' do
+      # Sign in as admin
+      sign_in_admin
+
+      # Create two links
+      # Expect links to not be nil
+      link1 = make_link(order: 1)
+      expect(link1).to_not(be(nil))
+
+      link2 = make_link(order: 2)
+      expect(link2).to_not(be(nil))
+
+      # Expect there to only be two links
+      expect(Link.count).to(eq(2))
+
+      # Try to move link1 up
+      patch up_link_path(link1)
+
+      # Expect to be ignored
+      expect(response).to(have_http_status(:no_content))
+
+      # Try to move link1 down
+      patch down_link_path(link2)
+
+      # Expect to be ignored
+      expect(response).to(have_http_status(:no_content))
+    end
+
     it 'disallows non-admins from moving a link up/down' do
       # Create a link to edit
       link = make_link
