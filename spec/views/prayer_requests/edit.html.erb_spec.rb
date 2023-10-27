@@ -35,8 +35,19 @@ RSpec.describe('prayer_requests/edit') do
     end
   end
 
-  context 'admin editing anonymous user prayer request' do
+  context 'admin editing user prayer request' do
     before { sign_in admin }
+
+    it 'does not render the request field in the edit prayer_request form' do
+      prayer_request = FactoryBot.create(:prayer_request, user: user1)
+      assign(:prayer_request, prayer_request)
+
+      render
+
+      assert_select 'form[action=?][method=?]', prayer_request_path(prayer_request), 'post' do
+        assert_select 'input[name=?]', 'prayer_request[request]', count: 0
+      end
+    end
 
     it 'does not render the is_anonymous checkbox in the edit prayer_request form' do
       prayer_request = FactoryBot.create(:prayer_request, user: user1, is_anonymous: true)
