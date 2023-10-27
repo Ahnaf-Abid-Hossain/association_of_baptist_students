@@ -22,7 +22,5 @@ RSpec.describe('links/index') do
     cell_selector = 'tr>td'
     assert_select cell_selector, text: Regexp.new('XLabel'.to_s), count: 2
     assert_select cell_selector, text: Regexp.new('XUrl'.to_s), count: 2
-    assert_select cell_selector, text: Regexp.new(2.to_s), count: 1
-    assert_select cell_selector, text: Regexp.new(3.to_s), count: 1
   end
 end

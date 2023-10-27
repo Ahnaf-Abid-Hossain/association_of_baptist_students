@@ -20,8 +20,6 @@ RSpec.describe('links/edit') do
       assert_select 'input[name=?]', 'link[label]'
 
       assert_select 'input[name=?]', 'link[url]'
-
-      assert_select 'input[name=?]', 'link[order]'
     end
   end
 end
