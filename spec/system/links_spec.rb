@@ -101,8 +101,8 @@ RSpec.describe('Links') do
       # Create a link
       link = make_link
 
-      # View link
-      visit link_path(link)
+      # View links
+      visit links_path
 
       # Expect to see a link to the author
       author_name = "#{link.user.user_first_name} #{link.user.user_last_name}"

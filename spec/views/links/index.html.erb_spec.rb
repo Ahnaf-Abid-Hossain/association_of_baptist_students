@@ -8,8 +8,7 @@ RSpec.describe('links/index') do
     assign(:links, [
       FactoryBot.create(:link, user: admin_user, label: 'XLabel', url: 'XURL', order: 2),
       FactoryBot.create(:link, user: admin_user, label: 'XLabel', url: 'XURL', order: 3)
-    ]
-    )
+    ])
   end
 
   it 'renders a list of links' do

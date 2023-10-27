@@ -4,13 +4,7 @@ class LinksController < ApplicationController
   before_action :redirect_non_admin, only: %i[index show new edit]
 
   # GET /links or /links.json
-  def index
-    # Actually redundant due to the ApplicationController hook
-    # @links = Link.all
-  end
-
-  # GET /links/1 or /links/1.json
-  def show; end
+  def index; end
 
   # GET /links/new
   def new

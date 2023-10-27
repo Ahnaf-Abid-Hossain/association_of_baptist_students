@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :prayer_requests
   resources :meeting_notes
 
-  resources :links do
+  resources :links, :except => [:show] do
     member do
       patch 'up'
       patch 'down'

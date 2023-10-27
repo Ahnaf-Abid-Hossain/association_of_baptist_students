@@ -2,11 +2,6 @@ require 'rails_helper'
 
 RSpec.describe('links/edit') do
   let(:link) do
-    # Link.create!(
-    #   label: 'MyString',
-    #   url: 'MyString',
-    #   order: 1
-    # )
     FactoryBot.create(:link)
   end
 
