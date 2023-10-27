@@ -4,13 +4,13 @@ class ApplicationController < ActionController::Base
 
   def check_approval_status
     unless current_user.approval_status == 1 || request.fullpath == '/account_created'
-      flash[:alert] = "You are not approved to access this page. Please wait to be approved by an admin."
+      flash[:alert] = 'You are not approved to access this page. Please wait to be approved by an admin.'
       redirect_to('/account_created')
     end
-  end  
+  end
 
   def account_created
-    render 'account_created'
+    render('account_created')
   end
 
   def set_links
