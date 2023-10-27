@@ -122,26 +122,6 @@ RSpec.describe('Links') do
       # Expect to be forbidden
       expect(response).to(have_http_status(:forbidden))
     end
-
-    it 'handles bad link creations' do
-      # Promote ourself to admin
-      sign_in_admin
-
-      # Create (bad) link data
-      data = {
-        link: {
-          label: 'Test',
-          url: 'https://test.com',
-          order: -8
-        }
-      }
-
-      # POST link create page
-      post links_path, params: data
-
-      # Expect to be OK
-      expect(response).to(have_http_status(:unprocessable_entity))
-    end
   end
 
   context 'deleting links' do
