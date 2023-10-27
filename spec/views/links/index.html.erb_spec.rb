@@ -18,4 +18,10 @@ RSpec.describe('links/index') do
     assert_select cell_selector, text: Regexp.new('XLabel'.to_s), count: 2
     assert_select cell_selector, text: Regexp.new('XURL'.to_s), count: 2
   end
+
+  it 'has up/down buttons' do
+    render
+    assert_select '.up-down button.up-button', count: 2
+    assert_select '.up-down button.down-button', count: 2
+  end
 end

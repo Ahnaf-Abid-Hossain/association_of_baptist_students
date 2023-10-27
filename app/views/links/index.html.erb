@@ -25,14 +25,12 @@
           <!-- Up Button -->
           <%= button_to "^", up_link_path(link),
             method: :patch,
-            class: "up-down-button",
-            id: "up-button",
+            class: "up-down-button up-button",
             disabled: index == 0 %>
           <!-- Down Button -->
           <%= button_to "v", down_link_path(link),
             method: :patch,
-            class: "up-down-button",
-            id: "down-button",
+            class: "up-down-button down-button",
             disabled: index == @links.length() - 1 %>
         </div>
       </td>
