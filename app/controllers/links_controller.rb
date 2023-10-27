@@ -1,5 +1,5 @@
 class LinksController < ApplicationController
-  before_action :set_link, only: %i[show edit update destroy]
+  before_action :set_link, only: %i[show edit update destroy up down]
   before_action :forbid_non_admin, only: %i[create update destroy]
   before_action :redirect_non_admin, only: %i[index show new edit]
 
@@ -15,7 +15,6 @@ class LinksController < ApplicationController
   # GET /links/new
   def new
     @link = Link.new
-    @link.order = Link.get_next_order
   end
 
   # GET /links/1/edit
@@ -24,10 +23,11 @@ class LinksController < ApplicationController
   # POST /links or /links.json
   def create
     @link = Link.new(link_params)
+    @link.order = Link.get_next_order
 
     respond_to do |format|
       if @link.save
-        format.html { redirect_to(link_url(@link), notice: 'Link was successfully created.') }
+        format.html { redirect_to(links_url, notice: 'Link was successfully created.') }
         format.json { render(:show, status: :created, location: @link) }
       else
         format.html { render(:new, status: :unprocessable_entity) }
@@ -61,12 +61,42 @@ class LinksController < ApplicationController
 
   # PATCH /links/1/up
   def up
-    # TODO: make link go up
+    # Only move links >1 up
+    if @link.order > 1
+      # Bad things happen if we fail here
+      before = Link.find_by(order: @link.order - 1)
+    
+      # Swap orders
+      @link.order -= 1
+      before.order += 1
+
+      # Save
+      @link.save!
+      before.save
+
+      # Redirect back to links
+      redirect_to(links_url)
+    end
   end
 
   # PATCH /links/1/down
   def down
-    # TODO: make link go down
+    # Only move links < LENGTH - 1
+    if @link.order < Link.count
+      # Bad things happen if we fail here
+      after = Link.find_by(order: @link.order + 1)
+    
+      # Swap orders
+      @link.order += 1
+      after.order -= 1
+
+      # Save
+      @link.save!
+      after.save
+
+      # Redirect back to links
+      redirect_to(links_url)
+    end
   end
 
   private

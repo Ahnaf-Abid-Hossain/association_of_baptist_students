@@ -13,7 +13,7 @@
     <th>Delete</th>
     <th>Reorder</th>
   </tr>
-  <% @links.each do |link| %>
+  <% @links.each_with_index do |link, index| %>
     <tr>
       <td><%= link.label %></td>
       <td><%= link.url %></td>
@@ -22,11 +22,20 @@
       <td><%= button_to "Delete this link", link_path(link), method: :delete %></td>
       <td>
         <div class="up-down">
-          <%= button_to "^", up_link_path(link), method: :patch, class: "up-down-button", id: "up-button" %>
-          <%= button_to "v", down_link_path(link), method: :patch, class: "up-down-button", id: "down-button" %>
+          <!-- Up Button -->
+          <%= button_to "^", up_link_path(link),
+            method: :patch,
+            class: "up-down-button",
+            id: "up-button",
+            disabled: index == 0 %>
+          <!-- Down Button -->
+          <%= button_to "v", down_link_path(link),
+            method: :patch,
+            class: "up-down-button",
+            id: "down-button",
+            disabled: index == @links.length() - 1 %>
         </div>
       </td>
     </tr>
   <% end %>
 </table>
-
