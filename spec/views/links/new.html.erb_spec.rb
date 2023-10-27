@@ -2,12 +2,13 @@ require 'rails_helper'
 
 RSpec.describe('links/new') do
   before do
-    assign(:link, Link.new(
-                    label: 'MyString',
-                    url: 'MyString',
-                    order: 1
-                  )
-    )
+    # assign(:link, Link.new(
+    #                 label: 'MyString',
+    #                 url: 'MyString',
+    #                 order: 1
+    #               )
+    # )
+    assign(:link, FactoryBot.build(:link))
   end
 
   it 'renders new link form' do

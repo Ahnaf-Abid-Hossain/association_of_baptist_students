@@ -1,19 +1,35 @@
 require 'rails_helper'
 
-RSpec.describe('Quick Links') do
+# Used for creating a factory bot link w/ admin user
+def make_link(**kwargs)
+  admin_user = User.find_by(email: 'admin@gmail.com')
+  FactoryBot.create(:link, user: admin_user, **kwargs)
+end
+
+# Used to sign in as admin
+def sign_in_admin
+  admin_user = User.find_by(email: 'admin@gmail.com')
+  sign_in(admin_user)
+  admin_user
+end
+
+RSpec.describe('Links') do
   before do
     driven_by(:rack_test)
 
     # Sign in
     user = FactoryBot.create(:user)
     sign_in user
+
+    # Create an admin user for testing
+    FactoryBot.create(:admin_user, email: 'admin@gmail.com')
   end
 
   context 'viewing links' do
     it 'displays new links' do
       # Create a link
       next_order = (Link.maximum(:order) || 0) + 1
-      link = Link.create!(label: 'Test Link 77', url: 'testlink77.edu', order: next_order)
+      link = make_link(order: next_order)
 
       # Visit home page
       visit '/'
@@ -36,8 +52,7 @@ RSpec.describe('Quick Links') do
   context 'making links' do
     it 'allows admins to try to make new links' do
       # Promote ourself to admin
-      admin = FactoryBot.create(:admin_user)
-      sign_in admin
+      sign_in_admin
 
       # GET new link page
       get '/links/new'
@@ -56,8 +71,7 @@ RSpec.describe('Quick Links') do
 
     it 'allows admins to create links' do
       # Promote ourself to admin
-      admin = FactoryBot.create(:admin_user)
-      sign_in admin
+      admin_user = sign_in_admin
 
       # Ensure we actually created one Link
       expect do
@@ -73,7 +87,26 @@ RSpec.describe('Quick Links') do
 
         # Expect to be able to create link
         expect(response).to(have_http_status(:found))
+
+        # Expect the latest link to be authored by us
+        link = Link.last
+        expect(link.user).to(eq(admin_user))
       end.to(change(Link, :count).by(1))
+    end
+
+    it 'shows the author of a link' do
+      # Promote ourself to admin
+      sign_in_admin
+
+      # Create a link
+      link = make_link
+
+      # View link
+      visit link_path(link)
+
+      # Expect to see a link to the author
+      author_name = "#{link.user.user_first_name} #{link.user.user_last_name}"
+      expect(page).to(have_link(author_name, href: user_path(link.user)))
     end
 
     it 'prevents non-admins from creating links' do
@@ -94,11 +127,10 @@ RSpec.describe('Quick Links') do
   context 'deleting links' do
     it 'allows admins to delete links' do
       # Promote ourself to admin
-      admin = FactoryBot.create(:admin_user)
-      sign_in admin
+      sign_in_admin
 
       # Create link to delete
-      link = Link.create!(label: 'Test', url: 'https://test.com', order: 800_000)
+      link = make_link
 
       # Ensure that deletion does remove one Link
       expect do
@@ -112,7 +144,7 @@ RSpec.describe('Quick Links') do
 
     it 'prevents non-admins from deleting links' do
       # Create link to delete
-      link = Link.create!(label: 'Test', url: 'https://test.com', order: 800_000)
+      link = make_link
 
       # DELETE to link
       delete link_path(link)
@@ -125,11 +157,10 @@ RSpec.describe('Quick Links') do
   context 'editing links' do
     it 'allows admins to try to edit links' do
       # Promote ourself to admin
-      admin = FactoryBot.create(:admin_user)
-      sign_in admin
+      sign_in_admin
 
       # Create link to edit
-      link = Link.create!(label: 'Test', url: 'https://test.com', order: 800_000)
+      link = make_link
 
       # GET link edit page
       get edit_link_path(link)
@@ -140,7 +171,7 @@ RSpec.describe('Quick Links') do
 
     it 'prevents non-admins from trying to edit links' do
       # Create link to edit
-      link = Link.create!(label: 'Test', url: 'https://test.com', order: 800_000)
+      link = make_link
 
       # GET link edit page
       get edit_link_path(link)
@@ -151,11 +182,10 @@ RSpec.describe('Quick Links') do
 
     it 'allows admins to actually edit links url' do
       # Promote ourself to admin
-      admin = FactoryBot.create(:admin_user)
-      sign_in admin
+      sign_in_admin
 
       # Create link to edit
-      link = Link.create!(label: 'Test', url: 'https://test.com', order: 800_000)
+      link = make_link
 
       # Create edit data
       data = {
@@ -178,11 +208,10 @@ RSpec.describe('Quick Links') do
 
     it 'allows admins to actually edit links label' do
       # Promote ourself to admin
-      admin = FactoryBot.create(:admin_user)
-      sign_in admin
+      sign_in_admin
 
       # Create link to edit
-      link = Link.create!(label: 'Test', url: 'https://test.com', order: 800_000)
+      link = make_link
 
       # Create edit data
       data = {
@@ -205,11 +234,10 @@ RSpec.describe('Quick Links') do
 
     it 'allows admins to actually edit links order' do
       # Promote ourself to admin
-      admin = FactoryBot.create(:admin_user)
-      sign_in admin
+      sign_in_admin
 
       # Create link to edit
-      link = Link.create!(label: 'Test', url: 'https://test.com', order: 800_000)
+      link = make_link
 
       # Create edit data
       data = {
@@ -232,11 +260,10 @@ RSpec.describe('Quick Links') do
 
     it 'handles bad link edits' do
       # Promote ourself to admin
-      admin = FactoryBot.create(:admin_user)
-      sign_in admin
+      sign_in_admin
 
       # Create link to edit
-      link = Link.create!(label: 'Test', url: 'https://test.com', order: 800_000)
+      link = make_link
 
       # Create (bad) edit data
       data = {
@@ -254,7 +281,7 @@ RSpec.describe('Quick Links') do
 
     it 'prevents non-admins from actually editing links' do
       # Create link to edit
-      link = Link.create!(label: 'Test', url: 'https://test.com', order: 800_000)
+      link = make_link
 
       # Create edit data
       data = {

@@ -23,6 +23,7 @@ class LinksController < ApplicationController
   # POST /links or /links.json
   def create
     @link = Link.new(link_params)
+    @link.user = current_user
     @link.order = Link.get_next_order
 
     respond_to do |format|
