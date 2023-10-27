@@ -16,7 +16,7 @@ class PrayerRequestsController < ApplicationController
   def show
     prayer_request_id = params[:id]
     if !current_user.is_admin? && PrayerRequest.find(prayer_request_id).user_id != current_user.id
-      redirect_to(prayer_requests_path, alert: 'You are not authorized to perform this action. LOL')
+      redirect_to(prayer_requests_path, alert: 'You are not authorized to perform this action.')
     end
   end
 
