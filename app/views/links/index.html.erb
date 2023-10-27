@@ -1,12 +1,29 @@
 <h1>Links</h1>
 
-<div id="links">
+<table id="links">
+  <tr>
+    <th>Label</th>
+    <th>URL</th>
+    <th>Edit</th>
+    <th>Delete</th>
+    <th>Reorder</th>
+  </tr>
   <% @links.each do |link| %>
-    <%= render link %>
-    <p>
-      <%= link_to "Show this link", link %>
-    </p>
+    <tr>
+      <td><%= link.label %></td>
+      <td><%= link.url %></td>
+      <td><%= link_to "Edit this link", edit_link_path(link) %></td>
+      <!-- TODO: add a destroy path? -->
+      <td><%= button_to "Delete this link", link_path(link), method: :delete %></td>
+      <td>
+        <div class="up-down">
+          <%= button_to "^", up_link_path(link), method: :patch, class: "up-down-button", id: "up-button" %>
+          <%= button_to "v", down_link_path(link), method: :patch, class: "up-down-button", id: "down-button" %>
+        </div>
+      </td>
+    </tr>
   <% end %>
-</div>
+</table>
+
 
 <%= link_to "New link", new_link_path %>

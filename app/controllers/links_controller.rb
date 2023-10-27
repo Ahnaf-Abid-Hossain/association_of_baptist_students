@@ -58,6 +58,16 @@ class LinksController < ApplicationController
     end
   end
 
+  # PATCH /links/1/up
+  def up
+    # TODO: make link go up
+  end
+
+  # PATCH /links/1/down
+  def down
+    # TODO: make link go down
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

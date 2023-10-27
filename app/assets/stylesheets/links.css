@@ -1,0 +1,14 @@
+table#links {
+  display: table;
+  border: solid 1px;
+  border-collapse: collapse;
+}
+
+table#links td, table#links th {
+  border: solid 1px;
+  padding: 1em;
+}
+
+.up-down {
+  display: flex;
+}

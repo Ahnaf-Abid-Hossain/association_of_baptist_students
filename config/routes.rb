@@ -3,9 +3,14 @@ Rails.application.routes.draw do
   resources :prayer_requests
   resources :meeting_notes
 
-  # TODO: update this with only the routes we need
-  resources :links
-    # Add this route for the approval page
+  resources :links do
+    member do
+      patch 'up'
+      patch 'down'
+    end
+  end
+    
+  # Add this route for the approval page
   get 'approvals/index'
   # -=-=-=-=-
   # New routing
