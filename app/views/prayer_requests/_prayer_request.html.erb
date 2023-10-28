@@ -4,10 +4,12 @@
     <%= prayer_request.request %>
   </p>
 
-  <p>
-    <strong>Status:</strong>
-    <%= prayer_request.status %>
-  </p>
+  <% if current_user.is_admin? || prayer_request.user_id == current_user.id %>
+    <p>
+      <strong>Status:</strong>
+      <%= prayer_request.status %>
+    </p>
+  <% end %>
 
   <% if !prayer_request.is_anonymous %>
     <p>

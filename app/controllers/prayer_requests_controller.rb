@@ -16,7 +16,7 @@ class PrayerRequestsController < ApplicationController
   def show
     prayer_request_id = params[:id]
     if !current_user.is_admin? && PrayerRequest.find(prayer_request_id).user_id != current_user.id
-      redirect_to(prayer_requests_path, alert: 'You are not authorized to perform this action. LOL')
+      redirect_to(prayer_requests_path, alert: 'You are not authorized to perform this action.')
     end
   end
 
@@ -36,7 +36,7 @@ class PrayerRequestsController < ApplicationController
   # POST /prayer_requests or /prayer_requests.json
   def create
     # current_user.user.prayer_requests?
-    @prayer_request = current_user.prayer_requests.build(prayer_request_params_create)
+    @prayer_request = current_user.prayer_requests.build(create_prayer_requests_params)
     @prayer_request.status = 'not_read'
 
     respond_to do |format|
@@ -53,7 +53,7 @@ class PrayerRequestsController < ApplicationController
   # PATCH/PUT /prayer_requests/1 or /prayer_requests/1.json
   def update
     respond_to do |format|
-      if (current_user.is_admin? || @prayer_request.user_id == current_user.id) && @prayer_request.update(prayer_request_params_update)
+      if update_prayer_request
         format.html { redirect_to(prayer_request_url(@prayer_request), notice: 'Prayer request was successfully updated.') }
         format.json { render(:show, status: :ok, location: @prayer_request) }
       else
@@ -85,15 +85,38 @@ class PrayerRequestsController < ApplicationController
   end
 
   # Only allow a list of trusted parameters through.
-  def prayer_request_params_create
+  def create_prayer_requests_params
     params.require(:prayer_request).permit(:request, :is_anonymous)
   end
 
-  def prayer_request_params_update
-    if current_user.is_admin?
-      params.require(:prayer_request).permit(:request, :status)
-    else
-      params.require(:prayer_request).permit(:request, :is_anonymous)
-    end
+  def update_prayer_request
+    permitted_params = case
+                       when admin_with_other_user?
+                         params.require(:prayer_request).permit(:status)
+                       when admin_with_own_request?
+                         params.require(:prayer_request).permit(:request, :status, :is_anonymous)
+                       when user_with_own_request?
+                         params.require(:prayer_request).permit(:request, :is_anonymous)
+                       when user_with_other_user?
+                         return false
+                       end
+
+    return @prayer_request.update(permitted_params)
+  end
+
+  def admin_with_other_user?
+    current_user.is_admin? && @prayer_request.user_id != current_user.id
+  end
+
+  def admin_with_own_request?
+    current_user.is_admin? && @prayer_request.user_id == current_user.id
+  end
+
+  def user_with_own_request?
+    @prayer_request.user_id == current_user.id
+  end
+
+  def user_with_other_user?
+    @prayer_request.user_id != current_user.id
   end
 end

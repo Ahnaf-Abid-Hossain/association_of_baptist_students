@@ -23,10 +23,8 @@ RSpec.describe(PrayerRequest) do
   describe 'factory' do
     context 'creating valid factory prayer requests' do
       it 'is valid' do
-        # Using FactoryBot to create valid prayer requests
         prayer_request = FactoryBot.create(:prayer_request)
 
-        # Check if the prayer requests are valid
         expect(prayer_request).to(be_valid)
         prayer_request.destroy!
       end
@@ -34,11 +32,9 @@ RSpec.describe(PrayerRequest) do
 
     context 'creating invalid factory prayer requests' do
       it 'is not valid' do
-        # Using FactoryBot to create invalid prayer requests
         prayer_request_no_request = FactoryBot.build(:invalid_prayer_request_no_request)
         prayer_request_no_status = FactoryBot.build(:invalid_prayer_request_no_status)
 
-        # Check if the prayer requests are not valid
         expect(prayer_request_no_request).not_to(be_valid)
         expect(prayer_request_no_status).not_to(be_valid)
       end
