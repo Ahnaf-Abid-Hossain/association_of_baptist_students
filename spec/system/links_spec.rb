@@ -152,6 +152,45 @@ RSpec.describe('Links') do
       # Expect to be forbidden
       expect(response).to(have_http_status(:forbidden))
     end
+
+    it 'reorders deleted links' do
+      # Promote ourself to admin
+      sign_in_admin
+      
+      # Delete all links
+      Link.destroy_all
+
+      # Expect 0 links
+      expect(Link.count).to(eq(0))
+
+      # Create three links {1, 2, 3}
+
+      link1 = make_link(order: 1)
+      expect(link1).to_not(be(nil))
+
+      link2 = make_link(order: 2)
+      expect(link2).to_not(be(nil))
+
+      link3 = make_link(order: 3)
+      expect(link3).to_not(be(nil))
+      
+      # Expect 3 links
+      expect(Link.count).to(eq(3))
+
+      # DELETE to link2
+      delete(link_path(link2))
+
+      # Expect to be accepted
+      expect(response).to(have_http_status(:found))
+      
+      # Expect link1 to still be (order: 1)
+      link1_new = Link.find(link1.id)
+      expect(link1_new.order).to(eq(1))
+      
+      # Expect link3 to be (order: 2) now
+      link3_new = Link.find(link3.id)
+      expect(link3_new.order).to(eq(2))
+    end
   end
 
   context 'editing links' do
