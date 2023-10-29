@@ -101,8 +101,8 @@ RSpec.describe('Links') do
       # Create a link
       link = make_link
 
-      # View link
-      visit link_path(link)
+      # View links
+      visit links_path
 
       # Expect to see a link to the author
       author_name = "#{link.user.user_first_name} #{link.user.user_last_name}"
@@ -121,26 +121,6 @@ RSpec.describe('Links') do
 
       # Expect to be forbidden
       expect(response).to(have_http_status(:forbidden))
-    end
-
-    it 'handles bad link creations' do
-      # Promote ourself to admin
-      sign_in_admin
-
-      # Create (bad) link data
-      data = {
-        link: {
-          label: 'Test',
-          url: 'https://test.com',
-          order: -8
-        }
-      }
-
-      # POST link create page
-      post links_path, params: data
-
-      # Expect to be OK
-      expect(response).to(have_http_status(:unprocessable_entity))
     end
   end
 
@@ -320,6 +300,105 @@ RSpec.describe('Links') do
 
       # PUT link edit page
       put link_path(link), params: data
+
+      # Expect to be forbidden
+      expect(response).to(have_http_status(:forbidden))
+    end
+
+    it 'allows admins to move a link up/down' do
+      # Sign in as admin
+      sign_in_admin
+
+      # Create four links
+      # Expect links to not be nil
+      link1 = make_link(order: 1)
+      expect(link1).to_not(be(nil))
+
+      link2 = make_link(order: 2)
+      expect(link2).to_not(be(nil))
+
+      link3 = make_link(order: 3)
+      expect(link3).to_not(be(nil))
+
+      link4 = make_link(order: 4)
+      expect(link4).to_not(be(nil))
+
+      # Store original order
+      order2_original = link2.order
+      expect(order2_original).to(eq(2))
+
+      order3_original = link3.order
+      expect(order3_original).to(eq(3))
+
+      # Try to move link3 up (swap 2<->3)
+      patch up_link_path(link3)
+
+      # Expect to be "redirected" to links
+      expect(response).to(redirect_to(links_path))
+
+      # Expect 2<->3 order swapped
+      order2_new = Link.find(link2.id).order
+      order3_new = Link.find(link3.id).order
+      expect(order2_new).to(eq(order3_original))
+      expect(order2_new).to(eq(3))
+      expect(order3_new).to(eq(order2_original))
+      expect(order3_new).to(eq(2))
+
+      # Try to move link3 back down
+      patch down_link_path(link3)
+
+      # Expect to be "redirected" to links
+      expect(response).to(redirect_to(links_path))
+
+      # Expect 2<->3 order to be returned to original
+      order2_new2 = Link.find(link2.id).order
+      order3_new2 = Link.find(link3.id).order
+      expect(order2_new2).to(eq(order2_original))
+      expect(order2_new2).to(eq(2))
+      expect(order3_new2).to(eq(order3_original))
+      expect(order3_new2).to(eq(3))
+    end
+
+    it 'ignores attempts to move links past end of list' do
+      # Sign in as admin
+      sign_in_admin
+
+      # Create two links
+      # Expect links to not be nil
+      link1 = make_link(order: 1)
+      expect(link1).to_not(be(nil))
+
+      link2 = make_link(order: 2)
+      expect(link2).to_not(be(nil))
+
+      # Expect there to only be two links
+      expect(Link.count).to(eq(2))
+
+      # Try to move link1 up
+      patch up_link_path(link1)
+
+      # Expect to be ignored
+      expect(response).to(have_http_status(:no_content))
+
+      # Try to move link1 down
+      patch down_link_path(link2)
+
+      # Expect to be ignored
+      expect(response).to(have_http_status(:no_content))
+    end
+
+    it 'disallows non-admins from moving a link up/down' do
+      # Create a link to edit
+      link = make_link
+
+      # Try to move link up
+      patch up_link_path(link)
+
+      # Expect to be forbidden
+      expect(response).to(have_http_status(:forbidden))
+
+      # Try to move link down
+      patch down_link_path(link)
 
       # Expect to be forbidden
       expect(response).to(have_http_status(:forbidden))
