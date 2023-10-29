@@ -1,0 +1,28 @@
+.abs-jumbotron-pad {
+  width: 80vw;
+  height: 60vh;
+  padding-left: 10vw;
+  padding-top: 10vh;
+}
+
+.abs-jumbotron {
+  padding-left: 10vw;
+  padding-right: 10vw;
+  padding-top: 2vh;
+  padding-bottom: 5vh;
+  border-radius: 1em;
+  background-color: #500000;
+  color: white;
+}
+
+.abs-jumbotron-head {
+  text-align: center;
+  padding-bottom: 2.5vh;
+}
+
+.abs-sign-in {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.25em;
+}
