@@ -47,6 +47,7 @@ class LinksController < ApplicationController
   # DELETE /links/1 or /links/1.json
   def destroy
     @link.destroy!
+    Link.reorder_links
 
     respond_to do |format|
       format.html { redirect_to(links_url, notice: 'Link was successfully destroyed.') }

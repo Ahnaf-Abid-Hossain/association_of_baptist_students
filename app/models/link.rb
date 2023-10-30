@@ -12,4 +12,12 @@ class Link < ApplicationRecord
       Link.last.order + 1
     end
   end
+
+  def self.reorder_links
+    # Reorder all links
+    Link.order(order: :asc).each_with_index do |link, index|
+      link.order = index + 1
+      link.save!
+    end
+  end
 end
