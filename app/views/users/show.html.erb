@@ -19,9 +19,9 @@
   <% end %>
   <br>
   <% if current_user && current_user.is_admin? %>
-    <%= link_to "New Meeting Note", new_user_meeting_note_path(@user) %>
+    <%= link_to "New Meeting Note", new_meeting_note_path() %>
     <br>
-    <%= link_to "View Meeting Notes", user_meeting_notes_path(@user) %>
+    <%= link_to "View Meeting Notes", meeting_notes_path() %>
 
 <!--
   <h2>Meeting Notes for <%= @user.user_first_name %></h2>
