@@ -1,12 +1,18 @@
 table#links {
   display: table;
-  border: solid 1px;
+  border-top: solid 1px #ddd;
+  border-bottom: solid 1px #ddd;
   border-collapse: collapse;
 }
 
 table#links td, table#links th {
-  border: solid 1px;
+  border-bottom: solid 1px #ddd;
+  text-align: left;
   padding: 1em;
+}
+
+table#links th {
+  border-bottom-width: 2px !important;
 }
 
 .up-down {
