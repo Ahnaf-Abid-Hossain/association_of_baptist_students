@@ -21,7 +21,14 @@
   </div>
   <div class="navbar-right">
     <% if current_user != nil %>
-      <h3 class="login-text">Logged in as: <%= current_user.full_name %> | <%= link_to "Your Profile", user_path(current_user) %> | <%= link_to "Log out", destroy_user_session_path %></h3>
+      <h3 class="login-text">
+        <%= link_to user_path(current_user), class: 'navbar-user-icon-link' do %>
+          <img class="navbar-user-icon" src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106" />
+        <% end %>
+        <%= link_to current_user.full_name, user_path(current_user), class: 'navbar-user-name navbar-link' %>
+        <div class="navbar-user-separator"></div>
+        <%= link_to "Log Out", destroy_user_session_path, class: 'navbar-user-logout navbar-link' %>
+      </h3>
     <% end %>
   </div>
 </div>
