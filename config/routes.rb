@@ -3,9 +3,14 @@ Rails.application.routes.draw do
   resources :prayer_requests
   resources :meeting_notes
 
-  # TODO: update this with only the routes we need
-  resources :links
-    # Add this route for the approval page
+  resources :links, :except => [:show] do
+    member do
+      patch 'up'
+      patch 'down'
+    end
+  end
+    
+  # Add this route for the approval page
   get 'approvals/index'
   # -=-=-=-=-
   # New routing
@@ -20,7 +25,6 @@ Rails.application.routes.draw do
 
 
   resources :users do
-    resources :meeting_notes
     member do
       patch 'approve'
       patch 'decline'

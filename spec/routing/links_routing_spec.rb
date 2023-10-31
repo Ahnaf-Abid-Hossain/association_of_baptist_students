@@ -10,10 +10,6 @@ RSpec.describe(LinksController) do
       expect(get: '/links/new').to(route_to('links#new'))
     end
 
-    it 'routes to #show' do
-      expect(get: '/links/1').to(route_to('links#show', id: '1'))
-    end
-
     it 'routes to #edit' do
       expect(get: '/links/1/edit').to(route_to('links#edit', id: '1'))
     end
@@ -32,6 +28,14 @@ RSpec.describe(LinksController) do
 
     it 'routes to #destroy' do
       expect(delete: '/links/1').to(route_to('links#destroy', id: '1'))
+    end
+
+    it 'routes to #up' do
+      expect(patch: '/links/1/up').to(route_to('links#up', id: '1'))
+    end
+
+    it 'routes to #down' do
+      expect(patch: '/links/1/down').to(route_to('links#down', id: '1'))
     end
   end
 end

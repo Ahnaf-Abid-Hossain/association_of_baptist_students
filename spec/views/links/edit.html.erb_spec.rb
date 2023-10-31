@@ -2,11 +2,7 @@ require 'rails_helper'
 
 RSpec.describe('links/edit') do
   let(:link) do
-    Link.create!(
-      label: 'MyString',
-      url: 'MyString',
-      order: 1
-    )
+    FactoryBot.create(:link)
   end
 
   before do
@@ -20,8 +16,6 @@ RSpec.describe('links/edit') do
       assert_select 'input[name=?]', 'link[label]'
 
       assert_select 'input[name=?]', 'link[url]'
-
-      assert_select 'input[name=?]', 'link[order]'
     end
   end
 end

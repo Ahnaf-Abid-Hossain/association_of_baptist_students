@@ -1,12 +1,45 @@
 <h1>Links</h1>
 
-<div id="links">
-  <% @links.each do |link| %>
-    <%= render link %>
-    <p>
-      <%= link_to "Show this link", link %>
-    </p>
-  <% end %>
-</div>
-
 <%= link_to "New link", new_link_path %>
+
+<br />
+<br />
+
+<table id="links">
+  <tr>
+    <th>Label</th>
+    <th>URL</th>
+    <th>Author</th>
+    <th>Edit</th>
+    <th>Delete</th>
+    <th>Reorder</th>
+  </tr>
+  <% @links.each_with_index do |link, index| %>
+    <tr>
+      <td><%= link.label %></td>
+      <td><%= link.url %></td>
+      <% if link.user == nil %>
+        <td>Unknown Author</td>
+      <% else %>
+        <td><%= link_to(link.user.user_first_name + " " + link.user.user_last_name, user_path(link.user)) %></td>
+      <% end %>
+      <td><%= link_to "Edit this link", edit_link_path(link) %></td>
+      <!-- TODO: add a destroy path? -->
+      <td><%= button_to "Delete this link", link_path(link), method: :delete %></td>
+      <td>
+        <div class="up-down">
+          <!-- Up Button -->
+          <%= button_to "^", up_link_path(link),
+            method: :patch,
+            class: "up-down-button up-button",
+            disabled: index == 0 %>
+          <!-- Down Button -->
+          <%= button_to "v", down_link_path(link),
+            method: :patch,
+            class: "up-down-button down-button",
+            disabled: index == @links.length() - 1 %>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+</table>
