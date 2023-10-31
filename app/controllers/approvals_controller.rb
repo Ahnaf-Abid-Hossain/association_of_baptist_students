@@ -11,4 +11,26 @@ class ApprovalsController < ApplicationController
       redirect_to(root_path) # or any other path you prefer
     end
   end
+
+  def show_users
+    @users_all = User.all
+  end
+
+  def show_rejected_users
+    @rejected_users = User.where(approval_status: -1)
+  end
+
+  # def approve
+  #   user = User.find(params[:id])
+  #   user.update(approval_status: 1)
+  #   redirect_to show_pending_users_approvals_path
+  # end
+
+  # def reject
+  #   user = User.find(params[:id])
+  #   user.update(approval_status: -1)
+  #   redirect_to show_pending_users_approvals_path
+  # end
+
+
 end
