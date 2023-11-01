@@ -46,7 +46,78 @@ RSpec.describe('Links') do
       expect(page).to(have_css('div.quick-links'))
     end
 
-    pending 'displays links in order'
+    it 'displays built-in links (for non admins)' do
+      # Delete all links
+      Link.destroy_all
+
+      # Expect 0 links
+      expect(Link.count).to(eq(0))
+      
+      # Visit home page
+      visit '/'
+
+      # Test for links in order
+      expect(page.find('.quick-links .navbar-link:nth-child(1)')['href']).to(eq(root_path))
+      expect(page.find('.quick-links .navbar-link:nth-child(2)')['href']).to(eq(meeting_notes_path))
+      expect(page.find('.quick-links .navbar-link:nth-child(3)')['href']).to(eq(prayer_requests_path))
+
+      # Test for no extra links
+      expect(page).not_to have_css('.quick-links .navbar-link:nth-child(4)')
+    end
+
+    it 'displays built-in links (for admins)' do
+      # Promote ourself to admin
+      sign_in_admin
+      
+      # Delete all links
+      Link.destroy_all
+
+      # Expect 0 links
+      expect(Link.count).to(eq(0))
+      
+      # Visit home page
+      visit '/'
+
+      # Test for links in order
+      expect(page.find('.quick-links .navbar-link:nth-child(1)')['href']).to(eq(root_path))
+      expect(page.find('.quick-links .navbar-link:nth-child(2)')['href']).to(eq(meeting_notes_path))
+      expect(page.find('.quick-links .navbar-link:nth-child(3)')['href']).to(eq(prayer_requests_path))
+      expect(page.find('.quick-links .navbar-link:nth-child(4)')['href']).to(eq(approvals_index_path))
+      expect(page.find('.quick-links .navbar-link:nth-child(5)')['href']).to(eq(links_path))
+
+      # Test for no extra links
+      expect(page).not_to have_css('.quick-links .navbar-link:nth-child(6)')
+    end
+
+    it 'displays links in order' do
+      # Promote ourself to admin
+      sign_in_admin
+      
+      # Delete all links
+      Link.destroy_all
+
+      # Expect 0 links
+      expect(Link.count).to(eq(0))
+
+      # Create three links {1, 2, 3}
+
+      link1 = make_link(order: 1)
+      expect(link1).to_not(be(nil))
+
+      link2 = make_link(order: 2)
+      expect(link2).to_not(be(nil))
+
+      link3 = make_link(order: 3)
+      expect(link3).to_not(be(nil))
+      
+      # Visit home page
+      visit '/'
+
+      # Test for links in order
+      expect(page.find('.quick-links .navbar-link:nth-child(6)')['href']).to(eq(link1.url))
+      expect(page.find('.quick-links .navbar-link:nth-child(7)')['href']).to(eq(link2.url))
+      expect(page.find('.quick-links .navbar-link:nth-child(8)')['href']).to(eq(link3.url))
+    end
   end
 
   context 'making links' do
@@ -67,6 +138,23 @@ RSpec.describe('Links') do
 
       # Expect to be directed away
       expect(response).to(redirect_to('/'))
+    end
+
+    it 'prevents admins from creating empty links' do
+      # Promote ourself to admin
+      admin_user = sign_in_admin
+
+      # POST to links page
+      post('/links', params: {
+          link: {
+            label: 'Test',
+            url: nil
+          }
+        }
+      )
+
+      # Expect to be able to create link
+      expect(response).to(have_http_status(:unprocessable_entity))
     end
 
     it 'allows admins to create links' do
