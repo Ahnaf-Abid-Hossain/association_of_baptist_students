@@ -2,9 +2,11 @@
   <div class="quick-links">
     <%= link_to "Home", root_path %>
     <%= link_to "Prayer Requests", prayer_requests_path %>
+    <%= link_to "Meeting Notes", meeting_notes_path %>
     <% if current_user && current_user.is_admin? %>
       <%= link_to "Approvals", approvals_index_path  %>
       <%= link_to "Links", links_path %>
+      
     <%end%>
     <% if @links != nil %>
       <% @links.each do |link| %>
