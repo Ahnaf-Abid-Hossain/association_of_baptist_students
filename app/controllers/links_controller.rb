@@ -104,7 +104,7 @@ class LinksController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def link_params
-    params.require(:link).permit(:label, :url, :order)
+    params.require(:link).permit(:label, :url)
   end
 
   def forbid_non_admin

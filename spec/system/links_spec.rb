@@ -152,6 +152,101 @@ RSpec.describe('Links') do
         expect(link3_new.order).to(eq(2))
       end
     end
+
+    context 'editing links' do
+      let(:link) { FactoryBot.create(:link, user: admin_user, order: 1) }
+
+      it 'allows admins to visit #edit' do
+        # GET link edit page
+        get edit_link_path(link)
+
+        # Expect to be allowed into the edit page
+        expect(response).to(have_http_status(:ok))
+      end
+
+      it 'allows admins to edit url' do
+        # PATCH link edit path
+        patch link_path(link), params: { link: { url: 'http://test.com' } }
+
+        # Expect to be OK
+        expect(response).to(have_http_status(:found))
+
+        # Expect link to now have URL test.com
+        link_new = Link.find(link.id)
+        expect(link_new).not_to(be_nil)
+        expect(link_new.url).to(eq('http://test.com'))
+      end
+
+      it 'allows admins to edit label' do
+        # PATCH link edit path
+        patch link_path(link), params: { link: { label: 'Hello' } }
+
+        # Expect to be OK
+        expect(response).to(have_http_status(:found))
+
+        # Expect link to now have label Hello
+        link_new = Link.find(link.id)
+        expect(link_new).not_to(be_nil)
+        expect(link_new.label).to(eq('Hello'))
+      end
+
+      it 'prevents admins from editing order' do
+        # PATCH link edit path
+        patch link_path(link), params: { link: { order: 800_000 } }
+
+        # Expect to be OK
+        # (it will silently ignore the order edit)
+        expect(response).to(have_http_status(:found))
+
+        # Expect link to have unchanged order
+        link_new = Link.find(link.id)
+        expect(link_new).not_to(be_nil)
+        expect(link_new.order).to(eq(1))
+      end
+
+      it 'prevents admins from making bad link edits' do
+        # PATCH link edit path
+        patch link_path(link), params: { link: { url: nil } }
+
+        # Expect to be unprocessable
+        expect(response).to(have_http_status(:unprocessable_entity))
+      end
+    end
+
+    context 'reordering links' do
+      let(:link1) { FactoryBot.create(:link, user: admin_user, order: 1) }
+      let(:link2) { FactoryBot.create(:link, user: admin_user, order: 2) }
+      let(:link3) { FactoryBot.create(:link, user: admin_user, order: 3) }
+      let(:link4) { FactoryBot.create(:link, user: admin_user, order: 4) }
+
+      it 'allows admins to move a link up/down' do
+        # Expect order to be 1, 2, 3, 4
+        expect(link1.order).to(eq(1))
+        expect(link2.order).to(eq(2))
+        expect(link3.order).to(eq(3))
+        expect(link4.order).to(eq(4))
+
+        # Try to move link3 up (swap 2<->3)
+        patch up_link_path(link3)
+
+        # Expect to be "redirected" to links
+        expect(response).to(redirect_to(links_path))
+
+        # Expect 2<->3 order swapped
+        expect(link2.reload.order).to(eq(3))
+        expect(link3.reload.order).to(eq(2))
+
+        # Try to move link3 back down
+        patch down_link_path(link3)
+
+        # Expect to be "redirected" to links
+        expect(response).to(redirect_to(links_path))
+
+        # Expect 2<->3 order to be returned to original
+        expect(link2.reload.order).to(eq(2))
+        expect(link3.reload.order).to(eq(3))
+      end
+    end
   end
 
   context 'as non-admin' do
@@ -217,6 +312,14 @@ RSpec.describe('Links') do
         expect(page.find('.quick-links .navbar-link:nth-child(5)')['href']).to(eq(links[1][:url]))
         expect(page.find('.quick-links .navbar-link:nth-child(6)')['href']).to(eq(links[2][:url]))
       end
+
+      it 'prevents non-admins from visiting #index' do
+        # GET links page
+        get '/links'
+
+        # Expect to be directed away
+        expect(response).to(redirect_to('/'))
+      end
     end
 
     context 'creating links' do
@@ -244,6 +347,44 @@ RSpec.describe('Links') do
 
         # DELETE to link page
         delete link_path(link)
+
+        # Expect to be forbidden
+        expect(response).to(have_http_status(:forbidden))
+      end
+    end
+
+    context 'editing links' do
+      let(:link) { FactoryBot.create(:link, user: admin_user, order: 1) }
+
+      it 'prevents non-admins from visiting #edit' do
+        # GET link edit page
+        get edit_link_path(link)
+
+        # Expect to be directed away
+        expect(response).to(redirect_to('/'))
+      end
+
+      it 'prevents non-admins from editing links' do
+        # PATCH link page
+        patch link_path(link), params: { link: { url: 'http://test.com' } }
+
+        # Expect to be forbidden
+        expect(response).to(have_http_status(:forbidden))
+      end
+    end
+
+    context 'reordering links' do
+      let(:link) { FactoryBot.create(:link, user: admin_user, order: 1) }
+
+      it 'prevents non-admins from reordering links' do
+        # Try to move link up
+        patch up_link_path(link)
+
+        # Expect to be forbidden
+        expect(response).to(have_http_status(:forbidden))
+
+        # Try to move link down
+        patch down_link_path(link)
 
         # Expect to be forbidden
         expect(response).to(have_http_status(:forbidden))
