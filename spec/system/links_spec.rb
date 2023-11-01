@@ -69,6 +69,23 @@ RSpec.describe('Links') do
       expect(response).to(redirect_to('/'))
     end
 
+    it 'prevents admins from creating empty links' do
+      # Promote ourself to admin
+      admin_user = sign_in_admin
+
+      # POST to links page
+      post('/links', params: {
+          link: {
+            label: 'Test',
+            url: nil
+          }
+        }
+      )
+
+      # Expect to be able to create link
+      expect(response).to(have_http_status(:unprocessable_entity))
+    end
+
     it 'allows admins to create links' do
       # Promote ourself to admin
       admin_user = sign_in_admin
