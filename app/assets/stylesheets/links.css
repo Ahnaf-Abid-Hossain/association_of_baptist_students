@@ -1,3 +1,9 @@
+.hero {
+  width: 80vw;
+  margin-left: 10vw;
+  margin-right: 10vw;
+}
+
 table#links {
   display: table;
   border-top: solid 1px #ddd;

@@ -1,9 +1,11 @@
 /* Navbar Layout */
 .navbar {
   border-bottom: 1px solid #ddd;
+  /* align-content: flex-end; */
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  height: 5em;
+  height: 6em;
   width: 100vw;
   margin-bottom: 0.75em;
   /* Logo */
@@ -41,6 +43,7 @@
 .quick-links {
   align-items: center;
   display: flex;
+  flex-wrap: wrap;
   gap: 30px;
 }
 
@@ -60,6 +63,7 @@ a.navbar-link:hover {
   display: flex;
   align-items: center;
   justify-content: left;
+  margin: 0;
 }
 
 .navbar-user-icon-link {
