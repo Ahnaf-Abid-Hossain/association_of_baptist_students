@@ -6,11 +6,16 @@
   height: 5em;
   width: 100vw;
   margin-bottom: 0.75em;
+  /* Logo */
+  background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(https://lirp.cdn-website.com/49b47ae5/dms3rep/multi/opt/Layer_1-120w.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
-.navbar .navbar-left, .navbar .navbar-right {
+/* .navbar .navbar-left, .navbar .navbar-right {
   width: 50vw;
-}
+} */
 
 .navbar-left {
   align-items: center;
@@ -49,15 +54,6 @@ a.navbar-link {
 a.navbar-link:hover {
   color: #500000;
   font-weight: bold;
-}
-
-.navbar-logo {
-  background: url(https://lirp.cdn-website.com/49b47ae5/dms3rep/multi/opt/Layer_1-120w.png);
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  width: 4em;
-  height: 4em;
 }
 
 .login-text {
