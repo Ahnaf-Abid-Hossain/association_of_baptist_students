@@ -104,6 +104,8 @@ RSpec.describe('Links') do
         # Expect to get :unprocessable_entity
         expect(response).to(have_http_status(:unprocessable_entity))
       end
+
+      pending 'adds http:// to the beginning of links missing a protocol'
     end
 
     context 'deleting links' do
@@ -211,6 +213,8 @@ RSpec.describe('Links') do
         # Expect to be unprocessable
         expect(response).to(have_http_status(:unprocessable_entity))
       end
+
+      pending 'adds http:// to the beginning of links missing a protocol'
     end
 
     context 'reordering links' do
