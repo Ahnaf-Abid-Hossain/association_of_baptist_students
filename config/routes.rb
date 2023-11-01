@@ -29,7 +29,6 @@ Rails.application.routes.draw do
       patch 'approve'
       patch 'decline'
       patch 'approve_admin'
-      # patch 'reject'
     end
     post 'approve/:id', action: :approve, on: :member
     post 'reject/:id', action: :reject, on: :member
@@ -38,16 +37,8 @@ Rails.application.routes.draw do
   
 
   resources :approvals do
-    # member do
-    #   patch 'approve'
-    #   patch 'reject'
-    # end
     get 'show_users', on: :collection
     get 'show_rejected_users', on: :collection
-    # post 'approve/:id', action: :approve, on: :member
-    # post 'reject/:id', action: :reject, on: :member
-    # post 'approve/:id', action: :approve, on: :member
-    # post 'reject/:id', action: :reject, on: :member
   end
 
   resources :users
