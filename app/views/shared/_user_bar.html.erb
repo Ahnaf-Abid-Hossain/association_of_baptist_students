@@ -1,3 +1,4 @@
+
 <!-- main_links | user_profile -->
 <div class="navbar">
   <div class="navbar-left">
@@ -13,6 +14,7 @@
         <% @links.each do |link| %>
           <%= sanitize link_to(link.label, link.url, target: :blank, class: 'navbar-link') %>
         <% end %>
+
       <% end %>
     </div>
   </div>

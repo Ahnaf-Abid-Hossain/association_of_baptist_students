@@ -1,6 +1,14 @@
 class MeetingNotesController < ApplicationController
   before_action :set_meeting_note, only: %i[show edit update destroy]
   before_action :check_approval_status
+  before_action :user_is_admin, only: [:new, :create, :show, :edit]
+
+  def user_is_admin
+    unless current_user&.is_admin
+      flash[:alert] = 'You do not have permission to access this page.'
+      redirect_to(root_path)
+    end
+  end
 
   # GET /meeting_notes or /meeting_notes.json
   def index

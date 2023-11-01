@@ -4,9 +4,12 @@
   <% @meeting_notes.each do |meeting_note| %>
     <%= render meeting_note %>
     <p>
-      <%= link_to "Show this meeting note", meeting_note %>
+      <% if current_user && current_user.is_admin? %>
+        <%= link_to "Show this meeting note", meeting_note %>
+      <%end%>
     </p>
   <% end %>
 </div>
-
-<%= link_to "New meeting note", new_meeting_note_path %>
+<% if current_user && current_user.is_admin? %>
+  <%= link_to "New meeting note", new_meeting_note_path %>
+<%end%>
