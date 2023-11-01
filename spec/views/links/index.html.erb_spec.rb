@@ -18,9 +18,24 @@ RSpec.describe('links/index') do
     assert_select 'tr>td a', text: Regexp.new('Johnny Admin'.to_s), count: 2
   end
 
+  it 'has add button' do
+    render
+    assert_select 'i.fas.fa-plus', count: 1
+  end
+
+  it 'has edit buttons' do
+    render
+    assert_select 'i.fas.fa-edit', count: 2
+  end
+
+  it 'has delete buttons' do
+    render
+    assert_select 'i.fas.fa-trash-alt', count: 2
+  end
+
   it 'has up/down buttons' do
     render
-    assert_select '.up-down button.up-button', count: 2
-    assert_select '.up-down button.down-button', count: 2
+    assert_select 'i.fas.fa-arrow-up', count: 2
+    assert_select 'i.fas.fa-arrow-down', count: 2
   end
 end

@@ -1,45 +1,68 @@
-<h1>Links</h1>
+<div class="hero">
+  <h1>Links</h1>
 
-<%= link_to "New link", new_link_path %>
-
-<br />
-<br />
-
-<table id="links">
-  <tr>
-    <th>Label</th>
-    <th>URL</th>
-    <th>Author</th>
-    <th>Edit</th>
-    <th>Delete</th>
-    <th>Reorder</th>
-  </tr>
-  <% @links.each_with_index do |link, index| %>
-    <tr>
-      <td><%= link.label %></td>
-      <td><%= link.url %></td>
-      <% if link.user == nil %>
-        <td>Unknown Author</td>
-      <% else %>
-        <td><%= link_to(link.user.user_first_name + " " + link.user.user_last_name, user_path(link.user)) %></td>
-      <% end %>
-      <td><%= link_to "Edit this link", edit_link_path(link) %></td>
-      <!-- TODO: add a destroy path? -->
-      <td><%= button_to "Delete this link", link_path(link), method: :delete %></td>
-      <td>
-        <div class="up-down">
-          <!-- Up Button -->
-          <%= button_to "^", up_link_path(link),
-            method: :patch,
-            class: "up-down-button up-button",
-            disabled: index == 0 %>
-          <!-- Down Button -->
-          <%= button_to "v", down_link_path(link),
-            method: :patch,
-            class: "up-down-button down-button",
-            disabled: index == @links.length() - 1 %>
-        </div>
-      </td>
-    </tr>
+  <%= link_to new_link_path do %>
+    <button class="success-button links-button with-text">
+      <i class="fas fa-plus"></i> Add Link
+    </button>
   <% end %>
-</table>
+
+  <table id="links">
+    <thead>
+        <tr>
+          <th>Edit</th>
+          <th>Label</th>
+          <th>URL</th>
+          <th>Author</th>
+          <th>Delete</th>
+          <th>Reorder</th>
+        </tr>
+    </thead>
+    <% @links.each_with_index do |link, index| %>
+      <tr>
+        <td>
+          <%= button_to edit_link_path(link), class: 'neutral-button links-button', method: :get do %>
+            <i class="fas fa-edit"></i>
+          <% end %>
+        </td>
+        <td><b><%= link.label %></b></td>
+        <td><%= link.url %></td>
+        <% if link.user == nil %>
+          <td>Unknown Author</td>
+        <% else %>
+          <td>
+            <div class="link-author">
+              <%= link_to user_path(link.user), class: 'link-author-icon-link' do %>
+                <img class="link-author-icon" src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106" />
+              <% end %>
+              <%= link_to(link.user.user_first_name + " " + link.user.user_last_name, user_path(link.user)) %>
+            </div>
+          </td>
+        <% end %>
+        <td>
+          <%= button_to link_path(link), method: :delete, class: 'danger-button links-button' do %>
+            <i class="fas fa-trash-alt"></i>
+          <% end %>
+        </td>
+        <td>
+          <div class="button-group">
+            <!-- Up Button -->
+            <%= button_to up_link_path(link),
+              method: :patch,
+              class: "neutral-button button-group-left links-button",
+              disabled: index == 0 do %>
+              <i class="fas fa-arrow-up"></i>
+            <% end %>
+            <!-- Down Button -->
+            <%= button_to down_link_path(link),
+              method: :patch,
+              class: "neutral-button button-group-right links-button",
+              disabled: index == @links.length() - 1 do %>
+              <i class="fas fa-arrow-down"></i>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

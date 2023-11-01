@@ -1,14 +1,135 @@
+.hero {
+  width: 80vw;
+  margin-left: 10vw;
+  margin-right: 10vw;
+}
+
 table#links {
   display: table;
-  border: solid 1px;
+  border-top: solid 1px #ddd;
+  border-bottom: solid 1px #ddd;
   border-collapse: collapse;
+  width: 80vw;
+  margin-top: 0.5em;
+}
+
+table#links thead {
+  border-bottom: solid 2px #ddd;
+}
+
+table#links tr {
+  border-bottom: solid 1px #ddd;
 }
 
 table#links td, table#links th {
-  border: solid 1px;
+  text-align: left;
   padding: 1em;
 }
 
-.up-down {
+table#links th {
+  border-bottom-width: 2px !important;
+}
+
+.links-input {
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 0.5em;
+  padding: 0.75em 1em;
+  font-size: 11pt;
+  outline: none;
+}
+
+.links-button {
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 0.5em;
+  color: white;
+  padding: 0.75em 1em;
+  font-weight: bold;
+  font-size: 11pt;
+  outline: none;
+}
+
+.links-button.with-text i {
+  margin-right: 0.5em;
+}
+
+.success-button {
+  border-color: hsl(116, 63%, 26%);
+  background-color: hsl(116, 100%, 30%);
+}
+
+.success-button:active {
+  background-color: hsl(116, 100%, 20%);
+}
+
+.success-button:disabled {
+  border-color: #ddd;
+  background-color: #eee;
+  color: #ddd;
+}
+
+.danger-button {
+  border-color: hsl(0, 63%, 43%);
+  background-color: hsl(0, 100%, 62%);
+}
+
+.danger-button:active {
+  background-color: hsl(0, 100%, 42%);
+}
+
+.danger-button:disabled {
+  border-color: #ddd;
+  background-color: #eee;
+  color: #ddd;
+}
+
+.button-group {
   display: flex;
+}
+
+.neutral-button {
+  border-color: hsl(216, 63%, 43%);
+  background-color: hsl(216, 100%, 62%);
+}
+
+.neutral-button:active {
+  background-color: hsl(216, 100%, 42%);
+}
+
+.neutral-button:disabled {
+  border-color: #ddd;
+  background-color: #eee;
+  color: #ddd;
+}
+
+.button-group-left {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.button-group-middle {
+  border-radius: 0 !important;
+}
+
+.button-group-right {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+.link-author {
+  align-items: center;
+  display: flex;
+  justify-content: left;
+}
+
+.link-author-icon-link {
+  display: flex;
+  align-items: center;
+}
+
+.link-author-icon {
+  height: 2em;
+  width: 2em;
+  margin-right: 0.75em;
 }
