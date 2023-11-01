@@ -13,15 +13,20 @@
 
   <div>
     <%= form.label :label, style: "display: block" %>
-    <%= form.text_field :label %>
+    <%= form.text_field :label, class: 'links-input', style: 'width: 40vw' %>
   </div>
 
   <div>
     <%= form.label :url, style: "display: block" %>
-    <%= form.text_field :url %>
+    <%= form.text_field :url, class: 'links-input', style: 'width: 40vw' %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <br />
+
+  <div class="button-group">
+    <%= link_to links_path do %>
+      <button class="links-button with-text danger-button button-group-left"><i class="fa fa-arrow-left"></i> Back</button>
+    <% end %>
+    <%= form.button class: 'links-button neutral-button button-group-right', type: :submit %>
   </div>
 <% end %>

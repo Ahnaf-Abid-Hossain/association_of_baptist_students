@@ -1,0 +1,84 @@
+/* Navbar Layout */
+.navbar {
+  border-bottom: 1px solid #ddd;
+  /* align-content: flex-end; */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: 6em;
+  width: 100vw;
+  margin-bottom: 0.75em;
+  /* Logo */
+  background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(https://lirp.cdn-website.com/49b47ae5/dms3rep/multi/opt/Layer_1-120w.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* .navbar .navbar-left, .navbar .navbar-right {
+  width: 50vw;
+} */
+
+.navbar-left {
+  align-items: center;
+  display: flex;
+  justify-content: left;
+  padding-left: 1em;
+}
+
+.navbar-mid {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-right {
+  align-items: center;
+  display: flex;
+  justify-content: right;
+  padding-right: 1em;
+}
+
+/* Navbar Components */
+.quick-links {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+a.navbar-link {
+  color: #736f6f;
+  font-size: 14px;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
+a.navbar-link:hover {
+  color: #500000;
+  font-weight: bold;
+}
+
+.login-text {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  margin: 0;
+}
+
+.navbar-user-icon-link {
+  height: 2em;
+}
+
+.navbar-user-icon {
+  height: 2em;
+  width: 2em;
+  margin-right: 0.75em;
+}
+
+.navbar-user-separator {
+  margin-left: 0.375em;
+  margin-right: 0.375em;
+  border-left: 1.5px solid #ddd;
+  height: 1.5em;
+}
