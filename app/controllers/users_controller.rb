@@ -15,6 +15,12 @@ class UsersController < ApplicationController
     redirect_to(users_path, notice: 'Alumni declined successfully.')
   end
 
+  def approve_admin
+    @alumni = User.find(params[:id])
+    @alumni.update(is_admin: 1)
+    redirect_to(users_path, notice: 'Alumni made Admin successfully')
+  end
+
   # GET /users or /users.json
   def index
     @users = User.all

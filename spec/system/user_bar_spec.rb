@@ -14,7 +14,7 @@ RSpec.describe('User Bar') do
     visit '/users'
 
     # Expect User Bar to contain user's full name
-    expect(page).to(have_css('h3', text: "Logged in as: #{user.full_name}"))
+    expect(page).to(have_css('a.navbar-user-name', text: user.full_name))
   end
 
   it 'logs out the user when Log Out is pressed' do
@@ -26,7 +26,7 @@ RSpec.describe('User Bar') do
     visit '/users'
 
     # Press Log Out
-    click_link 'Log out'
+    click_link 'Log Out'
 
     # Go back to the directory page
     get '/users'
