@@ -105,7 +105,16 @@ RSpec.describe('Links') do
         expect(response).to(have_http_status(:unprocessable_entity))
       end
 
-      pending 'adds http:// to the beginning of links missing a protocol'
+      it 'adds http:// to the beginning of links missing a protocol' do
+        # POST to links page
+        post '/links', params: { link: link_data.merge(url: 'test.com') }
+
+        # Expect to get :found
+        expect(response).to(have_http_status(:found))
+
+        # Expect new link to have http://
+        expect(Link.last.url).to(eq('http://test.com'))
+      end
     end
 
     context 'deleting links' do
@@ -214,7 +223,16 @@ RSpec.describe('Links') do
         expect(response).to(have_http_status(:unprocessable_entity))
       end
 
-      pending 'adds http:// to the beginning of links missing a protocol'
+      it 'adds http:// to the beginning of link edits missing a protocol' do
+        # POST to links page
+        patch link_path(link), params: { link: { url: 'test.com' } }
+
+        # Expect to get :found
+        expect(response).to(have_http_status(:found))
+
+        # Expect new link to have http://
+        expect(link.reload.url).to(eq('http://test.com'))
+      end
     end
 
     context 'reordering links' do
