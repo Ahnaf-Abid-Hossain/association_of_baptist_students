@@ -233,6 +233,17 @@ RSpec.describe('Links') do
         # Expect new link to have http://
         expect(link.reload.url).to(eq('http://test.com'))
       end
+
+      it 'does not add http:// to the beginning of link edits with a protocol' do
+        # POST to links page
+        patch link_path(link), params: { link: { url: 'https://test.com' } }
+
+        # Expect to get :found
+        expect(response).to(have_http_status(:found))
+
+        # Expect new link to be unaltered
+        expect(link.reload.url).to(eq('https://test.com'))
+      end
     end
 
     context 'reordering links' do
