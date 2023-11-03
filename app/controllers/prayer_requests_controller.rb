@@ -10,6 +10,7 @@ class PrayerRequestsController < ApplicationController
                          # current_user.user.prayer_requests?
                          current_user.prayer_requests
                        end
+    @public_prayer_requests = PrayerRequest.where(is_public: true)
   end
 
   # GET /prayer_requests/1 or /prayer_requests/1.json
@@ -36,7 +37,7 @@ class PrayerRequestsController < ApplicationController
   # POST /prayer_requests or /prayer_requests.json
   def create
     # current_user.user.prayer_requests?
-    @prayer_request = current_user.prayer_requests.build(create_prayer_requests_params)
+    @prayer_request = current_user.prayer_requests.build(create_prayer_request_params)
     @prayer_request.status = 'not_read'
 
     respond_to do |format|
@@ -85,8 +86,8 @@ class PrayerRequestsController < ApplicationController
   end
 
   # Only allow a list of trusted parameters through.
-  def create_prayer_requests_params
-    params.require(:prayer_request).permit(:request, :is_anonymous)
+  def create_prayer_request_params
+    params.require(:prayer_request).permit(:request, :is_anonymous, :is_public)
   end
 
   def update_prayer_request
@@ -94,9 +95,9 @@ class PrayerRequestsController < ApplicationController
                        when admin_with_other_user?
                          params.require(:prayer_request).permit(:status)
                        when admin_with_own_request?
-                         params.require(:prayer_request).permit(:request, :status, :is_anonymous)
+                         params.require(:prayer_request).permit(:request, :status, :is_anonymous, :is_public)
                        when user_with_own_request?
-                         params.require(:prayer_request).permit(:request, :is_anonymous)
+                         params.require(:prayer_request).permit(:request, :is_anonymous, :is_public)
                        when user_with_other_user?
                          return false
                        end

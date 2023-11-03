@@ -39,6 +39,20 @@
     </div>
   <% end %>
 
+  <% if prayer_request.new_record? %>
+    <div>
+      <%= form.label :is_public, "Is Public" %>
+      <%= form.check_box :is_public, { checked: false } %>
+    </div>
+  <% end %>
+
+  <% if !prayer_request.new_record? && current_user.id == prayer_request.user_id%>
+    <div>
+      <%= form.label :is_public, "Is Public" %>
+      <%= form.check_box :is_public, { checked: prayer_request.is_public } %>
+    </div>
+  <% end %>
+
   <div>
     <%= form.submit %>
   </div>
