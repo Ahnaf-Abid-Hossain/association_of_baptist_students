@@ -101,7 +101,7 @@ class PrayerRequestsController < ApplicationController
                          return false
                        end
 
-    return @prayer_request.update(permitted_params)
+    @prayer_request.update!(permitted_params)
   end
 
   def admin_with_other_user?

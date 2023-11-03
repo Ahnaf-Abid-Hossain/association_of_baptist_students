@@ -18,7 +18,7 @@ class UsersController < ApplicationController
 
   def approve_admin
     @alumni = User.find(params[:id])
-    @alumni.update(is_admin: 1)
+    @alumni.update!(is_admin: 1)
     redirect_to(users_path, notice: 'Alumni made Admin successfully')
   end
 
@@ -26,11 +26,10 @@ class UsersController < ApplicationController
   def authorize_user
     user = User.find(params[:id])
     unless current_user == user || current_user.is_admin?
-      flash[:alert] = "You are not authorized to perform this action."
-      redirect_to root_path
+      flash[:alert] = 'You are not authorized to perform this action.'
+      redirect_to(root_path)
     end
   end
-  
 
   # GET /users or /users.json
   def index
@@ -88,13 +87,13 @@ class UsersController < ApplicationController
     if current_user == @user || current_user.is_admin?
       @user.destroy!
       respond_to do |format|
-        format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-        format.json { head :no_content }
+        format.html { redirect_to(users_url, notice: 'User was successfully destroyed.') }
+        format.json { head(:no_content) }
       end
     else
       respond_to do |format|
-        format.html { redirect_to root_url, alert: 'You are not authorized to delete this user.' }
-        format.json { render json: { error: 'Unauthorized' }, status: :unauthorized }
+        format.html { redirect_to(root_url, alert: 'You are not authorized to delete this user.') }
+        format.json { render(json: { error: 'Unauthorized' }, status: :unauthorized) }
       end
     end
   end
