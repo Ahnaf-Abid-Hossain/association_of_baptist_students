@@ -10,10 +10,9 @@ class GoogleDriveService
 
   def upload_image(image_path, folder_id)
     file_metadata = Google::Apis::DriveV3::File.new(name: File.basename(image_path), parents: [folder_id])
-    media = Google::Apis::DriveV3::Media::UploadIO.new(image_path, 'image/jpeg')
 
     begin
-      @drive_service.create_file(file_metadata, media_type: 'image/jpeg', media: media)
+      @drive_service.create_file(file_metadata, upload_source: image_path, content_type: 'image/jpeg')
     rescue Google::Apis::ClientError => e
       # Handle any errors
       Rails.logger.error("Google Drive upload error: #{e.message}")

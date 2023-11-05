@@ -6,8 +6,8 @@ class ImagesController < ApplicationController
     google_drive_service = GoogleDriveService.new
 
     # Replace these paths and folder_id with actual values
-    image_path = 'path_to_uploaded_image.jpg'
-    folder_id = '1z62YvXxsIaxjK4HnmX5hTkcam0XoO'
+    image_path = params[:file].tempfile.path
+    folder_id = '1z6-2YvXxsIaxjK4HnmX5hTkcam-0X-oO'
 
     google_drive_service.upload_image(image_path, folder_id)
 
