@@ -3,15 +3,24 @@ class ImagesController < ApplicationController
   end
 
   def create
+    @user = current_user
+
     google_drive_service = GoogleDriveService.new
 
-    # Replace these paths and folder_id with actual values
+    # Location to put it in
     image_path = params[:file].tempfile.path
     folder_id = '1z6-2YvXxsIaxjK4HnmX5hTkcam-0X-oO'
 
-    google_drive_service.upload_image(image_path, folder_id)
+    image_url = google_drive_service.upload_image(image_path, folder_id)
 
-    # Handle the response as needed
+    
+
+    if image_url
+      # Store the image URL in the user's profile
+      @user.update(avatar_url: image_url)
+    else
+      # Handle the error case
+    end
   end
 end
 
