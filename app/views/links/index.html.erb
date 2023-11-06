@@ -32,8 +32,8 @@
         <% else %>
           <td>
             <div class="link-author">
-            <%= link_to user_path(current_user), class: 'link-author-icon-link' do %>
-              <%= image_tag(current_user.avatar_url.present? ? current_user.avatar_url : 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106', alt: 'User Avatar', class: 'navbar-user-icon') %>
+            <%= link_to user_path(link.user), class: 'link-author-icon-link' do %>
+              <%= image_tag(link.user.avatar_url.present? ? link.user.avatar_url : 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106', alt: 'User Avatar', class: 'navbar-user-icon') %>
             <% end %>
               <%= link_to(link.user.user_first_name + " " + link.user.user_last_name, user_path(link.user)) %>
             </div>
