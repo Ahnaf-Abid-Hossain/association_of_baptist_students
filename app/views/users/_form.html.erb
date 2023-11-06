@@ -56,7 +56,7 @@
 
   <div>
     <%= form.label :user_status, "Status", style: "display: block" %>
-    <%= form.text_field :user_status %>
+    <%= form.select :user_status, options_for_select(["Student", "Alumnus"]), include_blank: true %>
   </div>
 
 

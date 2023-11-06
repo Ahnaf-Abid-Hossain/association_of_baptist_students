@@ -20,6 +20,11 @@ class LinksController < ApplicationController
     @link.user = current_user
     @link.order = Link.get_next_order
 
+    # Prepend http:// if not present
+    if @link.url
+      @link.url = 'http://' + @link.url unless @link.url.start_with?('http://', 'https://')
+    end
+
     respond_to do |format|
       if @link.save
         format.html { redirect_to(links_url, notice: 'Link was successfully created.') }
@@ -33,8 +38,13 @@ class LinksController < ApplicationController
 
   # PATCH/PUT /links/1 or /links/1.json
   def update
+    new_params = link_params
+    if new_params[:url]
+      new_params[:url] = 'http://' + new_params[:url] unless new_params[:url].start_with?('http://', 'https://')
+    end
+
     respond_to do |format|
-      if @link.update(link_params)
+      if @link.update(new_params)
         format.html { redirect_to(link_url(@link), notice: 'Link was successfully updated.') }
         format.json { render(:show, status: :ok, location: @link) }
       else
@@ -104,7 +114,7 @@ class LinksController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def link_params
-    params.require(:link).permit(:label, :url, :order)
+    params.require(:link).permit(:label, :url)
   end
 
   def forbid_non_admin
