@@ -137,14 +137,15 @@ class UsersController < ApplicationController
     @results = User.all
 
     @results = if @first_name.present? || @last_name.present? || @class_year.present? || @major.present? || @current_city.present?
-                 
                  if @class_year.present?
                    User.where(
-                     'user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_class_year = ? AND is_class_year_private = False AND user_major ILIKE ? AND is_major_private = False AND user_location ILIKE ? AND is_location_private = False AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%", Integer(@class_year, 10), "%#{@major}%", "%#{@current_city}%"
+                     'user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_class_year = ? AND user_major ILIKE ? AND user_location ILIKE ? AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%", Integer(
+                                                                                                                                                                                                                     @class_year, 10
+                                                                                                                                                                                                                   ), "%#{@major}%", "%#{@current_city}%"
                    )
                  else
                    User.where(
-                     'user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_major ILIKE ? AND is_major_private = False AND user_location ILIKE ? AND is_location_private = False AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%", "%#{@major}%", "%#{@current_city}%"
+                     'user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_major ILIKE ? AND user_location ILIKE ? AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%", "%#{@major}%", "%#{@current_city}%"
                    )
                  end
                else
