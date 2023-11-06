@@ -84,6 +84,12 @@ a.maroon-link {
     font-size: 11pt;
     outline: none;
 }
+.user_input select {
+    width: 100%; /* Take up the full width of the parent container */
+    height: 30px !important;
+    width: 100px;
+}
+
 .input-container {
     display: inline-block;
     margin-right: 10px; /* Adjust the margin to control the spacing between fields */
