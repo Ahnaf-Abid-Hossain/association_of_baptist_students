@@ -1,0 +1,30 @@
+<h1>Search Meeting Notes by Date</h1>
+
+<%= form_tag basic_search_meeting_note_path, method: :get, class: "form-inline" do %>
+  <div class="form-group">
+    <%= label_tag :search_date, "Search by Date:" %>
+    <%= text_field_tag :search_date, params[:search_date], class: "form-control" %>
+  </div>
+  <%= submit_tag "Search", class: "btn btn-primary" %>
+<% end %>
+
+<% if @meeting_notes2 %>
+    <%if @meeting_notes2 == nil %>
+        <p>No meeting notes found for the given date.</p>
+    <% else %>
+        <h2>Search Results</h2>
+        <table>
+            <tr>
+            <th>Date</th>
+            <th>Content</th>
+            </tr>
+            <% @meeting_notes2.each do |note| %>
+            <tr>
+                <td><%= note.date.strftime("%Y-%m-%d") %></td>
+                <td><%= note.content %></td>
+            </tr>
+            <% end %>
+        </table>
+    <% end %>
+  
+<% end %>
