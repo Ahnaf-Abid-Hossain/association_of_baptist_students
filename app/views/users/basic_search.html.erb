@@ -1,29 +1,37 @@
-<h1>Search Directory</h1>
-<%= form_tag(basic_search_user_path, method: :get, class: 'form-inline') do %>
-  <div class="form-group">
-  <%= text_field_tag(:search_name, params[:search_name], class: 'form-control', placeholder: 'Enter Alumni Name') %>
-  <%= submit_tag('Search', class: 'btn btn-primary') %>
-  </div>
-<% end %>
-<%= link_to "Advanced Search", search_user_path %>
-<%= button_to "Back to Directory", users_path, method: :get %><br>
-
-<% if @results %>
-  <% if @results.empty? %>
-    <p> No results found.</p>
-  <% else %>
-    <h2>Search Results</h2>
-    <div>
-      <% sorted_results = @results.sort_by { |user| user.user_last_name} %>
-      <% sorted_results.each_with_index do |user, index| %>
-        <p>
-          <%= user.user_first_name %> <%= user.user_last_name %> <br>
-          <%= link_to "View Profile", user %>
-        </p>
-        <% unless index == @results.size - 1 %>
-          <hr>
-        <% end %>
-      <% end %>
+<div class="margins">
+  <a href="<%= users_path %>" class="back-button"><i class="fa fa-arrow-left"></i> Back to Directory</a>
+  <br>
+  <br>
+  <h1>Search Directory</h1>
+  <%= form_tag(basic_search_user_path, method: :get, class: 'form-inline') do %>
+    <div class="form-group">
+      <%= text_field_tag(:search_name, params[:search_name], class: 'search-input', placeholder: 'Enter Alumni Name') %>
+      <%= submit_tag('Search', class: 'btn search-button') %>
     </div>
   <% end %>
-<% end %>
+  <%= link_to "Advanced Search", search_user_path, class: "maroon-link" %><br>
+  <br>
+  <% if @results %>
+    <% if @results.empty? %>
+      <p>No results found.</p>
+    <% else %>
+      <h2>Search Results</h2>
+      <div>
+        <% sorted_results = @results.sort_by { |user| user.user_last_name} %>
+        <% sorted_results.each_with_index do |user, index| %>
+          <div class="user-item">
+            <p style="display: flex; justify-content: space-between; align-items: center;">
+              <a href="<%= user_path(user) %>" style="text-decoration: none; color: inherit;">
+                <span style="font-size: 20px;"><%= user.user_first_name %> <%= user.user_last_name %></span>
+              </a>
+              <%= link_to "View Profile", user, class: "view-button" %>
+            </p>
+          </div>
+          <% unless index == @results.size - 1 %>
+            <hr>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
