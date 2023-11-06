@@ -4,13 +4,14 @@ class PrayerRequestsController < ApplicationController
 
   # GET /prayer_requests or /prayer_requests.json
   def index
-    @prayer_requests = if current_user.is_admin?
-                         PrayerRequest.all
-                       else
-                         # current_user.user.prayer_requests?
-                         current_user.prayer_requests
-                       end
-    @public_prayer_requests = PrayerRequest.where(is_public: true)
+    @user_prayer_requests = 
+                            current_user.prayer_requests
+
+    @public_prayer_requests = if current_user.is_admin?
+                                PrayerRequest.all
+    else
+      PrayerRequest.where(is_public: true)
+    end
   end
 
   # GET /prayer_requests/1 or /prayer_requests/1.json
