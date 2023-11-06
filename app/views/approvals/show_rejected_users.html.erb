@@ -24,7 +24,7 @@
           <td><%= user.email %></td>
           <td><%= user.approval_status %></td>
           <td>
-            <%= button_to "Approve", approve_user_path(user), method: :patch, class: 'btn btn-success' %>
+            <%= button_to "Approve", approve_user_path(user), method: :patch, class: "neutral-button button-group-left links-button open-popup-button", data: { toggle: "modal", target: "#popupModal", popup_text: "This is the approval confirmation message." } %>
             <%= button_to "Decline", decline_user_path(user), method: :patch, class: 'btn btn-danger' %>
           </td>
         </tr>
