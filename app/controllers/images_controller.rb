@@ -18,6 +18,8 @@ class ImagesController < ApplicationController
     if image_url
       # Store the image URL in the user's profile
       @user.update(avatar_url: image_url)
+      flash[:success] = 'Success! Your profile picture has been updated.'
+      redirect_to new_image_path
     else
       # Handle the error case
     end
