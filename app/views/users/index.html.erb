@@ -17,9 +17,11 @@
     <% sorted_users = approved_users.sort_by { |user| user.user_last_name } %>
     <% sorted_users.each_with_index do |user, index| %>
       <div class="user-item">
-        <p>
-          <%= user.user_first_name %> <%= user.user_last_name %> <br>
-          <%= link_to "View Profile", user %>
+        <p style="display: flex; justify-content: space-between; align-items: center;">
+          <a href="<%= user_path(user) %>" style="text-decoration: none; color: inherit;">
+            <span style="font-size: 20px;"><%= user.user_first_name %> <%= user.user_last_name %></span>
+          </a>
+          <%= link_to "View Profile", user, class: "view-button" %>
         </p>
       </div>
       <% unless index == sorted_users.size - 1 %>
@@ -27,10 +29,5 @@
       <% end %>
     <% end %>
   </div>
-
   <br>
-
-  <% if current_user && current_user.is_admin? %>
-    <%= link_to "New user", new_user_path %>
-  <% end %>
 </div>

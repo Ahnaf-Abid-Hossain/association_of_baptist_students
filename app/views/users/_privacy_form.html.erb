@@ -35,5 +35,6 @@
     </div>
   </div>
 
-  <%= form.submit "Save Privacy Settings", class: "btn btn-primary" %>
+  <%= link_to "Save Privacy Settings", "#", class: "save-button", onclick: "document.forms[0].submit(); return false;" %>
+  <span> <%= link_to "Cancel", @user, class: "save-button" %></span>
 <% end %>
