@@ -11,35 +11,41 @@
     </div>
   <% end %>
   
-  <div>
-    <%= form.label :user_first_name, "First Name", style: "display: block" %>
-    <%= form.text_field :user_first_name %>
+  <div class="form-group">
+    <div class="input-container">
+      <%= form.label :user_first_name, "First Name" %>
+      <%= form.text_field :user_first_name, class: 'user-input' %>
+    </div>
+    <div class="input-container">
+      <%= form.label :user_last_name, "Last Name" %>
+      <%= form.text_field :user_last_name, class: 'user-input' %>
+    </div>
+  </div>
+  <br>
+  <div class="form-group">
+    <div class="input-container">
+      <%= form.label :user_contact_email, "Contact Email", style: "display: block" %>
+      <%= form.text_field :user_contact_email, class: 'user-input' %>
+    </div>
+    <div class="input-container">
+      <%= form.label :user_ph_num, "Phone Number", style: "display: block" %>
+      <%= form.text_field :user_ph_num, class: 'user-input' %>
+    </div>
+  </div>
+  <br>
+  <div class="form-group">
+    <div class="input-container">
+      <%= form.label :user_major, "College Major", style: "display: block" %>
+      <%= form.text_field :user_major %>
+    </div>
+    <div class="input-container">
+      <%= form.label :user_class_year, "Class Year", style: "display: block" %>
+      <!-- <%= form.text_field :user_class_year %> -->
+      <% current_year = Date.today.year %>
+      <%= form.select :user_class_year, options_for_select((current_year - 100..current_year + 4).to_a.reverse.map { |year| [year.to_s, year] }, @user.user_class_year), include_blank: true %>
+    </div>
   </div>
 
-
-  <div>
-    <%= form.label :user_last_name, "Last Name", style: "display: block" %>
-    <%= form.text_field :user_last_name %>
-  </div>
-
-  <div>
-    <%= form.label :user_contact_email, "Contact Email", style: "display: block" %>
-    <%= form.text_field :user_contact_email %>
-  </div>
-  
-  
-  <div>
-    <%= form.label :user_ph_num, "Phone Number", style: "display: block" %>
-    <%= form.text_field :user_ph_num %>
-  </div>
-
-
-  <div>
-    <%= form.label :user_class_year, "Class Year", style: "display: block" %>
-    <!-- <%= form.text_field :user_class_year %> -->
-    <% current_year = Date.today.year %>
-    <%= form.select :user_class_year, options_for_select((current_year - 100..current_year + 4).to_a.reverse.map { |year| [year.to_s, year] }, @user.user_class_year), include_blank: true %>
-  </div>
 
   
   <div>
@@ -60,10 +66,7 @@
   </div>
 
 
-  <div>
-    <%= form.label :user_major, "College Major", style: "display: block" %>
-    <%= form.text_field :user_major %>
-  </div>
+
 
   <div>
     <%= form.submit "Save Profile" %>

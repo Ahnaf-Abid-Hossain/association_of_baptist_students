@@ -25,6 +25,74 @@ body {
     margin: 8px;
 }
 
+.margins {
+  width: 80vw;
+  margin-left: 10vw;
+  margin-right: 10vw;
+}
+
+.search-input {
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 0.5em;
+    padding: 0.5em 1em;
+    font-size: 11pt;
+    outline: none;
+}
+
+.search-button {
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 0.5em;
+    padding: 0.5em 1em;
+    font-size: 11pt;
+    outline: none;
+}
+
+a.back-button {
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 0.5em;
+    padding: 0.5em 1em;
+    font-size: 11pt;
+    outline: none;
+    color: #500000; /* You can adjust the color here */
+    ; /* You can adjust the color here */
+}
+
+a.maroon-link {
+    color: #500000;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+  
+.search-label {
+    width: 120px; /* Adjust the width as needed */
+    text-align: right;
+    margin-right: 10px;
+}
+
+.user-input {
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 0.5em;
+    padding: 0.5em 1em;
+    font-size: 11pt;
+    outline: none;
+}
+.input-container {
+    display: inline-block;
+    margin-right: 10px; /* Adjust the margin to control the spacing between fields */
+}
+
+.input-container label, .input-container input {
+    display: block;
+}
+
 .wrapper {
     min-height: 100%;
     display: -webkit-box;

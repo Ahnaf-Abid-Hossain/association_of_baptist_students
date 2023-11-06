@@ -1,36 +1,36 @@
-<h1>Association of Baptist Student's Alumni Directory</h1>
+<div class="margins">
+  <h1>Association of Baptist Student's Alumni Directory</h1>
 
-
-<%= form_tag(basic_search_user_path, method: :get, class: 'form-inline') do %>
-  <div class="form-group">
-    <%= text_field_tag(:search_name, params[:search_name], class: 'form-control', placeholder: 'Enter Alumni Name') %>
-    <%= submit_tag('Search', class: 'btn btn-primary') %>
+  <%= form_tag(basic_search_user_path, method: :get, class: 'form-inline') do %>
+    <div class="form-group">
+      <%= text_field_tag(:search_name, params[:search_name], class: 'search-input', placeholder: 'Enter Alumni Name') %>
+      <%= submit_tag('Search', class: 'btn search-button') %>
     </div>
-<% end %>
+  <% end %>
 
-<%= link_to "Advanced Search", search_user_path %>
+  <%= link_to "Advanced Search", search_user_path, class: "maroon-link" %>
+  <br>
+  <br>
 
-<br>
-<br>
-
-<div id="users">
-  <% approved_users = @users.select { |user| user.approval_status == 1 } %>
-  <% sorted_users = approved_users.sort_by { |user| user.user_last_name} %>
-  <% sorted_users.each_with_index do |user, index| %>
-    <div class=user-item">
-      <p>
-        <%= user.user_first_name %> <%= user.user_last_name %> <br>
-        <%= link_to "View Profile", user %>
-      </p>
-    </div>
-    <% unless index == sorted_users.size - 1 %>
-      <hr>
+  <div id="users">
+    <% approved_users = @users.select { |user| user.approval_status == 1 } %>
+    <% sorted_users = approved_users.sort_by { |user| user.user_last_name } %>
+    <% sorted_users.each_with_index do |user, index| %>
+      <div class="user-item">
+        <p>
+          <%= user.user_first_name %> <%= user.user_last_name %> <br>
+          <%= link_to "View Profile", user %>
+        </p>
+      </div>
+      <% unless index == sorted_users.size - 1 %>
+        <hr>
+      <% end %>
     <% end %>
+  </div>
+
+  <br>
+
+  <% if current_user && current_user.is_admin? %>
+    <%= link_to "New user", new_user_path %>
   <% end %>
 </div>
-
-<br>
-
-<% if current_user && current_user.is_admin? %>
-  <%= link_to "New user", new_user_path %>
-<% end %>

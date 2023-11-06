@@ -1,36 +1,38 @@
+<div class="margins">
+<a href="<%= users_path %>" class="back-button"><i class="fa fa-arrow-left"></i> Back to Directory</a>
+<br>
+<br>
 <h1>Advanced Search</h1>
 
 <%= form_tag search_user_path, method: :get do %>
   <div class="form-group">
-    <%= label_tag 'first_name', 'First Name:' %>
-    <%= text_field_tag 'first_name', params[:first_name], class: 'form-control', placeholder: 'Enter First Name' %>
+    <%= label_tag 'first_name', 'First Name:', class: "search-label" %>
+    <%= text_field_tag 'first_name', params[:first_name], class: 'search-input', placeholder: 'Enter First Name' %>
   </div>
   
   <div class="form-group">
-    <%= label_tag 'last_name', 'Last Name:' %>
-    <%= text_field_tag 'last_name', params[:last_name], class: 'form-control', placeholder: 'Enter Last Name' %>
+    <%= label_tag 'last_name', 'Last Name:', class: "search-label" %>
+    <%= text_field_tag 'last_name', params[:last_name], class: 'search-input', placeholder: 'Enter Last Name' %>
   </div>
 
   <div class="form-group">
-    <%= label_tag 'class_year', 'Class Year:' %>
-    <%= text_field_tag 'class_year', params[:class_year], class: 'form-control', placeholder: 'Enter Class Year' %>
+    <%= label_tag 'class_year', 'Class Year:', class: "search-label" %>
+    <%= text_field_tag 'class_year', params[:class_year], class: 'search-input', placeholder: 'Enter Class Year' %>
   </div>
 
   <div class="form-group">
-    <%= label_tag 'major', 'Major:' %>
-    <%= text_field_tag 'major', params[:major], class: 'form-control', placeholder: 'Enter Major' %>
+    <%= label_tag 'major', 'Major:', class: "search-label" %>
+    <%= text_field_tag 'major', params[:major], class: 'search-input', placeholder: 'Enter Major' %>
   </div>
 
   <div class="form-group">
-    <%= label_tag 'current_city', 'Current City:' %>
-    <%= text_field_tag 'current_city', params[:current_city], class: 'form-control', placeholder: 'Enter Current City' %>
+    <%= label_tag 'current_city', 'Current City:', class: "search-label" %>
+    <%= text_field_tag 'current_city', params[:current_city], class: 'search-input', placeholder: 'Enter Current City' %>
   </div>
 
-  <%= submit_tag 'Search', class: 'btn btn-primary' %>
+  <%= submit_tag 'Search', class: 'btn search-button' %>
 <% end %>
 
-<br>
-<%= button_to "Back to Directory", users_path, method: :get %><br>
 <br>
 
 <% if @results %>
@@ -52,3 +54,4 @@
     </div>
   <% end %>
 <% end %>
+</div>

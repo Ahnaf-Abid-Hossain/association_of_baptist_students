@@ -1,12 +1,15 @@
+<div class="margins">
+<a href="<%= users_path %>" class="back-button"><i class="fa fa-arrow-left"></i> Back to Directory</a>
+<br>
+<br>
 <h1>Search Directory</h1>
 <%= form_tag(basic_search_user_path, method: :get, class: 'form-inline') do %>
   <div class="form-group">
-  <%= text_field_tag(:search_name, params[:search_name], class: 'form-control', placeholder: 'Enter Alumni Name') %>
-  <%= submit_tag('Search', class: 'btn btn-primary') %>
+  <%= text_field_tag(:search_name, params[:search_name], class: 'search-input', placeholder: 'Enter Alumni Name') %>
+  <%= submit_tag('Search', class: 'btn search-button') %>
   </div>
 <% end %>
-<%= link_to "Advanced Search", search_user_path %>
-<%= button_to "Back to Directory", users_path, method: :get %><br>
+<%= link_to "Advanced Search", search_user_path, class: "maroon-link" %><br>
 
 <% if @results %>
   <% if @results.empty? %>
@@ -27,3 +30,4 @@
     </div>
   <% end %>
 <% end %>
+</div>
