@@ -17,7 +17,7 @@
   <% approved_users = @users.select { |user| user.approval_status == 1 } %>
   <% sorted_users = approved_users.sort_by { |user| user.user_last_name} %>
   <% sorted_users.each_with_index do |user, index| %>
-    <div class=user-item">
+    <div class="user-item">
       <p>
         <%= user.user_first_name %> <%= user.user_last_name %> <br>
         <%= link_to "View Profile", user %>

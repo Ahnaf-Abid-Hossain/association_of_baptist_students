@@ -2,35 +2,39 @@
 <html>
 <head>
   <title>All Users</title>
+
 </head>
 <body>
-  <h1><%= @title %></h1>
+<div class ="hero">
 
-  <table>
+  <h1><%= @title %></h1>
+  <table id = "links">
     <thead>
       <tr>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Email Address</th>
         <th>Approval Status</th>
+        <th> Admin Status</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       <% @users_all.each do |user| %>
         <tr>
-          <td><%= user.user_first_name %></td>
+          <td><%= link_to user.user_first_name, user %></td>
           <td><%= user.user_last_name %></td>
           <td><%= user.email %></td>
           <td><%= user.approval_status %></td>
-          <td>
-            <%= button_to "Approve", approve_user_path(user), method: :patch, class: 'btn btn-success' %>
-            <%= button_to "Decline", decline_user_path(user), method: :patch, class: 'btn btn-danger' %>
-            <%= button_to "Admin_status", approve_admin_user_path(user), method: :patch, class: 'btn btn-success' %>
+          <td><%= user.is_admin ? 'true' : 'false' %></td>
+          <td><%= button_to "Approve", approve_user_path(user), method: :patch, class: "neutral-button button-group-left links-button ", data: { confirm: 'Are you sure?' }  %>
+            <td><%= button_to "Decline", decline_user_path(user), method: :patch, class: "neutral-button button-group-left links-button", data: { confirm: 'Are you sure?' } %></td>
+            <td><%= button_to "Admin Toggler", approve_admin_user_path(user), method: :patch, class:  "neutral-button button-group-left links-button", data: { confirm: 'Are you sure?' }  %>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
+  </div>
 </body>
 </html>
