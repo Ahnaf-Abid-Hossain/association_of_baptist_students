@@ -81,6 +81,11 @@ group :test do
   gem 'webdrivers'
 end
 
+# Gems for image upload
+gem 'google-api-client'
+gem 'google-apis-drive_v3'
+gem 'googleauth'
+
 gem 'seed_dump'
 
 # Devise (as of now, no need for specific version)
