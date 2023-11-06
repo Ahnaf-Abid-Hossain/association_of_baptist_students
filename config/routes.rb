@@ -66,6 +66,9 @@ Rails.application.routes.draw do
 
   resources :users
   get '/account_created', to: 'users#account_created'
+
+  resources :meeting_notes
+  get '/search_meeting', to: 'meeting_notes#search_meeting', as: :basic_search_meeting_note
   
   # images routing
   resources :images, only: [:new, :create]
