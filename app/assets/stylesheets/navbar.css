@@ -74,6 +74,7 @@ a.navbar-link:hover {
   height: 2em;
   width: 2em;
   margin-right: 0.75em;
+  border-radius: 50%; /* Create a circular shape */
 }
 
 .navbar-user-separator {

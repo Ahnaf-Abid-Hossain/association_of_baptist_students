@@ -17,11 +17,17 @@ RSpec.describe('/links') do
   # Link. As you add validations to Link, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
-    skip('Add a hash of attributes valid for your model')
+    {
+      url: 'http://google.com/',
+      label: 'Google'
+    }
   end
 
   let(:invalid_attributes) do
-    skip('Add a hash of attributes invalid for your model')
+    {
+      url: nil,
+      label: 'Barf'
+    }
   end
 
   before do
@@ -30,19 +36,12 @@ RSpec.describe('/links') do
 
   describe 'GET /index' do
     it 'renders a successful response' do
-      Link.create!(valid_attributes)
+      FactoryBot.create(:link)
       get links_url
       expect(response).to(be_successful)
     end
   end
 
-  describe 'GET /show' do
-    it 'renders a successful response' do
-      link = Link.create!(valid_attributes)
-      get link_url(link)
-      expect(response).to(be_successful)
-    end
-  end
 
   describe 'GET /new' do
     it 'renders a successful response' do
@@ -53,7 +52,7 @@ RSpec.describe('/links') do
 
   describe 'GET /edit' do
     it 'renders a successful response' do
-      link = Link.create!(valid_attributes)
+      link = FactoryBot.create(:link)
       get edit_link_url(link)
       expect(response).to(be_successful)
     end
@@ -67,9 +66,9 @@ RSpec.describe('/links') do
         end.to(change(Link, :count).by(1))
       end
 
-      it 'redirects to the created link' do
+      it 'redirects back to links' do
         post links_url, params: { link: valid_attributes }
-        expect(response).to(redirect_to(link_url(Link.last)))
+        expect(response).to(redirect_to(links_url))
       end
     end
 
@@ -90,18 +89,21 @@ RSpec.describe('/links') do
   describe 'PATCH /update' do
     context 'with valid parameters' do
       let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
+        {
+          label: 'Tester',
+          url: 'https://test.com'
+        }
       end
 
       it 'updates the requested link' do
-        link = Link.create!(valid_attributes)
+        link = FactoryBot.create(:link)
         patch link_url(link), params: { link: new_attributes }
         link.reload
         skip('Add assertions for updated state')
       end
 
       it 'redirects to the link' do
-        link = Link.create!(valid_attributes)
+        link = FactoryBot.create(:link)
         patch link_url(link), params: { link: new_attributes }
         link.reload
         expect(response).to(redirect_to(link_url(link)))
@@ -110,7 +112,7 @@ RSpec.describe('/links') do
 
     context 'with invalid parameters' do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
-        link = Link.create!(valid_attributes)
+        link = FactoryBot.create(:link)
         patch link_url(link), params: { link: invalid_attributes }
         expect(response).to(have_http_status(:unprocessable_entity))
       end
@@ -119,14 +121,14 @@ RSpec.describe('/links') do
 
   describe 'DELETE /destroy' do
     it 'destroys the requested link' do
-      link = Link.create!(valid_attributes)
+      link = FactoryBot.create(:link)
       expect do
         delete(link_url(link))
       end.to(change(Link, :count).by(-1))
     end
 
     it 'redirects to the links list' do
-      link = Link.create!(valid_attributes)
+      link = FactoryBot.create(:link)
       delete link_url(link)
       expect(response).to(redirect_to(links_url))
     end

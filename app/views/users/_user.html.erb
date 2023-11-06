@@ -1,55 +1,50 @@
-<div id="<%= dom_id user %>">
-
-<body>
-<div class="wrapper">
-<main role = "main" id = "contentarea" class = "content">
-<div class ="floating-box--wide">
-<div class="floating-form">
-<div class="result-listing">
-
-
-    <h2> <%= user.user_first_name %> <%= user.user_last_name %> </h2> <br>
-    <div class="result-listing__details">
-    <div class="contact-info">
-
-    <p>
-            
-        <% unless user.is_contact_email_private %>
-          <a href="mailto:<%= user.user_contact_email %> "><%= user.user_contact_email %> </a><br>
-      <% end %>
-
-      
-      
-    </p>
+<div id="<%= dom_id(user) %>">
+  <body>
+    <div class="wrapper">
+      <main role="main" id="contentarea" class="content">
+        <div class="floating-box--wide">
+          <div class="floating-form">
+            <div class="result-listing">
+              <h2><%= user.user_first_name %> <%= user.user_last_name %></h2> <br>
+              <div class="result-listing__details">
+                <div class="contact-info">
+                  <p>
+                    <% unless user.is_contact_email_private %>
+                      <a href="mailto:<%= user.user_contact_email %>"><%= user.user_contact_email %></a><br>
+                    <% end %>
+                  </p>
+                </div>
+                <div style="display: flex; align-items: center;">
+                  <div>
+                    <%= image_tag user.avatar_url, alt: 'User Avatar', class: 'avatar-image' %>
+                  </div>
+                  <div class="additional-info">
+                    <ul class="no-bullets">
+                      <% unless user.is_ph_num_private %>
+                      <li><h3 class="identification-title">Phone Number</h3> <%= user.user_ph_num %></li>
+                      <% end %>
+                      <% unless user.is_class_year_private %>
+                      <li><h3 class="identification-title">Class Year</h3><%= user.user_class_year %></li>
+                      <% end %>
+                      <% unless user.is_major_private %>
+                      <li><h3 class="identification-title">Major</h3> <%= user.user_major %></li>
+                      <% end %>
+                      <% unless user.is_job_field_private %>
+                      <li><h3 class="identification-title">Current Job</h3><%= user.user_job_field %></li>
+                      <% end %>
+                      <% unless user.is_location_private %>
+                      <li><h3 class="identification-title">Current City</h3> <%= user.user_location %></li>
+                      <% end %>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
-        
-    <div class="additional-info">
-
-    <ul class = "no-bullets">
-            <% unless user.is_ph_num_private %>
-            <li><h3 class="identification-title">Phone Number</h3> <%= user.user_ph_num %></li>
-            <% end %>
-            <% unless user.is_class_year_private %>
-            <li><h3 class="identification-title">Class Year</h3><%= user.user_class_year %></li>
-            <% end %>
-            <% unless user.is_major_private %>
-            <li><h3 class="identification-title">Major</h3> <%= user.user_major %></li>
-            <% end %>
-            <% unless user.is_job_field_private %>
-            <li><h3 class="identification-title">Current Job</h3><%= user.user_job_field %></li>
-            <% end %>
-            <% unless user.is_location_private %>
-            <li><h3 class="identification-title">Current City</h3> <%= user.user_location %></li>
-            <% end %>
-        </ul>
-
+  </body>
 </div>
 
 
-
-
-</div>
-</main>
-
-</div>
-</body>
