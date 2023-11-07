@@ -7,19 +7,39 @@
 
 <h1>Alumni Approval Page</h1>
 <ul>
-  <% @non_admins.each do |alumni| %>
-    <li><%= alumni.user_first_name %></li>
-    <li>
-      <strong>Name:</strong> <%= alumni.user_first_name %> <%= alumni.user_last_name %>
-      <br>
-      <strong>Status:</strong> <%= alumni.user_status %>
-      <div class="button-group">
-      <%= button_to "Approve", approve_user_path(alumni), method: :patch, class: 'btn btn-success' %>
-      <%= button_to "Decline", decline_user_path(alumni), method: :patch, class: 'btn btn-danger' %>
-      </div>
-    </li>
-    <!-- Display other alumni information as needed -->
-  <% end %>
+  <h1><%= @title %></h1>
+  <table id = "links">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email Address</th>
+        <th>Approval Status</th>
+        <th> Profanity</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @non_admins == nil %>
+          <p>No users found.</p>
+      <% else %>
+      <% @non_admins.each do |user| %>
+        <tr>
+          <td><%= link_to user.user_first_name, user %></td>
+          <td><%= user.user_last_name %></td>
+          <td><%= user.email %></td>
+          <td><%= user.approval_status %></td>
+          <td>
+            <%= (check_for_profanity(user.user_first_name) || check_for_profanity(user.user_last_name) || check_for_profanity(user.email)) ? 'true' : 'false' %>
+          </td>
+          <td><%= button_to "Approve", approve_user_path(user), method: :patch, class: "neutral-button button-group-left links-button " %></td>
+          <td><%= button_to "Decline", decline_user_path(user), method: :patch, class: 'neutral-button button-group-left links-button' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <% end %>
+
+  </table>
 
   <%= link_to 'Show All Users', show_users_approvals_path %>
   <%= link_to 'Show Rejected Users', show_rejected_users_approvals_path %>
