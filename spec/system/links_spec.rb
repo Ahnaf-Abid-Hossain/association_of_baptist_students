@@ -3,11 +3,13 @@ require 'rails_helper'
 RSpec.describe('Links') do
   let(:user) { FactoryBot.create(:user) }
   let(:admin_user) { FactoryBot.create(:admin_user) }
-  let (:links) { [
-    { label: 'Link 1', url: 'https://www.google1.com', order: 1, user: admin_user },
-    { label: 'Link 2', url: 'https://www.google2.com', order: 2, user: admin_user },
-    { label: 'Link 3', url: 'https://www.google3.com', order: 3, user: admin_user }
-  ] }
+  let(:links) do
+    [
+      { label: 'Link 1', url: 'https://www.google1.com', order: 1, user: admin_user },
+      { label: 'Link 2', url: 'https://www.google2.com', order: 2, user: admin_user },
+      { label: 'Link 3', url: 'https://www.google3.com', order: 3, user: admin_user }
+    ]
+  end
   let(:link_data) { { label: 'Test', url: 'https://test.com', order: 800_000 } }
 
   before do
@@ -21,17 +23,17 @@ RSpec.describe('Links') do
     end
 
     context 'viewing links' do
-      before(:each) do
+      before do
         Link.destroy_all
       end
-  
-      it 'displays built-in links (for non admins)' do
+
+      it 'displays built-in links (for admins)' do
         # Expect 0 links
         expect(Link.count).to(eq(0))
-        
+
         # Visit home page
         visit '/'
-  
+
         # Test for links in order
         expect(page.find('.quick-links .navbar-link:nth-child(1)')['href']).to(eq(root_path))
         expect(page.find('.quick-links .navbar-link:nth-child(2)')['href']).to(eq(meeting_notes_path))
@@ -43,19 +45,19 @@ RSpec.describe('Links') do
         # Test for no extra links
         expect(page).not_to have_css('.quick-links .navbar-link:nth-child(7)')
       end
-  
+
       it 'displays links in order (as an admin)' do
         # Expect 0 links
         expect(Link.count).to(eq(0))
-  
+
         # Create three links {1, 2, 3}
         expect do
           Link.create!(links)
         end.to(change(Link, :count).by(3))
-        
+
         # Visit home page
         visit '/'
-  
+
         # Test for links in order
         expect(page.find('.quick-links .navbar-link:nth-child(7)')['href']).to(eq(links[0][:url]))
         expect(page.find('.quick-links .navbar-link:nth-child(8)')['href']).to(eq(links[1][:url]))
@@ -88,7 +90,7 @@ RSpec.describe('Links') do
         # Check for overall creation of 1 link
         expect do
           # Post to the links page
-          post '/links', params: { link: link_data }
+          post('/links', params: { link: link_data })
 
           # Expect to succeed
           expect(response).to(have_http_status(:found))
@@ -132,7 +134,7 @@ RSpec.describe('Links') do
         # Expect to reduce number of links by 1
         expect do
           # DELETE to link page
-          delete link_path(link)
+          delete(link_path(link))
 
           # Expect to succeed
           expect(response).to(have_http_status(:found))
@@ -148,17 +150,17 @@ RSpec.describe('Links') do
 
         # Expect 3 links
         expect(Link.count).to(eq(3))
-  
+
         # DELETE to link2
         delete(link_path(link2))
-  
+
         # Expect to be accepted
         expect(response).to(have_http_status(:found))
-        
+
         # Expect link1 to still be (order: 1)
         link1_new = Link.find(link1.id)
         expect(link1_new.order).to(eq(1))
-        
+
         # Expect link3 to be (order: 2) now
         link3_new = Link.find(link3.id)
         expect(link3_new.order).to(eq(2))
@@ -290,36 +292,36 @@ RSpec.describe('Links') do
     end
 
     context 'viewing links' do
-      before(:each) do
+      before do
         Link.destroy_all
       end
 
       it 'displays new links' do
         # Create a link
         link = FactoryBot.create(:link, user: admin_user, order: 1)
-  
+
         # Visit home page
         visit '/'
-  
+
         # Test for link
         expect(page).to(have_link(link.label, href: link.url))
       end
-  
+
       it 'displays links bar with CSS' do
         # Visit home page
         visit '/'
-  
+
         # Test for .quick-links element
         expect(page).to(have_css('div.quick-links'))
       end
-  
+
       it 'displays built-in links (for non admins)' do
         # Expect 0 links
         expect(Link.count).to(eq(0))
-        
+
         # Visit home page
         visit '/'
-  
+
         # Test for links in order
         expect(page.find('.quick-links .navbar-link:nth-child(1)')['href']).to(eq(root_path))
         expect(page.find('.quick-links .navbar-link:nth-child(2)')['href']).to(eq(meeting_notes_path))
@@ -329,19 +331,19 @@ RSpec.describe('Links') do
         # Test for no extra links
         expect(page).not_to have_css('.quick-links .navbar-link:nth-child(5)')
       end
-  
+
       it 'displays links in order (as a non-admin)' do
         # Expect 0 links
         expect(Link.count).to(eq(0))
-  
+
         # Create three links {1, 2, 3}
         expect do
           Link.create!(links)
         end.to(change(Link, :count).by(3))
-        
+
         # Visit home page
         visit '/'
-  
+
         # Test for links in order
         expect(page.find('.quick-links .navbar-link:nth-child(5)')['href']).to(eq(links[0][:url]))
         expect(page.find('.quick-links .navbar-link:nth-child(6)')['href']).to(eq(links[1][:url]))

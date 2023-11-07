@@ -13,28 +13,26 @@ class UsersController < ApplicationController
 
   def decline
     @alumni = User.find(params[:id])
-    if @alumni != current_user
+    if @alumni == current_user
+      redirect_to(users_path, alert: "You can't decline yourself.")
+    else
       @alumni.update!(approval_status: -1)
       redirect_to(users_path, notice: 'Alumni declined successfully.')
-    else
-      redirect_to(users_path, alert: "You can't decline yourself.")
     end
   end
 
   def approve_admin
     @alumni = User.find(params[:id])
-    if @alumni != current_user
-      if @alumni.is_admin?
-        @alumni.update(is_admin: 0)
-        notice_message = 'Alumni admin status revoked successfully.'
-      else
-        @alumni.update(is_admin: 1)
-        notice_message = 'Alumni made admin successfully.'
-      end
-    else
+    if @alumni == current_user
       notice_message = "You can't modify your own admin status."
+    elsif @alumni.is_admin?
+      @alumni.update!(is_admin: 0)
+      notice_message = 'Alumni admin status revoked successfully.'
+    else
+      @alumni.update!(is_admin: 1)
+      notice_message = 'Alumni made admin successfully.'
     end
-  
+
     redirect_to(users_path, notice: notice_message)
   end
 
@@ -42,11 +40,10 @@ class UsersController < ApplicationController
   def authorize_user
     user = User.find(params[:id])
     unless current_user == user || current_user.is_admin?
-      flash[:alert] = "You are not authorized to perform this action."
-      redirect_to root_path
+      flash[:alert] = 'You are not authorized to perform this action.'
+      redirect_to(root_path)
     end
   end
-  
 
   # GET /users or /users.json
   def index
@@ -104,13 +101,13 @@ class UsersController < ApplicationController
     if current_user == @user || current_user.is_admin?
       @user.destroy!
       respond_to do |format|
-        format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-        format.json { head :no_content }
+        format.html { redirect_to(users_url, notice: 'User was successfully destroyed.') }
+        format.json { head(:no_content) }
       end
     else
       respond_to do |format|
-        format.html { redirect_to root_url, alert: 'You are not authorized to delete this user.' }
-        format.json { render json: { error: 'Unauthorized' }, status: :unauthorized }
+        format.html { redirect_to(root_url, alert: 'You are not authorized to delete this user.') }
+        format.json { render(json: { error: 'Unauthorized' }, status: :unauthorized) }
       end
     end
   end
@@ -153,10 +150,12 @@ class UsersController < ApplicationController
     @results = User.all
 
     @results = if @first_name.present? || @last_name.present? || @class_year.present? || @major.present? || @current_city.present?
-                 
+
                  if @class_year.present?
                    User.where(
-                     'user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_class_year = ? AND is_class_year_private = False AND user_major ILIKE ? AND is_major_private = False AND user_location ILIKE ? AND is_location_private = False AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%", Integer(@class_year, 10), "%#{@major}%", "%#{@current_city}%"
+                     'user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_class_year = ? AND is_class_year_private = False AND user_major ILIKE ? AND is_major_private = False AND user_location ILIKE ? AND is_location_private = False AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%", Integer(
+                                                                                                                                                                                                                                                                                                                    @class_year, 10
+                                                                                                                                                                                                                                                                                                                  ), "%#{@major}%", "%#{@current_city}%"
                    )
                  else
                    User.where(
