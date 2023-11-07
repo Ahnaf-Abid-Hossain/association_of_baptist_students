@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe ImagesHelper, type: :helper do
+RSpec.describe(ImagesHelper) do
   pending "add some examples to (or delete) #{__FILE__}"
 end

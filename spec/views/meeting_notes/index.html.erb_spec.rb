@@ -22,11 +22,9 @@ RSpec.describe('meeting_notes/index') do
     )
   end
 
-
   it 'displays a table with the expected structure' do
     render
     assert_select 'tr>td', text: Regexp.new('Title'.to_s), count: 2
     assert_select 'tr>td', text: Regexp.new('MyText'.to_s), count: 2
   end
-  
 end

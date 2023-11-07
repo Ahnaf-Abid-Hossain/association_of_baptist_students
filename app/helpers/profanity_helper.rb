@@ -8,11 +8,11 @@ module ProfanityHelper
     response = HTTParty.get(profanity_api_url)
 
     if response.success?
-      result = JSON.parse(response.body)
-        return result
+      JSON.parse(response.body)
+
     else
       # Handle API request errors
-      return "Error: Failed to check for profanity"
+      'Error: Failed to check for profanity'
     end
   end
 end

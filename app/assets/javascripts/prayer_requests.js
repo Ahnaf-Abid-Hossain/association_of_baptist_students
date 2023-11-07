@@ -4,6 +4,7 @@ prayerRequestSwitch.addEventListener("click", () => {
   var userPrayerRequests = document.querySelectorAll('.userPrayerRequests');
   var publicPrayerRequests = document.querySelectorAll('.publicPrayerRequests');
   var prayerRequestHeader = document.querySelectorAll('#prayer-request-header')[0];
+  var prayerRequestHeaderAlt = document.querySelectorAll('#prayer-request-header-alt')[0];
 
   userPrayerRequests.forEach(element => 
     element.classList.toggle('hidden')
@@ -12,9 +13,6 @@ prayerRequestSwitch.addEventListener("click", () => {
     element.classList.toggle('hidden')
   );
 
-  if (prayerRequestHeader.textContent === "Public prayer requests") {
-    prayerRequestHeader.textContent = "Your prayer requests";
-  } else {
-    prayerRequestHeader.textContent = 'Public prayer requests';
-  }
+  prayerRequestHeader.classList.toggle('hidden');
+  prayerRequestHeaderAlt.classList.toggle('hidden');
 });
