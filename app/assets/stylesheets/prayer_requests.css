@@ -1,8 +1,24 @@
+/* General Styles */
 .hidden {
   display: none;
 }
 
-/* The switch - the box around the slider */
+.flex-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.small-margin-sides {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Switch Styles */
 .switch {
   position: relative;
   display: inline-block;
@@ -10,14 +26,12 @@
   height: 34px;
 }
 
-/* Hide default HTML checkbox */
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-/* The slider */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -56,7 +70,7 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
-/* Rounded sliders */
+/* Rounded Sliders */
 .slider.round {
   border-radius: 34px;
 }
@@ -65,22 +79,12 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-.flex-center {
-  display: flex;
-  flex-direction: row; 
-  align-items: center;
-}
-
-.small-margin-sides {
-  margin-left: 5px;
-  margin-right: 5px;
-}
-
+/* Prayer Request Table Styles */
 #prayer-request-option-bar {
   display: flex;
-  flex: 1; 
-  flex-direction: row; 
-  justify-content: space-between; 
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -102,6 +106,10 @@ input:checked + .slider:before {
   border-bottom: solid 1px #ddd;
 }
 
+#prayer-request-table th {
+  border-bottom-width: 2px !important;
+}
+
 .align-left {
   text-align: left;
   padding: 1em;
@@ -120,10 +128,7 @@ input:checked + .slider:before {
   width: 15%;
 }
 
-#prayer-request-table th {
-  border-bottom-width: 2px !important;
-}
-
+/* Prayer Request Buttons and Icons */
 .prayer-request-button {
   border-width: 1px;
   border-style: solid;
@@ -151,10 +156,7 @@ input:checked + .slider:before {
   cursor: not-allowed;
 }
 
-.cursor-pointer {
-  cursor: pointer;
-}
-
+/* Styled Text Box */
 .styled-text-box {
   width: 600px;
   height: 150px;
@@ -166,16 +168,15 @@ input:checked + .slider:before {
   resize: none; /* Prevent text box resizing by the user */
 }
 
-/* CSS for focusing (highlighting) the text box */
 .styled-text-box:focus {
   border-color: #007bff; /* Change to your preferred focus color */
 }
 
-/* CSS for placeholder text (optional) */
 .styled-text-box::placeholder {
   color: #999; /* Change to your preferred placeholder text color */
 }
 
+/* Prayer Request Show Styles */
 #prayer-request-show {
   background-color: #f7f7f7;
   padding: 20px;
@@ -184,7 +185,6 @@ input:checked + .slider:before {
   margin: 20px;
 }
 
-/* Style for the strong element inside p tags */
 #prayer-request-show p strong {
   color: #007bff;
 }
