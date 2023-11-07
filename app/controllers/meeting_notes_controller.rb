@@ -70,7 +70,6 @@ class MeetingNotesController < ApplicationController
   end
 
   def search_meeting
-    puts "Debug message: This is a debug log entry"
     if params[:search_date]
       @meeting_notes2 = MeetingNote.where(date: Date.parse(params[:search_date]))
     else
