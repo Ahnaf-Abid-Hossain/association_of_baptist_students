@@ -1,5 +1,9 @@
 <div class="hero">
-  <h1 id="prayer-request-header">Public prayer requests</h1>
+  <% if current_user.is_admin? %>
+    <h1 id="prayer-request-header">All prayer requests</h1>
+  <% else %>
+    <h1 id="prayer-request-header">Public prayer requests</h1>
+  <% end %>
   <div>
     <!-- Holds options: Create new prayer request (button), Your prayer requests (toggle switch) -->
     <div id="prayer-request-option-bar">
