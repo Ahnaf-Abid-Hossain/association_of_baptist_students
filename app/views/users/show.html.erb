@@ -4,24 +4,24 @@
   </a>
 </div>
 
-<%= render @user %>
+<div>
+  <%= render @user %>
+</div>
 
-<div class="margins">
+<div class="margins", style="margin-top: 25px" >
   <div>
     <div class="button-group" style="display: flex; gap: 5px;">      
       <% if current_user.email == @user.email %>
         <%= link_to "Edit Profile", edit_user_path(@user), method: :get, class: "view-button" %>
         <%= link_to "Privacy Settings", privacy_settings_user_path(@user), method: :get, class: "view-button" %>
         <%= link_to "Upload Profile Picture", new_image_path, method: :get, class: "view-button" %>
-        <%= button_to "Delete Your Profile", @user, method: :delete, form: { data: { turbo_confirm: "Are you sure you want to delete your profile? This action cannot be undone." }}, class: "view-button"  %>
+        <%= button_to "Delete Your Profile", @user, method: :delete, form: { data: { turbo_confirm: "Are you sure you want to delete your profile? This action cannot be undone." }}, class: "view-button" %>
+      <% elsif current_user && current_user.is_admin? %>
+        <%= link_to "Edit this User", edit_user_path(@user), class: "view-button" %>
+        <%= button_to "Delete this User", @user, method: :delete, form: { data: { turbo_confirm: "Are you sure you want to delete this profile? This action cannot be undone." }}, class: "view-button" %>
       <% end %>
     </div>
-
-    <% if current_user && current_user.is_admin? %>
-      <%= link_to "Edit this user", edit_user_path(@user), class: "custom-link" %>
-      <%= button_to "Destroy this user", @user, method: :delete, class: "custom-link" %>
-    <% end %>
-
+    
     <br>
 
     <% if current_user && current_user.is_admin? %>

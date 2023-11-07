@@ -25,10 +25,11 @@
       <%= text_field_tag 'major', params[:major], class: 'search-input', placeholder: 'Enter Major' %>
     </div>
 
-    <div class "form-group">
+    <div class="form-group">
       <%= label_tag 'current_city', 'Current City:', class: "search-label" %>
       <%= text_field_tag 'current_city', params[:current_city], class: 'search-input', placeholder: 'Enter Current City' %>
     </div>
+
 
     <%= submit_tag 'Search', class: 'btn search-button' %>
   <% end %>
