@@ -92,6 +92,7 @@ gem 'seed_dump'
 # Devise (as of now, no need for specific version)
 gem 'devise'
 
+gem 'httparty'
 # Specified (in assignment) version 1.9.1 omniauth
 gem 'omniauth', '~> 1.9.1'
 
