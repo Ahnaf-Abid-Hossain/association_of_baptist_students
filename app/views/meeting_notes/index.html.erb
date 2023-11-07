@@ -1,4 +1,11 @@
 
+
+
+
+
+
+<div id="meeting_notes">
+<div class ="hero">
 <h1>Meeting notes</h1>
 <%= link_to "Back to Directory", current_user %>
 
@@ -9,12 +16,6 @@
     </div>
 <% end %>
 
-
-
-
-
-<div id="meeting_notes">
-<div class ="hero">
 <table id = "links">
     <thead>
       <tr>
@@ -33,6 +34,10 @@
     <%end%>
     </tbody>
     </table>
+    <% if current_user && current_user.is_admin? %>
+  <%= link_to "New meeting note", new_meeting_note_path %>
+<%end%>
+
     </div>
     <p>
 
@@ -40,6 +45,3 @@
     </p>
 
 </div>
-<% if current_user && current_user.is_admin? %>
-  <%= link_to "New meeting note", new_meeting_note_path %>
-<%end%>

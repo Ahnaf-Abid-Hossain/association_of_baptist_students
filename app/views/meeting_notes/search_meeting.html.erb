@@ -1,3 +1,4 @@
+<div class ="hero">
 <h1>Search Meeting Notes by Date</h1>
 
 <%= form_tag basic_search_meeting_note_path, method: :get, class: "form-inline" do %>
@@ -12,7 +13,7 @@
     <%if @meeting_notes2 == nil %>
         <p>No meeting notes found for the given date.</p>
     <% else %>
-        <div class ="hero">
+        
             <table id = "links">
                 <thead>
                     <tr>
