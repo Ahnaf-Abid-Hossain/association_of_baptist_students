@@ -21,9 +21,7 @@ class LinksController < ApplicationController
     @link.order = Link.get_next_order
 
     # Prepend http:// if not present
-    if @link.url
-      @link.url = 'http://' + @link.url unless @link.url.start_with?('http://', 'https://')
-    end
+    @link.url = "http://#{@link.url}" if @link.url && !@link.url.start_with?('http://', 'https://')
 
     respond_to do |format|
       if @link.save
@@ -39,9 +37,7 @@ class LinksController < ApplicationController
   # PATCH/PUT /links/1 or /links/1.json
   def update
     new_params = link_params
-    if new_params[:url]
-      new_params[:url] = 'http://' + new_params[:url] unless new_params[:url].start_with?('http://', 'https://')
-    end
+    new_params[:url] = "http://#{new_params[:url]}" if new_params[:url] && !new_params[:url].start_with?('http://', 'https://')
 
     respond_to do |format|
       if @link.update(new_params)
@@ -71,14 +67,14 @@ class LinksController < ApplicationController
     if @link.order > 1
       # Bad things happen if we fail here
       before = Link.find_by(order: @link.order - 1)
-    
+
       # Swap orders
       @link.order -= 1
       before.order += 1
 
       # Save
       @link.save!
-      before.save
+      before.save!
 
       # Redirect back to links
       redirect_to(links_url)
@@ -91,14 +87,14 @@ class LinksController < ApplicationController
     if @link.order < Link.count
       # Bad things happen if we fail here
       after = Link.find_by(order: @link.order + 1)
-    
+
       # Swap orders
       @link.order += 1
       after.order -= 1
 
       # Save
       @link.save!
-      after.save
+      after.save!
 
       # Redirect back to links
       redirect_to(links_url)

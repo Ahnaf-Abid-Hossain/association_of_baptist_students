@@ -3,12 +3,13 @@ require 'rails_helper'
 RSpec.describe('links/index') do
   before do
     # Create user for authorship
-    admin_user = FactoryBot.create(:admin_user, user_first_name: "Johnny", user_last_name: "Admin")
+    admin_user = FactoryBot.create(:admin_user, user_first_name: 'Johnny', user_last_name: 'Admin')
 
     assign(:links, [
       FactoryBot.create(:link, user: admin_user, label: 'XLabel', url: 'XURL', order: 2),
       FactoryBot.create(:link, user: admin_user, label: 'XLabel', url: 'XURL', order: 3)
-    ])
+    ]
+    )
   end
 
   it 'renders a list of links' do
