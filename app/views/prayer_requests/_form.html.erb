@@ -1,8 +1,8 @@
 <%= form_with(model: prayer_request) do |form| %>
+  <!-- Display error if any -->
   <% if prayer_request.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(prayer_request.errors.count, "error") %> prohibited this prayer_request from being saved:</h2>
-
       <ul>
         <% prayer_request.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -11,35 +11,50 @@
     </div>
   <% end %>
 
+  <!-- If creating new prayer request, display request field -->
   <% if prayer_request.new_record? || current_user.id == prayer_request.user_id %>
     <div>
       <%= form.label :request, style: "display: block" %>
-      <%= form.text_field :request %>
+      <%= form.text_area :request, class: "styled-text-box" %>
     </div>
   <% end %>
 
-  <% if !prayer_request.new_record? && current_user.is_admin? %>
-    <div>
-      <%= form.label :status, style: "display: block" %>
-      <%= form.text_field :status %>
-    </div>
-  <% end %>
-
+  <!-- If creating prayer request, display anonymous field -->
   <% if prayer_request.new_record? %>
     <div>
-      <%= form.label :is_anonymous, "Is Anonymous" %>
       <%= form.check_box :is_anonymous, { checked: true } %>
+      <%= form.label :is_anonymous, "Is Anonymous" %>
     </div>
   <% end %>
-
+  <!-- If editing prayer request, display anonymous field only to creator of request -->
   <% if !prayer_request.new_record? && current_user.id == prayer_request.user_id%>
     <div>
-      <%= form.label :is_anonymous, "Is Anonymous" %>
       <%= form.check_box :is_anonymous, { checked: prayer_request.is_anonymous } %>
+      <%= form.label :is_anonymous, "Is Anonymous" %>
     </div>
   <% end %>
 
-  <div>
-    <%= form.submit %>
+  <!-- If creating prayer request, display is public field -->
+  <% if prayer_request.new_record? %>
+    <div>
+      <%= form.check_box :is_public, { checked: false } %>
+      <%= form.label :is_public, "Is Public" %>
+    </div>
+  <% end %>
+  <!-- If editing prayer request, display is public field only to creator of request -->
+  <% if !prayer_request.new_record? && current_user.id == prayer_request.user_id%>
+    <div>
+      <%= form.check_box :is_public, { checked: prayer_request.is_public } %>
+      <%= form.label :is_public, "Is Public" %>
+    </div>
+  <% end %>
+
+  <!-- Buttons: Go back, Submit -->
+  <div class="button-group">
+    <%= link_to prayer_requests_path do %>
+      <button class="links-button with-text danger-button button-group-left cursor-pointer"><i class="fa fa-arrow-left"></i> Back</button>
+    <% end %>
+    <%= form.button class: 'links-button neutral-button button-group-right cursor-pointer', type: :submit %>
   </div>
 <% end %>
+<%= stylesheet_link_tag "prayer_requests" %>

@@ -1,20 +1,11 @@
-<div id="<%= dom_id prayer_request %>">
-  <p>
-    <strong>Request:</strong>
-    <%= prayer_request.request %>
-  </p>
+<div id="prayer-request-show">
 
-  <% if current_user.is_admin? || prayer_request.user_id == current_user.id %>
-    <p>
-      <strong>Status:</strong>
-      <%= prayer_request.status %>
-    </p>
-  <% end %>
-
+  <!-- Prayer request: name -->
   <% if !prayer_request.is_anonymous %>
     <p>
       <strong>Requester's Name:</strong>
-      <%= prayer_request.user.full_name %>
+      <%= prayer_request.user.user_first_name %>
+      <%= prayer_request.user.user_last_name %>
     </p>
   <% else %>
     <p>
@@ -22,11 +13,28 @@
     </p>
   <% end %>
 
-  <% if !prayer_request.is_anonymous && current_user.is_admin?%>
+  <!-- Prayer request: request -->
+  <p class="prayer-request-request">
+    <strong>Request:</strong>
+    <%= prayer_request.request %>
+  </p>
+
+  <!-- Prayer request: status -->
+  <% if prayer_request.user_id == current_user.id %>
     <p>
-      <strong>User ID:</strong>
-      <%= prayer_request.user_id %>
+      <strong>Status:</strong>
+      <%= prayer_request.status %>
     </p>
   <% end %>
 
+  <!-- Separator -->
+  <div style="margin-bottom: 15px;"></div>
+
+  <!-- Button: Go back -->
+  <div class="button-group">
+    <%= link_to prayer_requests_path do %>
+      <button class="links-button with-text danger-button cursor-pointer"><i class="fa fa-arrow-left"></i> Back</button>
+    <% end %>
+  </div>
 </div>
+<%= stylesheet_link_tag "prayer_requests" %>

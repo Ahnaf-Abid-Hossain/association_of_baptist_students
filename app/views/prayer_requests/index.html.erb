@@ -1,12 +1,119 @@
-<h1>Prayer requests</h1>
-
-<div id="prayer_requests">
-  <% @prayer_requests.each do |prayer_request| %>
-    <%= render prayer_request %>
-    <p>
-      <%= link_to "Show this prayer request", prayer_request %>
-    </p>
-  <% end %>
+<div class="hero">
+  <h1 id="prayer-request-header">Public prayer requests</h1>
+  <div>
+    <!-- Holds options: Create new prayer request (button), Your prayer requests (toggle switch) -->
+    <div id="prayer-request-option-bar">
+      <!-- Create new prayer request (button) -->
+      <div>
+        <%= link_to new_prayer_request_path do %>
+          <button class="success-button links-button with-text cursor-pointer">
+            <i class="fas fa-plus"></i> New prayer request
+          </button>
+        <% end %>
+      </div>
+      <!-- Your prayer requests (toggle switch) -->
+      <div class="flex-center">
+        <label class="switch small-margin-sides">
+          <input type="checkbox" id="prayerRequestSwitch">
+          <span class="slider round"></span>
+        </label>
+        <span class="switch-label small-margin-sides" id="switchLabel">Your prayer requests</span>
+      </div>
+    </div>
+    <!-- Table with prayer requests -->
+    <table id="prayer-request-table">
+      <!-- Col names -->
+      <thead>
+        <tr>
+          <th class="align-left">Author</th>
+          <th class="align-left">Request</th>
+          <th class="align-center small-col">View</th>
+          <th class="align-center small-col">Edit</th>
+          <th class="align-center small-col">Delete</th>
+        </tr>
+      </thead>
+      <!-- Public prayer requests -->
+      <% @public_prayer_requests.each do |prayer_request| %>
+        <tr class="publicPrayerRequests">
+          <td class="align-left med-col">
+            <!-- Profile Pic and Name -->
+            <% if prayer_request.is_anonymous %>
+              <span class="prayer-request-author-icon-link">
+                <img class="prayer-request-author-icon" src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106" />
+                Anonymous
+              </span>
+            <% else %>
+              <%= link_to user_path(prayer_request.user), class: 'prayer-request-author-icon-link' do %>
+                <img class="prayer-request-author-icon" src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106" />
+                <%= prayer_request.user.user_first_name %>
+                <%= prayer_request.user.user_last_name %>
+              <% end %> 
+            <% end %>
+          </td>
+          <!-- Request length max 80 char -->
+          <td class="align-left"><%= truncate(prayer_request.request, length: 80) %></td>
+          <!-- View prayer request link-->
+          <td class="align-center small-col"><%= link_to "View", prayer_request %></td>
+          <!-- Edit button -->
+          <td class="align-center small-col">
+            <% if prayer_request.user == current_user %>
+              <%= button_to edit_prayer_request_path(prayer_request), class: 'neutral-button prayer-request-button cursor-pointer', method: :get do %>
+                <i class="fas fa-edit"></i>
+              <% end %>
+            <% else %>
+              <i class="neutral-button prayer-request-button fa-disabled fas fa-edit"></i>
+            <% end %>
+          </td>
+          <!-- Delete button -->
+          <td class="align-center small-col">
+            <% if current_user.is_admin? || prayer_request.user == current_user %>
+              <%= button_to prayer_request_path(prayer_request), method: :delete, class: 'danger-button prayer-request-button cursor-pointer' do %>
+                <i class="fas fa-trash-alt"></i>
+              <% end %>
+            <% else %>
+              <i class="danger-button prayer-request-button fa-disabled fas fa-trash-alt"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      <!-- User prayer reqeusts (Your prayer requests) -->
+      <% @user_prayer_requests.each do |prayer_request| %>
+        <tr class="userPrayerRequests hidden">
+          <td class="align-left med-col">
+            <!-- Profile Pic and Name -->
+            <% if prayer_request.is_anonymous %>
+              <span class="prayer-request-author-icon-link">
+                <img class="prayer-request-author-icon" src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106" />
+                Anonymous
+              </span>
+            <% else %>
+              <%= link_to user_path(prayer_request.user), class: 'prayer-request-author-icon-link' do %>
+                <img class="prayer-request-author-icon" src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106" />
+                <%= prayer_request.user.user_first_name %>
+                <%= prayer_request.user.user_last_name %>
+              <% end %> 
+            <% end %>
+          </td>
+          <!-- Request length max 80 char -->
+          <td class="align-left"><%= truncate(prayer_request.request, length: 80) %></td>
+          <!-- View prayer request link -->
+          <td class="align-center small-col"><%= link_to "View", prayer_request %></td>
+          <!-- Edit button -->
+          <td class="align-center small-col">
+            <%= button_to edit_prayer_request_path(prayer_request), class: 'neutral-button prayer-request-button cursor-pointer', method: :get do %>
+              <i class="fas fa-edit"></i>
+            <% end %>
+          </td>
+          <!-- Delete button -->
+          <td class="align-center small-col">
+            <%= button_to prayer_request_path(prayer_request), method: :delete, class: 'danger-button prayer-request-button cursor-pointer' do %>
+              <i class="fas fa-trash-alt"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
 </div>
-
-<%= link_to "New prayer request", new_prayer_request_path %>
+<%= stylesheet_link_tag "prayer_requests" %>
+<%= javascript_include_tag 'prayer_requests' %>

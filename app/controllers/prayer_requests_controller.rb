@@ -4,12 +4,14 @@ class PrayerRequestsController < ApplicationController
 
   # GET /prayer_requests or /prayer_requests.json
   def index
-    @prayer_requests = if current_user.is_admin?
-                         PrayerRequest.all
-                       else
-                         # current_user.user.prayer_requests?
-                         current_user.prayer_requests
-                       end
+    @user_prayer_requests = 
+                            current_user.prayer_requests
+
+    @public_prayer_requests = if current_user.is_admin?
+                                PrayerRequest.all
+    else
+      PrayerRequest.where(is_public: true)
+    end
   end
 
   # GET /prayer_requests/1 or /prayer_requests/1.json
@@ -36,7 +38,7 @@ class PrayerRequestsController < ApplicationController
   # POST /prayer_requests or /prayer_requests.json
   def create
     # current_user.user.prayer_requests?
-    @prayer_request = current_user.prayer_requests.build(create_prayer_requests_params)
+    @prayer_request = current_user.prayer_requests.build(create_prayer_request_params)
     @prayer_request.status = 'not_read'
 
     respond_to do |format|
@@ -85,8 +87,8 @@ class PrayerRequestsController < ApplicationController
   end
 
   # Only allow a list of trusted parameters through.
-  def create_prayer_requests_params
-    params.require(:prayer_request).permit(:request, :is_anonymous)
+  def create_prayer_request_params
+    params.require(:prayer_request).permit(:request, :is_anonymous, :is_public)
   end
 
   def update_prayer_request
@@ -94,9 +96,9 @@ class PrayerRequestsController < ApplicationController
                        when admin_with_other_user?
                          params.require(:prayer_request).permit(:status)
                        when admin_with_own_request?
-                         params.require(:prayer_request).permit(:request, :status, :is_anonymous)
+                         params.require(:prayer_request).permit(:request, :status, :is_anonymous, :is_public)
                        when user_with_own_request?
-                         params.require(:prayer_request).permit(:request, :is_anonymous)
+                         params.require(:prayer_request).permit(:request, :is_anonymous, :is_public)
                        when user_with_other_user?
                          return false
                        end

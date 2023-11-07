@@ -4,6 +4,7 @@ FactoryBot.define do
     status { 'pending' }
     user
     is_anonymous { true }
+    is_public { true }
 
     factory :invalid_prayer_request_no_request do
       # Invalid because request is required
