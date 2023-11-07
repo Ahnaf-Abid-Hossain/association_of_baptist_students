@@ -9,14 +9,7 @@ module ProfanityHelper
 
     if response.success?
       result = JSON.parse(response.body)
-
-      # if result == false
-        # Handle profanity found
         return result
-      # else
-        # No profanity found
-        # return text
-      # end
     else
       # Handle API request errors
       return "Error: Failed to check for profanity"
