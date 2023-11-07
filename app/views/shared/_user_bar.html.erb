@@ -6,6 +6,7 @@
       <%= link_to "Home", root_path, class: 'navbar-link' %>
       <%= link_to "Meeting Notes", meeting_notes_path, class: 'navbar-link' %>
       <%= link_to "Prayer Requests", prayer_requests_path, class: 'navbar-link' %>
+      <%= link_to 'Google Calendar', google_calendar_path %>
       <% if current_user && current_user.is_admin? %>
         <%= link_to "Approvals", approvals_index_path, class: 'navbar-link'  %>
         <%= link_to "Links", links_path, class: 'navbar-link' %>
