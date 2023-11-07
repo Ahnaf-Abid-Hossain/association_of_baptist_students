@@ -143,6 +143,9 @@ GEM
       os (>= 0.9, < 2.0)
       signet (>= 0.16, < 2.a)
     hashie (5.0.0)
+    httparty (0.21.0)
+      mini_mime (>= 1.0.0)
+      multi_xml (>= 0.5.2)
     httpclient (2.8.3)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
@@ -389,6 +392,7 @@ DEPENDENCIES
   google-api-client
   google-apis-drive_v3
   googleauth
+  httparty
   importmap-rails
   jbuilder
   jquery-rails

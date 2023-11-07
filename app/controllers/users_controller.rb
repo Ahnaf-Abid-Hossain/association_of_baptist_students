@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_action :force_new_user, only: %i[index show edit]
   before_action :check_approval_status, except: %i[edit update]
   before_action :authorize_user, only: %i[edit update destroy]
+  helper ProfanityHelper
 
   def approve
     @alumni = User.find(params[:id])
