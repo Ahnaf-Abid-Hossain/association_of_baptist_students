@@ -10,6 +10,6 @@ require 'rails_helper'
 #     end
 #   end
 # end
-RSpec.describe ProfanityHelper, type: :helper do
+RSpec.describe(ProfanityHelper) do
   pending "add some examples to (or delete) #{__FILE__}"
 end

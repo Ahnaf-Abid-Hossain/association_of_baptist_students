@@ -38,37 +38,37 @@ RSpec.describe(Link) do
 
   it 'properly returns next order' do
     # Delete all
-    Link.destroy_all
-    expect(Link.count).to(eq(0))
+    described_class.destroy_all
+    expect(described_class.count).to(eq(0))
 
     # Create user to author links
     user = FactoryBot.create(:admin_user)
-    expect(user).to_not(be_nil)
+    expect(user).not_to(be_nil)
 
     # Ensure Link.get_next_order returns 1 when no links exist
-    expect(Link.get_next_order).to(eq(1))
+    expect(described_class.get_next_order).to(eq(1))
 
     # Create a link
     link = FactoryBot.create(:link, user: user, order: 1)
-    expect(link).to_not(be_nil)
-    
+    expect(link).not_to(be_nil)
+
     # Link.get_next_order should return 2 now
-    expect(Link.get_next_order).to(eq(2))
+    expect(described_class.get_next_order).to(eq(2))
 
     # Create a second link
     link2 = FactoryBot.create(:link, user: user, order: 2)
-    expect(link2).to_not(be_nil)
-    
+    expect(link2).not_to(be_nil)
+
     # Link.get_next_order should return 3 now
-    expect(Link.get_next_order).to(eq(3))
+    expect(described_class.get_next_order).to(eq(3))
 
     # Delete the first link
     link.destroy!
 
     # Now call reorder_links
-    Link.reorder_links
+    described_class.reorder_links
 
     # Now Link.get_next_order should return 2 again
-    expect(Link.get_next_order).to(eq(2))
+    expect(described_class.get_next_order).to(eq(2))
   end
 end
