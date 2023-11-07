@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :prayer_request do
     request { 'Please pray for me.' }
-    status { 'pending' }
+    status { 'Not read' }
     user
     is_anonymous { true }
     is_public { true }
