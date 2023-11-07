@@ -154,3 +154,44 @@ input:checked + .slider:before {
 .cursor-pointer {
   cursor: pointer;
 }
+
+.styled-text-box {
+  width: 600px;
+  height: 150px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+  resize: none; /* Prevent text box resizing by the user */
+}
+
+/* CSS for focusing (highlighting) the text box */
+.styled-text-box:focus {
+  border-color: #007bff; /* Change to your preferred focus color */
+}
+
+/* CSS for placeholder text (optional) */
+.styled-text-box::placeholder {
+  color: #999; /* Change to your preferred placeholder text color */
+}
+
+#prayer-request-show {
+  background-color: #f7f7f7;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 20px;
+}
+
+/* Style for the strong element inside p tags */
+#prayer-request-show p strong {
+  color: #007bff;
+}
+
+.prayer-request-request {
+  font-size: 18px;
+  margin-bottom: 18px;
+  line-height: 1.2; /* Line height for readability */
+  white-space: pre-line; /* Preserve line breaks in text */
+}
