@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_action :force_new_user, only: %i[index show edit]
   before_action :check_approval_status, except: %i[edit update]
   before_action :authorize_user, only: %i[edit update destroy]
+  helper ProfanityHelper
 
   def approve
     @alumni = User.find(params[:id])
@@ -12,14 +13,29 @@ class UsersController < ApplicationController
 
   def decline
     @alumni = User.find(params[:id])
-    @alumni.update!(approval_status: -1)
-    redirect_to(users_path, notice: 'Alumni declined successfully.')
+    if @alumni != current_user
+      @alumni.update!(approval_status: -1)
+      redirect_to(users_path, notice: 'Alumni declined successfully.')
+    else
+      redirect_to(users_path, alert: "You can't decline yourself.")
+    end
   end
 
   def approve_admin
     @alumni = User.find(params[:id])
-    @alumni.update(is_admin: 1)
-    redirect_to(users_path, notice: 'Alumni made Admin successfully')
+    if @alumni != current_user
+      if @alumni.is_admin?
+        @alumni.update(is_admin: 0)
+        notice_message = 'Alumni admin status revoked successfully.'
+      else
+        @alumni.update(is_admin: 1)
+        notice_message = 'Alumni made admin successfully.'
+      end
+    else
+      notice_message = "You can't modify your own admin status."
+    end
+  
+    redirect_to(users_path, notice: notice_message)
   end
 
   # Make sure user is authorized to access account

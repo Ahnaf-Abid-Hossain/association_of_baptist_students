@@ -3,12 +3,16 @@ class MeetingNotesController < ApplicationController
   before_action :check_approval_status
   before_action :user_is_admin, only: [:new, :create, :show, :edit]
 
+
+
   def user_is_admin
     unless current_user&.is_admin
       flash[:alert] = 'You do not have permission to access this page.'
       redirect_to(root_path)
     end
   end
+
+  
 
   # GET /meeting_notes or /meeting_notes.json
   def index
@@ -65,6 +69,18 @@ class MeetingNotesController < ApplicationController
     end
   end
 
+  def search_meeting
+    if params[:search_date]
+      @meeting_notes2 = MeetingNote.where(date: Date.parse(params[:search_date]))
+    else
+      @meeting_notes2 = MeetingNote.all
+    end
+    respond_to do |format|
+      format.html # This will render the default HTML template (if it exists)
+      format.json { render json: @meeting_notes } # Render JSON for JSON requests
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -76,4 +92,7 @@ class MeetingNotesController < ApplicationController
   def meeting_note_params
     params.require(:meeting_note).permit(:title, :content, :date, :id)
   end
+
+
 end
+

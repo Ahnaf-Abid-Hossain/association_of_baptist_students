@@ -1,14 +1,44 @@
+
 <h1>Meeting notes</h1>
 <%= link_to "Back to Directory", current_user %>
+
+<%= form_tag(basic_search_meeting_note_path, method: :get, class: 'form-inline') do %>
+  <div class="form-group">
+    <%= date_field_tag(:search_date, params[:search_date], class: 'form-control', placeholder: 'Enter Date') %>
+    <%= submit_tag('Search', class: 'btn btn-primary') %>
+    </div>
+<% end %>
+
+
+
+
+
 <div id="meeting_notes">
-  <% @meeting_notes.each do |meeting_note| %>
-    <%= render meeting_note %>
+<div class ="hero">
+<table id = "links">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Content</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @meeting_notes.each do |meeting_note| %>
+    <tr>
+          <td><%= meeting_note.title %></td>
+          <td><%= meeting_note.content %></td>
+          <td><%= meeting_note.date %></td>
+    </tr>
+    <%end%>
+    </tbody>
+    </table>
+    </div>
     <p>
-      <% if current_user && current_user.is_admin? %>
-        <%= link_to "Show this meeting note", meeting_note %>
-      <%end%>
+
+
     </p>
-  <% end %>
+
 </div>
 <% if current_user && current_user.is_admin? %>
   <%= link_to "New meeting note", new_meeting_note_path %>

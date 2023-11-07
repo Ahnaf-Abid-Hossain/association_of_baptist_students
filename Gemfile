@@ -42,6 +42,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 gem 'rexml'
+gem 'jquery-rails'
 
 # Use Sass to process CSS
 # gem "sassc-rails"
@@ -91,6 +92,7 @@ gem 'seed_dump'
 # Devise (as of now, no need for specific version)
 gem 'devise'
 
+gem 'httparty'
 # Specified (in assignment) version 1.9.1 omniauth
 gem 'omniauth', '~> 1.9.1'
 

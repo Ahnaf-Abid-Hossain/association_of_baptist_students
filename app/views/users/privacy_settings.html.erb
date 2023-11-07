@@ -1,14 +1,4 @@
-<h1>Privacy Settings</h1>
-
-
-<%= render partial:'users/privacy_form', locals: { user: @user } %>
-
-<br>
-
-<% if current_user.user_first_name.nil? %>
-<% else %>
-  <div>
-    <%= link_to "Show this user", @user %> |
-    <%= link_to "Back to users", users_path %>
-  </div>
-<% end %>
+<div class="margins">
+  <h1>Privacy Settings</h1>
+  <%= render partial:'users/privacy_form', locals: { user: @user } %>
+</div>
