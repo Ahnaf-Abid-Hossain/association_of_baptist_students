@@ -52,9 +52,9 @@
   <!-- Buttons: Go back, Submit -->
   <div class="button-group">
     <%= link_to prayer_requests_path do %>
-      <button class="links-button with-text danger-button button-group-left"><i class="fa fa-arrow-left"></i> Back</button>
+      <button class="links-button with-text danger-button button-group-left cursor-pointer"><i class="fa fa-arrow-left"></i> Back</button>
     <% end %>
-    <%= form.button class: 'links-button neutral-button button-group-right', type: :submit %>
+    <%= form.button class: 'links-button neutral-button button-group-right cursor-pointer', type: :submit %>
   </div>
 <% end %>
 <%= stylesheet_link_tag "prayer_requests" %>

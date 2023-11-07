@@ -1,5 +1,6 @@
 <div id="prayer-request-show">
 
+  <!-- Prayer request: name -->
   <% if !prayer_request.is_anonymous %>
     <p>
       <strong>Requester's Name:</strong>
@@ -12,12 +13,14 @@
     </p>
   <% end %>
 
+  <!-- Prayer request: request -->
   <p class="prayer-request-request">
     <strong>Request:</strong>
     <%= prayer_request.request %>
   </p>
 
-  <% if current_user.is_admin? || prayer_request.user_id == current_user.id %>
+  <!-- Prayer request: status -->
+  <% if prayer_request.user_id == current_user.id %>
     <p>
       <strong>Status:</strong>
       <%= prayer_request.status %>
@@ -30,7 +33,7 @@
   <!-- Button: Go back -->
   <div class="button-group">
     <%= link_to prayer_requests_path do %>
-      <button class="links-button with-text danger-button"><i class="fa fa-arrow-left"></i> Back</button>
+      <button class="links-button with-text danger-button cursor-pointer"><i class="fa fa-arrow-left"></i> Back</button>
     <% end %>
   </div>
 </div>

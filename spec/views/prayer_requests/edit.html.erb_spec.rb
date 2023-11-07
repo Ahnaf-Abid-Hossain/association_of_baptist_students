@@ -19,18 +19,71 @@ RSpec.describe('prayer_requests/edit') do
       render
 
       assert_select 'form[action=?][method=?]', prayer_request_path(prayer_request), 'post' do
-        assert_select 'input[name=?]', 'prayer_request[request]'
+        assert_select 'textarea[name=?]', 'prayer_request[request]'
       end
     end
 
-    it 'renders the status field in the edit prayer_request form' do
+    it 'does not render the status field in the edit prayer_request form' do
       prayer_request = FactoryBot.create(:prayer_request, user: admin, is_anonymous: true)
       assign(:prayer_request, prayer_request)
 
       render
 
       assert_select 'form[action=?][method=?]', prayer_request_path(prayer_request), 'post' do
-        assert_select 'input[name=?]', 'prayer_request[status]'
+        assert_select 'textarea[name=?]', 'prayer_request[status]', count: 0
+      end
+    end
+
+    it 'renders the anonymous field in the edit prayer_request form' do
+      prayer_request = FactoryBot.create(:prayer_request, user: admin, is_anonymous: true)
+      assign(:prayer_request, prayer_request)
+
+      render
+
+      assert_select 'form[action=?][method=?]', prayer_request_path(prayer_request), 'post' do
+        assert_select 'textarea[name=?]', 'prayer_request[status]', count: 0
+      end
+    end
+
+    it 'does renders the is_anonymous checkbox in the edit prayer_request form' do
+      prayer_request1 = FactoryBot.create(:prayer_request, user: admin, is_anonymous: true)
+      prayer_request2 = FactoryBot.create(:prayer_request, user: admin, is_anonymous: false)
+
+      assign(:prayer_request, prayer_request1)
+
+      render
+
+      assert_select 'form[action=?][method=?]', prayer_request_path(prayer_request1), 'post' do
+        assert_select 'input[type=?][checked=?][name=?]', 'checkbox', 'checked', 'prayer_request[is_anonymous]'
+      end
+
+      assign(:prayer_request, prayer_request2)
+
+      render
+
+      assert_select 'form[action=?][method=?]', prayer_request_path(prayer_request2), 'post' do
+        assert_select 'input[type=?][checked=?][name=?]', 'checkbox', 'checked', 'prayer_request[is_anonymous]', count: 0
+      end
+    end
+
+    it 'does renders the is_public checkbox in the edit prayer_request form' do
+      prayer_request1 = FactoryBot.create(:prayer_request, user: admin, is_public: true)
+      prayer_request2 = FactoryBot.create(:prayer_request, user: admin, is_public: false)
+
+      assign(:prayer_request, prayer_request1)
+
+      render
+
+      assert_select 'form[action=?][method=?]', prayer_request_path(prayer_request1), 'post' do
+        assert_select 'input[type=?][checked=?][name=?]', 'checkbox', 'checked', 'prayer_request[is_public]'
+      end
+
+      assign(:prayer_request, prayer_request2)
+
+      render
+
+      assert_select 'form[action=?][method=?]', prayer_request_path(prayer_request2), 'post' do
+        assert_select 'input[type=?][checked=?][name=?]', 'checkbox', 'checked', 'prayer_request[is_public]', count: 0
       end
     end
   end
@@ -50,13 +103,24 @@ RSpec.describe('prayer_requests/edit') do
     end
 
     it 'does not render the is_anonymous checkbox in the edit prayer_request form' do
-      prayer_request = FactoryBot.create(:prayer_request, user: user1, is_anonymous: true)
+      prayer_request = FactoryBot.create(:prayer_request, user: user1)
       assign(:prayer_request, prayer_request)
 
       render
 
       assert_select 'form[action=?][method=?]', prayer_request_path(prayer_request), 'post' do
         assert_select 'input[type=?][name=?]', 'checkbox', 'prayer_request[is_anonymous]', count: 0
+      end
+    end
+
+    it 'does not render the is_public checkbox in the edit prayer_request form' do
+      prayer_request = FactoryBot.create(:prayer_request, user: user1)
+      assign(:prayer_request, prayer_request)
+
+      render
+
+      assert_select 'form[action=?][method=?]', prayer_request_path(prayer_request), 'post' do
+        assert_select 'input[type=?][name=?]', 'checkbox', 'prayer_request[is_public]', count: 0
       end
     end
   end
@@ -71,7 +135,7 @@ RSpec.describe('prayer_requests/edit') do
       render
 
       assert_select 'form[action=?][method=?]', prayer_request_path(prayer_request), 'post' do
-        assert_select 'input[name=?]', 'prayer_request[request]'
+        assert_select 'textarea[name=?]', 'prayer_request[request]'
       end
     end
 
@@ -85,35 +149,46 @@ RSpec.describe('prayer_requests/edit') do
         assert_select 'input[name=?]', 'prayer_request[status]', count: 0
       end
     end
-  end
 
-  context 'user editing their own anonymous prayer request' do
-    before { sign_in user1 }
+    it 'does renders the is_anonymous checkbox in the edit prayer_request form' do
+      prayer_request1 = FactoryBot.create(:prayer_request, user: user1, is_anonymous: true)
+      prayer_request2 = FactoryBot.create(:prayer_request, user: user1, is_anonymous: false)
 
-    it 'renders the true is_anonymous checkbox in the edit prayer_request form' do
-      prayer_request = FactoryBot.create(:prayer_request, user: user1, is_anonymous: true)
-      assign(:prayer_request, prayer_request)
+      assign(:prayer_request, prayer_request1)
 
       render
 
-      assert_select 'form[action=?][method=?]', prayer_request_path(prayer_request), 'post' do
-        assert_select 'input[type=?][name=?]', 'checkbox', 'prayer_request[is_anonymous]'
+      assert_select 'form[action=?][method=?]', prayer_request_path(prayer_request1), 'post' do
+        assert_select 'input[type=?][checked=?][name=?]', 'checkbox', 'checked', 'prayer_request[is_anonymous]'
+      end
+
+      assign(:prayer_request, prayer_request2)
+
+      render
+
+      assert_select 'form[action=?][method=?]', prayer_request_path(prayer_request2), 'post' do
+        assert_select 'input[type=?][checked=?][name=?]', 'checkbox', 'checked', 'prayer_request[is_anonymous]', count: 0
       end
     end
-  end
 
-  context 'user editing their own non-anonymous prayer request' do
-    before { sign_in user1 }
+    it 'does renders the is_public checkbox in the edit prayer_request form' do
+      prayer_request1 = FactoryBot.create(:prayer_request, user: user1, is_public: true)
+      prayer_request2 = FactoryBot.create(:prayer_request, user: user1, is_public: false)
 
-    it 'renders the false is_anonymous checkbox in the edit prayer_request form' do
-      prayer_request = FactoryBot.create(:prayer_request, user: user1, is_anonymous: false)
-      assign(:prayer_request, prayer_request)
+      assign(:prayer_request, prayer_request1)
 
       render
 
-      assert_select 'form[action=?][method=?]', prayer_request_path(prayer_request), 'post' do
-        assert_select 'input[type=?][checked=?][name=?]', 'checkbox', 'checked', 'prayer_request[is_anonymous]', count: 0
-        assert_select 'input[type=?][name=?]', 'checkbox', 'prayer_request[is_anonymous]'
+      assert_select 'form[action=?][method=?]', prayer_request_path(prayer_request1), 'post' do
+        assert_select 'input[type=?][checked=?][name=?]', 'checkbox', 'checked', 'prayer_request[is_public]'
+      end
+
+      assign(:prayer_request, prayer_request2)
+
+      render
+
+      assert_select 'form[action=?][method=?]', prayer_request_path(prayer_request2), 'post' do
+        assert_select 'input[type=?][checked=?][name=?]', 'checkbox', 'checked', 'prayer_request[is_public]', count: 0
       end
     end
   end
