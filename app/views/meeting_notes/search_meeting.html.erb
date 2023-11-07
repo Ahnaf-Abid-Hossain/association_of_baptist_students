@@ -12,19 +12,26 @@
     <%if @meeting_notes2 == nil %>
         <p>No meeting notes found for the given date.</p>
     <% else %>
-        <h2>Search Results</h2>
-        <table>
-            <tr>
-            <th>Date</th>
-            <th>Content</th>
-            </tr>
-            <% @meeting_notes2.each do |note| %>
-            <tr>
-                <td><%= note.date.strftime("%Y-%m-%d") %></td>
-                <td><%= note.content %></td>
-            </tr>
-            <% end %>
-        </table>
+        <div class ="hero">
+            <table id = "links">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Content</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% @meeting_notes2.each do |meeting_note| %>
+                    <tr>
+                        <td><%= meeting_note.title %></td>
+                        <td><%= meeting_note.content %></td>
+                        <td><%= meeting_note.date %></td>
+                    </tr>
+                <%end%>
+                </tbody>
+            </table>
+        </div>
     <% end %>
   
 <% end %>
