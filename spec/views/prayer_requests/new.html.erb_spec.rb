@@ -19,7 +19,7 @@ RSpec.describe('prayer_requests/new') do
       render
 
       assert_select 'form[action=?][method=?]', prayer_requests_path, 'post' do
-        assert_select 'input[name=?]', 'prayer_request[request]'
+        assert_select 'textarea[name=?]', 'prayer_request[request]'
       end
     end
 
@@ -42,6 +42,18 @@ RSpec.describe('prayer_requests/new') do
 
       assert_select 'form[action=?][method=?]', prayer_requests_path, 'post' do
         assert_select 'input[type=?][checked=?][name=?]', 'checkbox', 'checked', 'prayer_request[is_anonymous]'
+      end
+    end
+
+    it 'renders the is_public checkbox defaulted to not public in the create prayer_request form' do
+      prayer_request = PrayerRequest.new
+      assign(:prayer_request, prayer_request)
+
+      render
+
+      assert_select 'form[action=?][method=?]', prayer_requests_path, 'post' do
+        assert_select 'input[type=?][checked=?][name=?]', 'checkbox', 'checked', 'prayer_request[is_public]', count: 0
+        assert_select 'input[type=?][name=?]', 'checkbox', 'prayer_request[is_public]'
       end
     end
   end
@@ -56,7 +68,7 @@ RSpec.describe('prayer_requests/new') do
       render
 
       assert_select 'form[action=?][method=?]', prayer_requests_path, 'post' do
-        assert_select 'input[name=?]', 'prayer_request[request]'
+        assert_select 'textarea[name=?]', 'prayer_request[request]'
       end
     end
 
@@ -79,6 +91,18 @@ RSpec.describe('prayer_requests/new') do
 
       assert_select 'form[action=?][method=?]', prayer_requests_path, 'post' do
         assert_select 'input[type=?][checked=?][name=?]', 'checkbox', 'checked', 'prayer_request[is_anonymous]'
+      end
+    end
+
+    it 'renders the is_public checkbox defaulted to not public in the create prayer_request form' do
+      prayer_request = PrayerRequest.new
+      assign(:prayer_request, prayer_request)
+
+      render
+
+      assert_select 'form[action=?][method=?]', prayer_requests_path, 'post' do
+        assert_select 'input[type=?][checked=?][name=?]', 'checkbox', 'checked', 'prayer_request[is_public]', count: 0
+        assert_select 'input[type=?][name=?]', 'checkbox', 'prayer_request[is_public]'
       end
     end
   end

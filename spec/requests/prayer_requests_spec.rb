@@ -228,6 +228,22 @@ RSpec.describe('/prayer_requests') do
         expect(prayer_request.is_anonymous).to(eq(original_anonymity))
       end
 
+      it "does not allow an admin to modify the 'is_public' attribute of a User's prayer request" do
+        sign_in admin
+
+        prayer_request = FactoryBot.create(:prayer_request, user: user1, is_public: true)
+        original_publicity = prayer_request.is_public
+
+        updated_publicity = !original_publicity
+        updated_prayer_request = FactoryBot.build(:prayer_request, is_public: updated_publicity)
+        patch prayer_request_url(prayer_request), params: { prayer_request: updated_prayer_request.attributes }
+        prayer_request.reload
+
+        expect(response).to(redirect_to(prayer_request_url(prayer_request)))
+        expect(prayer_request.is_public).not_to(eq(updated_publicity))
+        expect(prayer_request.is_public).to(eq(original_publicity))
+      end
+
       it 'updates the requested PrayerRequest for users with valid parameters' do
         sign_in user1
         prayer_request = FactoryBot.create(:prayer_request, user: user1)
