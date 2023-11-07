@@ -1,7 +1,7 @@
 <%= form_with(model: @image, url: images_path, local: true, multipart: true) do |form| %>
   <div class="form-group">
     <%= form.label :file, 'Choose an image' %>
-    <%= form.file_field :file, class: 'form-control' %>
+    <%= form.file_field :file %>
   </div>
-  <%= form.submit 'Upload Image', class: 'btn btn-primary' %>
+  <%= link_to "Upload Image", "javascript:void(0);", class: "save-button", onclick: "document.forms[0].submit(); return false;" %>
 <% end %>

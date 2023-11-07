@@ -1,40 +1,34 @@
-
-<%= render @user %>
+<div class="margins">
+  <a href="<%= users_path %>" class="back-button">
+    <i class="fa fa-arrow-left"></i> Back to Directory
+  </a>
+</div>
 
 <div>
-  <div class="button-group" style="display: flex; gap: 5px;">
-    <%= button_to "Back to Directory", users_path, method: :get %>
-    <% if current_user.email == @user.email %>
-      | <%= button_to "Edit Profile", edit_user_path(@user), method: :get %>
-      | <%= button_to "Privacy Settings", privacy_settings_user_path(@user), method: :get %>
-      | <%= button_to "Upload Profile Picture", new_image_path, method: :get %>
-      | <%= button_to "Delete Your Profile", @user, method: :delete, form: { data: { turbo_confirm: "Are you sure you want to delete your profile?" } } %>
+  <%= render @user %>
+</div>
+
+<div class="margins", style="margin-top: 25px" >
+  <div>
+    <div class="button-group" style="display: flex; gap: 5px;">      
+      <% if current_user.email == @user.email %>
+        <%= link_to "Edit Profile", edit_user_path(@user), method: :get, class: "view-button" %>
+        <%= link_to "Privacy Settings", privacy_settings_user_path(@user), method: :get, class: "view-button" %>
+        <%= link_to "Upload Profile Picture", new_image_path, method: :get, class: "view-button" %>
+        <%= button_to "Delete Your Profile", @user, method: :delete, form: { data: { turbo_confirm: "Are you sure you want to delete your profile? This action cannot be undone." }}, class: "view-button" %>
+      <% elsif current_user && current_user.is_admin? %>
+        <%= link_to "Edit this User", edit_user_path(@user), class: "view-button" %>
+        <%= button_to "Delete this User", @user, method: :delete, form: { data: { turbo_confirm: "Are you sure you want to delete this profile? This action cannot be undone." }}, class: "view-button" %>
+      <% end %>
+    </div>
+    
+    <br>
+
+    <% if current_user && current_user.is_admin? %>
+      <%= link_to "New Meeting Note", new_meeting_note_path() %>
+      <br>
+      <%= link_to "View Meeting Notes", meeting_notes_path() %>
     <% end %>
   </div>
-
-  <% if current_user && current_user.is_admin? %>
-
-    <%= link_to "Edit this user", edit_user_path(@user) , class: "custom-link"%>
-    <%= button_to "Destroy this user", @user, method: :delete ,class: "custom-link" %>
-
-  <% end %>
-  <br>
-  <% if current_user && current_user.is_admin? %>
-    <%= link_to "New Meeting Note", new_meeting_note_path() %>
-    <br>
-    <%= link_to "View Meeting Notes", meeting_notes_path() %>
-
-<!--
-  <h2>Meeting Notes for <%= @user.user_first_name %></h2>
-  <ul>
-    <% @meeting_notes.each do |meeting_note| %>
-      <li>
-        <strong><%= meeting_note.title %></strong><br>
-        Date: <%= meeting_note.date %><br>
-        Content: <%= meeting_note.content %>
-      </li>
-    <% end %>
-  </ul>
-  !-->
-  <%end%>
 </div>
+
