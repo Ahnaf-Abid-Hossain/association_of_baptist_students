@@ -1,6 +1,6 @@
 <%= form_with(model: user) do |form| %>
   <% if user.errors.any? %>
-    <div style="color: red">
+    <div style="color: red;">
       <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
       <ul>
@@ -10,62 +10,76 @@
       </ul>
     </div>
   <% end %>
-  
-  <div>
-    <%= form.label :user_first_name, "First Name", style: "display: block" %>
-    <%= form.text_field :user_first_name %>
+
+  <div class="form-group">
+    <div class="input-container">
+      <%= form.label :user_first_name, "First Name" %>
+      <%= form.text_field :user_first_name, class: 'user-input' %>
+    </div>
+
+    <div class="input-container">
+      <%= form.label :user_last_name, "Last Name" %>
+      <%= form.text_field :user_last_name, class: 'user-input' %>
+    </div>
   </div>
 
+  <br>
 
-  <div>
-    <%= form.label :user_last_name, "Last Name", style: "display: block" %>
-    <%= form.text_field :user_last_name %>
+  <div class="form-group">
+    <div class="input-container">
+      <%= form.label :user_contact_email, "Contact Email", style: "display: block" %>
+      <%= form.text_field :user_contact_email, class: 'user-input' %>
+    </div>
+
+    <div class="input-container">
+      <%= form.label :user_ph_num, "Phone Number", style: "display: block" %>
+      <%= form.text_field :user_ph_num, class: 'user-input' %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :user_contact_email, "Contact Email", style: "display: block" %>
-    <%= form.text_field :user_contact_email %>
-  </div>
-  
-  
-  <div>
-    <%= form.label :user_ph_num, "Phone Number", style: "display: block" %>
-    <%= form.text_field :user_ph_num %>
-  </div>
+  <br>
 
+  <div class="form-group">
+    <div class="input-container">
+      <%= form.label :user_major, "College Major", style: "display: block" %>
+      <%= form.text_field :user_major, class: 'user-input' %>
+    </div>
 
-  <div>
-    <%= form.label :user_class_year, "Class Year", style: "display: block" %>
-    <!-- <%= form.text_field :user_class_year %> -->
-    <% current_year = Date.today.year %>
-    <%= form.select :user_class_year, options_for_select((current_year - 100..current_year + 4).to_a.reverse.map { |year| [year.to_s, year] }, @user.user_class_year), include_blank: true %>
-  </div>
+    <div class="input-container">
+      <%= form.label :user_class_year, "Class Year", style: "display: block" %>
+      <% current_year = Date.today.year %>
+      <%= form.select :user_class_year, options_for_select((current_year - 100..current_year + 4).to_a.reverse.map { |year| [year.to_s, year] }, @user.user_class_year), include_blank: true %>
+    </div>
 
-  
-  <div>
-    <%= form.label :user_job_field, "Current Job Title", style: "display: block" %>
-    <%= form.text_field :user_job_field %>
+    <div class="input-container">
+      <%= form.label :user_status, "Status", style: "display: block" %>
+      <%= form.select :user_status, options_for_select(["Student", "Alumnus"], @user.user_status), include_blank: true %>
+    </div>
   </div>
 
+  <br>
 
-  <div>
-    <%= form.label :user_location, "Current City", style: "display: block" %>
-    <%= form.text_field :user_location %>
+  <div class="form-group">
+    <div class="input-container">
+      <%= form.label :user_job_field, "Current Job Title", style: "display: block" %>
+      <%= form.text_field :user_job_field, class: 'user-input' %>
+    </div>
+
+    <div class="input-container">
+      <%= form.label :user_location, "Current City", style: "display: block" %>
+      <%= form.text_field :user_location, class: 'user-input' %>
+    </div>
   </div>
 
+  <br>
 
   <div>
-    <%= form.label :user_status, "Status", style: "display: block" %>
-    <%= form.text_field :user_status %>
+    <%= link_to "Save Profile", "#", class: "save-button", onclick: "document.forms[0].submit(); return false;" %>
+    <% if current_user.user_first_name.nil? %>
+    <% else %>
+      <span><%= link_to "Cancel", @user, class: "save-button" %></span>
+    <% end %>
   </div>
-
-
-  <div>
-    <%= form.label :user_major, "College Major", style: "display: block" %>
-    <%= form.text_field :user_major %>
-  </div>
-
-  <div>
-    <%= form.submit "Save Profile" %>
-  </div>
+</div>
 <% end %>
+

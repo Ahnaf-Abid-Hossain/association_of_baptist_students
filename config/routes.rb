@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'images/new'
+  get 'images/create'
   get 'approvals/index'
   resources :prayer_requests
   resources :meeting_notes
@@ -64,6 +66,12 @@ Rails.application.routes.draw do
 
   resources :users
   get '/account_created', to: 'users#account_created'
+
+  resources :meeting_notes
+  get '/search_meeting', to: 'meeting_notes#search_meeting', as: :basic_search_meeting_note
   
+  # images routing
+  resources :images, only: [:new, :create]
+
 
 end

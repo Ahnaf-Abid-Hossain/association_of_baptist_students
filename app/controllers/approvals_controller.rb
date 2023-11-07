@@ -1,5 +1,6 @@
 class ApprovalsController < ApplicationController
   before_action :require_admin
+  helper ProfanityHelper
   def index
     # @non_admin_alumni = Alumni.where.not(alum_status: 'admin')
     @non_admins = User.where(approval_status: 0)
