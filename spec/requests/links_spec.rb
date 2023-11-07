@@ -42,7 +42,6 @@ RSpec.describe('/links') do
     end
   end
 
-
   describe 'GET /new' do
     it 'renders a successful response' do
       get new_link_url

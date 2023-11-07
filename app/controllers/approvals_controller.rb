@@ -20,7 +20,4 @@ class ApprovalsController < ApplicationController
   def show_rejected_users
     @rejected_users = User.where(approval_status: -1)
   end
-
-
-
 end

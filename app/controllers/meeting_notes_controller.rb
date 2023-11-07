@@ -1,9 +1,7 @@
 class MeetingNotesController < ApplicationController
   before_action :set_meeting_note, only: %i[show edit update destroy]
   before_action :check_approval_status
-  before_action :user_is_admin, only: [:new, :create, :show, :edit]
-
-
+  before_action :user_is_admin, only: %i[new create show edit]
 
   def user_is_admin
     unless current_user&.is_admin
@@ -11,8 +9,6 @@ class MeetingNotesController < ApplicationController
       redirect_to(root_path)
     end
   end
-
-  
 
   # GET /meeting_notes or /meeting_notes.json
   def index
@@ -70,14 +66,14 @@ class MeetingNotesController < ApplicationController
   end
 
   def search_meeting
-    if params[:search_date]
-      @meeting_notes2 = MeetingNote.where(date: Date.parse(params[:search_date]))
-    else
-      @meeting_notes2 = MeetingNote.all
-    end
+    @meeting_notes2 = if params[:search_date]
+                        MeetingNote.where(date: Date.parse(params[:search_date]))
+                      else
+                        MeetingNote.all
+                      end
     respond_to do |format|
       format.html # This will render the default HTML template (if it exists)
-      format.json { render json: @meeting_notes } # Render JSON for JSON requests
+      format.json { render(json: @meeting_notes) } # Render JSON for JSON requests
     end
   end
 
@@ -92,7 +88,4 @@ class MeetingNotesController < ApplicationController
   def meeting_note_params
     params.require(:meeting_note).permit(:title, :content, :date, :id)
   end
-
-
 end
-

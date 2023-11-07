@@ -17,8 +17,7 @@ RSpec.describe('Edit and Delete User') do
       visit edit_user_path(@user)
 
       # expect to not be redirected
-      expect(page).not_to have_http_status(302)
-
+      expect(page).not_to(have_http_status(:found))
     end
   end
 
@@ -31,7 +30,7 @@ RSpec.describe('Edit and Delete User') do
       visit edit_user_path(@user)
 
       # expect to be told that you can't
-      expect(page).to have_text('You are not authorized to perform this action')
+      expect(page).to(have_text('You are not authorized to perform this action'))
     end
   end
 
@@ -45,7 +44,7 @@ RSpec.describe('Edit and Delete User') do
       delete user_path(@user)
 
       # check if request did not work
-      expect(User.where(id: @user.id)).to_not exist
+      expect(User.where(id: @user.id)).not_to(exist)
     end
   end
 
@@ -58,8 +57,7 @@ RSpec.describe('Edit and Delete User') do
       delete user_path(@user)
 
       # check if request did not work
-      expect(User.where(id: @user.id)).to exist
+      expect(User.where(id: @user.id)).to(exist)
     end
   end
-
 end

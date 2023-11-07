@@ -73,5 +73,5 @@ Rails.application.routes.draw do
   # images routing
   resources :images, only: [:new, :create]
 
-
+  get '/google_calendar', to: 'google_calendar#show'
 end
