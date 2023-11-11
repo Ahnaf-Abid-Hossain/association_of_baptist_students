@@ -3,7 +3,7 @@
   border-bottom: 1px solid #ddd;
   /* align-content: flex-end; */
   display: grid;
-  grid-template-columns: 1fr 120px 0.6fr 0.4fr;
+  grid-template-columns: 1fr 100px 0.6fr 0.4fr;
   /* flex-wrap: wrap; */
   justify-content: space-between;
   min-height: 8em;
