@@ -4,14 +4,14 @@ class PrayerRequestsController < ApplicationController
 
   # GET /prayer_requests or /prayer_requests.json
   def index
-    @user_prayer_requests = 
-                            current_user.prayer_requests.order(created_at: :desc)
+    @user_prayer_requests =
+      current_user.prayer_requests.order(created_at: :desc)
 
     @public_prayer_requests = if current_user.is_admin?
-                                PrayerRequest.all.order(created_at: :desc)
-    else
-      PrayerRequest.where(is_public: true).order(created_at: :desc)
-    end
+                                PrayerRequest.order(created_at: :desc)
+                              else
+                                PrayerRequest.where(is_public: true).order(created_at: :desc)
+                              end
   end
 
   # GET /prayer_requests/1 or /prayer_requests/1.json
@@ -22,9 +22,7 @@ class PrayerRequestsController < ApplicationController
     end
     if current_user.is_admin?
       prayer_request = PrayerRequest.where(id: prayer_request_id)[0]
-      if prayer_request.status == "Not Read"
-        prayer_request.update(status: "Read")
-      end
+      prayer_request.update!(status: 'Read') if prayer_request.status == 'Not Read'
     end
   end
 

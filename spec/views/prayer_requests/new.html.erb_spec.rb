@@ -10,12 +10,12 @@ RSpec.describe('prayer_requests/new') do
   end
 
   context 'admin creating their own prayer request' do
-    before do 
+    before do
       sign_in admin
       prayer_request = PrayerRequest.new
       assign(:prayer_request, prayer_request)
       render
-    end  
+    end
 
     it 'renders the request field in the create prayer_request form' do
       assert_select 'form[action=?][method=?]', prayer_requests_path, 'post' do
@@ -44,7 +44,7 @@ RSpec.describe('prayer_requests/new') do
   end
 
   context 'user creating their own prayer request' do
-    before do 
+    before do
       sign_in user1
       prayer_request = PrayerRequest.new
       assign(:prayer_request, prayer_request)

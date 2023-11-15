@@ -41,9 +41,9 @@ RSpec.describe('Links') do
         expect(page.find('.quick-links .navbar-link:nth-child(4)')['href']).to(eq(google_calendar_path))
         expect(page.find('.quick-links .navbar-link:nth-child(5)')['href']).to(eq(approvals_index_path))
         expect(page.find('.quick-links .navbar-link:nth-child(6)')['href']).to(eq(links_path))
-  
+
         # Test for no extra links
-        expect(page).not_to have_css('.quick-links .navbar-link:nth-child(7)')
+        expect(page).not_to(have_css('.quick-links .navbar-link:nth-child(7)'))
       end
 
       it 'displays links in order (as an admin)' do
@@ -327,9 +327,9 @@ RSpec.describe('Links') do
         expect(page.find('.quick-links .navbar-link:nth-child(2)')['href']).to(eq(meeting_notes_path))
         expect(page.find('.quick-links .navbar-link:nth-child(3)')['href']).to(eq(prayer_requests_path))
         expect(page.find('.quick-links .navbar-link:nth-child(4)')['href']).to(eq(google_calendar_path))
-  
+
         # Test for no extra links
-        expect(page).not_to have_css('.quick-links .navbar-link:nth-child(5)')
+        expect(page).not_to(have_css('.quick-links .navbar-link:nth-child(5)'))
       end
 
       it 'displays links in order (as a non-admin)' do

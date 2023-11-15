@@ -14,14 +14,14 @@ RSpec.describe('/prayer_requests') do
   describe 'GET /index' do
     it 'renders a successful response for admins' do
       sign_in admin
-      prayer_request = FactoryBot.create(:prayer_request, user: admin)
+      FactoryBot.create(:prayer_request, user: admin)
       get prayer_requests_url
       expect(response).to(be_successful)
     end
 
     it 'renders a successful response for users' do
       sign_in user1
-      prayer_request = FactoryBot.create(:prayer_request, user: admin)
+      FactoryBot.create(:prayer_request, user: admin)
       get prayer_requests_url
       expect(response).to(be_successful)
     end
@@ -69,11 +69,11 @@ RSpec.describe('/prayer_requests') do
         prayer_request = FactoryBot.create(:prayer_request, user: user1)
 
         prev_status = prayer_request.status
-        expect(prev_status).to eq('Not Read')
+        expect(prev_status).to(eq('Not Read'))
 
         get prayer_request_url(prayer_request)
 
-        expect(prayer_request.reload.status).to eq('Read')
+        expect(prayer_request.reload.status).to(eq('Read'))
       end
     end
   end
