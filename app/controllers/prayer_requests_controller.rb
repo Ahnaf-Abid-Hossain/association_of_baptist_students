@@ -17,7 +17,7 @@ class PrayerRequestsController < ApplicationController
   # GET /prayer_requests/1 or /prayer_requests/1.json
   def show
     prayer_request_id = params[:id]
-    if !current_user.is_admin? && PrayerRequest.find(prayer_request_id).user_id != current_user.id
+    if !current_user.is_admin? && !PrayerRequest.find(prayer_request_id).is_public && PrayerRequest.find(prayer_request_id).user_id != current_user.id
       redirect_to(prayer_requests_path, alert: 'You are not authorized to perform this action.')
     end
     if current_user.is_admin?

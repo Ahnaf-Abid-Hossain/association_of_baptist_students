@@ -27,11 +27,18 @@ RSpec.describe('/prayer_requests') do
         expect(response).to(be_successful)
       end
 
-      it "renders an unsuccessful response for users trying to view other users' prayer requests" do
+      it "renders an unsuccessful response for users trying to view other users' private prayer requests" do
         sign_in user1
-        prayer_request = FactoryBot.create(:prayer_request, user: user2)
+        prayer_request = FactoryBot.create(:prayer_request, user: user2, is_public: false)
         get prayer_request_url(prayer_request)
         expect(response).not_to(be_successful)
+      end
+
+      it "renders a successful response for users trying to view other users' public prayer requests" do
+        sign_in user1
+        prayer_request = FactoryBot.create(:prayer_request, user: user2, is_public: true)
+        get prayer_request_url(prayer_request)
+        expect(response).to(be_successful)
       end
 
       it 'renders a successful response for admins viewing other users prayer requests' do
