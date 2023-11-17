@@ -49,7 +49,7 @@
               </span>
             <% else %>
               <%= link_to user_path(prayer_request.user), class: 'prayer-request-author-icon-link' do %>
-                <img class="prayer-request-author-icon" src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106" />
+                <%= image_tag(prayer_request.user.avatar_url.present? ? prayer_request.user.avatar_url : 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106', alt: 'User Avatar', class: 'navbar-user-icon') %>
                 <%= prayer_request.user.user_first_name %>
                 <%= prayer_request.user.user_last_name %>
               <% end %> 
@@ -93,7 +93,7 @@
               </span>
             <% else %>
               <%= link_to user_path(prayer_request.user), class: 'prayer-request-author-icon-link' do %>
-                <img class="prayer-request-author-icon" src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106" />
+                <%= image_tag(prayer_request.user.avatar_url.present? ? prayer_request.user.avatar_url : 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?20200418092106', alt: 'User Avatar', class: 'navbar-user-icon') %>
                 <%= prayer_request.user.user_first_name %>
                 <%= prayer_request.user.user_last_name %>
               <% end %> 
