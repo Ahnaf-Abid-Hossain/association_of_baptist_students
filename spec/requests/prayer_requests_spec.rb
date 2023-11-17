@@ -11,6 +11,22 @@ RSpec.describe('/prayer_requests') do
     admin.destroy!
   end
 
+  describe 'GET /index' do
+    it 'renders a successful response for admins' do
+      sign_in admin
+      FactoryBot.create(:prayer_request, user: admin)
+      get prayer_requests_url
+      expect(response).to(be_successful)
+    end
+
+    it 'renders a successful response for users' do
+      sign_in user1
+      FactoryBot.create(:prayer_request, user: admin)
+      get prayer_requests_url
+      expect(response).to(be_successful)
+    end
+  end
+
   describe 'GET /show' do
     context 'when viewing prayer requests' do
       it 'renders a successful response for admins' do
@@ -27,11 +43,18 @@ RSpec.describe('/prayer_requests') do
         expect(response).to(be_successful)
       end
 
-      it "renders an unsuccessful response for users trying to view other users' prayer requests" do
+      it "renders an unsuccessful response for users trying to view other users' private prayer requests" do
         sign_in user1
-        prayer_request = FactoryBot.create(:prayer_request, user: user2)
+        prayer_request = FactoryBot.create(:prayer_request, user: user2, is_public: false)
         get prayer_request_url(prayer_request)
         expect(response).not_to(be_successful)
+      end
+
+      it "renders a successful response for users trying to view other users' public prayer requests" do
+        sign_in user1
+        prayer_request = FactoryBot.create(:prayer_request, user: user2, is_public: true)
+        get prayer_request_url(prayer_request)
+        expect(response).to(be_successful)
       end
 
       it 'renders a successful response for admins viewing other users prayer requests' do
@@ -39,6 +62,18 @@ RSpec.describe('/prayer_requests') do
         prayer_request = FactoryBot.create(:prayer_request, user: user1)
         get prayer_request_url(prayer_request)
         expect(response).to(be_successful)
+      end
+
+      it 'correctly updates the prayer request status when viewed by an admin' do
+        sign_in admin
+        prayer_request = FactoryBot.create(:prayer_request, user: user1)
+
+        prev_status = prayer_request.status
+        expect(prev_status).to(eq('Not Read'))
+
+        get prayer_request_url(prayer_request)
+
+        expect(prayer_request.reload.status).to(eq('Read'))
       end
     end
   end
