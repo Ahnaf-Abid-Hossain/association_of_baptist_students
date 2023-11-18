@@ -18,7 +18,7 @@
 
   <div>
     <%= form.label :content, style: "display: block" %>
-    <%= form.text_area :content %>
+    <%= form.text_area :content, class: "styled-text-box"%>
   </div>
 
   <div>
@@ -28,7 +28,14 @@
 
 
 
-  <div>
-    <%= form.submit %>
+
+  <div class="button-group">
+    <%= link_to meeting_notes_path do %>
+      <button class="links-button with-text danger-button button-group-left cursor-pointer"><i class="fa fa-arrow-left"></i> Back</button>
+    <% end %>
+    <%= form.button class: 'links-button neutral-button button-group-right cursor-pointer', type: :submit %>
   </div>
+
+
+
 <% end %>
