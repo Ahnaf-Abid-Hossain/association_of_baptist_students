@@ -4,6 +4,8 @@ class UsersController < ApplicationController
   before_action :check_approval_status, except: %i[edit update]
   before_action :authorize_user, only: %i[edit update destroy]
   helper ProfanityHelper
+  include ProfanityHelper
+  before_action :check_for_profanity_in_attributes, only: [:update]
 
   def approve
     @alumni = User.find(params[:id])
@@ -18,6 +20,15 @@ class UsersController < ApplicationController
     else
       @alumni.update!(approval_status: -1)
       redirect_to(users_path, notice: 'Alumni declined successfully.')
+    end
+  end
+
+
+  def check_for_profanity_in_attributes
+
+    if(check_for_profanity(user_params['user_first_name']) || check_for_profanity(user_params['user_last_name']) || check_for_profanity(user_params['user_location']) || check_for_profanity(user_params['user_major']) || check_for_profanity(user_params['user_last_name']) || check_for_profanity(user_params['user_contact_email']) || check_for_profanity(user_params['user_ph_num']) || check_for_profanity(user_params['user_job_field'])   )
+      flash[:error] = "Profanity is detected in your changes, please check your changes"
+      redirect_to edit_user_path(@user)
     end
   end
 
