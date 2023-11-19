@@ -160,18 +160,64 @@ class UsersController < ApplicationController
     @current_city = params[:current_city]
     @results = User.all
 
-    @results = if @first_name.present? || @last_name.present? || @class_year.present? || @major.present? || @current_city.present?
 
-                 if @class_year.present?
-                   User.where(
-                     'user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_class_year = ? AND is_class_year_private = False AND user_major ILIKE ? AND is_major_private = False AND user_location ILIKE ? AND is_location_private = False AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%", Integer(
+    class_year_present = false
+    major_present = false
+    current_city_present = false
+
+    if @class_year.present?
+      class_year_present = true
+    end
+
+    if @major.present?
+      major_present = true
+    end
+
+    if @current_city.present?
+      current_city_present = true
+    end
+
+    if @first_name.present? || @last_name.present? || @class_year.present? || @major.present? || @current_city.present?
+                 initial_query = User.all
+                 if class_year_present
+                   initial_query = User.where(
+                     'user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_class_year = ? AND user_major ILIKE ? AND user_location ILIKE ? AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%", Integer(
                                                                                                                                                                                                                                                                                                                     @class_year, 10
                                                                                                                                                                                                                                                                                                                   ), "%#{@major}%", "%#{@current_city}%"
                    )
+                  if class_year_present
+                    users_with_class_year_present = User.where.not('is_class_year_private')
+                    initial_query = initial_query.and(users_with_class_year_present)
+                  end
+          
+                   if major_present
+                    users_with_major_present = User.where.not('is_major_private')
+                    initial_query = initial_query.and(users_with_major_present)
+                  end
+                
+                  if current_city_present
+                    users_with_city_present = User.where.not('is_location_private')
+                    initial_query = initial_query.and(users_with_city_present)
+                  end
+
+                   @results = initial_query
                  else
-                   User.where(
-                     'user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_major ILIKE ? AND is_major_private = False AND user_location ILIKE ? AND is_location_private = False AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%", "%#{@major}%", "%#{@current_city}%"
+                   initial_query = User.where(
+                     'user_first_name ILIKE ? AND user_last_name ILIKE ? AND user_major ILIKE ? AND user_location ILIKE ? AND approval_status = 1', "%#{@first_name}%", "%#{@last_name}%", "%#{@major}%", "%#{@current_city}%"
                    )
+                
+                    if major_present
+                      users_with_major_present = User.where.not('is_major_private')
+                      initial_query = initial_query.and(users_with_major_present)
+                    end
+                  
+                    if current_city_present
+                      users_with_city_present = User.where.not('is_location_private')
+                      initial_query = initial_query.and(users_with_city_present)
+                    end
+
+                    @results = initial_query
+                  
                  end
                else
                  []
