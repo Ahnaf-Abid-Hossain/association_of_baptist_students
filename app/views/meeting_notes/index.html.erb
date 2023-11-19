@@ -24,7 +24,11 @@
     <% @meeting_notes.each do |meeting_note| %>
     <tr>
           <td><%= meeting_note.title %></td>
-          <td><%= meeting_note.content %></td>
+          <td>
+            <div class="truncate-content">
+              <%= meeting_note.content %>
+            </div>
+          </td>
           <td><%= meeting_note.date %></td>
           <td class="align-center small-col"><%= link_to "View", meeting_note_path(meeting_note) %></td>
           <% if current_user.is_admin? %>
