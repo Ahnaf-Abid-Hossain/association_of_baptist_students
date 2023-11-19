@@ -28,7 +28,24 @@
                         <td><%= meeting_note.title %></td>
                         <td><%= meeting_note.content %></td>
                         <td><%= meeting_note.date %></td>
-                    </tr>
+                        <td class="align-center small-col"><%= link_to "View", meeting_note_path(meeting_note) %></td>
+
+                        <% if current_user.is_admin? %>
+                        <td class="align-center small-col">
+                            <%= button_to edit_meeting_note_path(meeting_note), class: 'neutral-button prayer-request-button cursor-pointer', method: :get do %>
+                            <i class="fas fa-edit"></i>
+                            <% end %>
+                        </td>
+                        <%end%>
+                        <!-- Delete button -->
+                        <% if current_user.is_admin? %>
+                        <td class="align-center small-col">
+                            <%= button_to meeting_note_path(meeting_note), method: :delete, class: 'danger-button prayer-request-button cursor-pointer' do %>
+                            <i class="fas fa-trash-alt"></i>
+                            <% end %>
+                        </td>
+                        <%end%>
+                        </tr>
                 <%end%>
                 </tbody>
             </table>
@@ -36,3 +53,6 @@
     <% end %>
   
 <% end %>
+
+
+</div>
