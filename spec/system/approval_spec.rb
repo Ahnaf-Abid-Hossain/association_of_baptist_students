@@ -41,11 +41,11 @@ RSpec.describe('/approvals/show_users') do
     sign_in @author
 
     # Create a user with a completed profile
-    user = FactoryBot.create(:user, approval_status: 0)
+    FactoryBot.create(:user, approval_status: 0)
 
     # Visit the approvals page and expect the user to be there
     visit '/approvals/index'
-    expect(page).to(have_css 'tbody > tr', count: 1)
+    expect(page).to(have_css('tbody > tr', count: 1))
   end
 
   it 'does not display incomplete profiles needing approval' do
@@ -53,10 +53,10 @@ RSpec.describe('/approvals/show_users') do
     sign_in @author
 
     # Create a user with an incomplete profile
-    user = FactoryBot.create(:user, approval_status: 0, user_first_name: '', user_last_name: '')
+    FactoryBot.create(:user, approval_status: 0, user_first_name: '', user_last_name: '')
 
     # Visit the approvals page and expect the user to not be there (no rows)
     visit '/approvals/index'
-    expect(page).to_not(have_css 'tbody > tr')
+    expect(page).not_to(have_css('tbody > tr'))
   end
 end
