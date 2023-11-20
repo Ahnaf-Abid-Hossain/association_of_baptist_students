@@ -8,8 +8,6 @@ class ImagesController < ApplicationController
     # validation that file is selected when user clicks "Upload Image"
     if params[:file].present?
       image_path = params[:file].tempfile.path
-      folder_id = '1z6-2YvXxsIaxjK4HnmX5hTkcam-0X-oO'
-      image_url = google_drive_service.upload_image(image_path, folder_id)
 
       file_extension = File.extname(image_path).downcase
 
@@ -24,7 +22,9 @@ class ImagesController < ApplicationController
       if content_type != 'image/png' && content_type != 'image/jpeg'
         flash[:alert] = 'Please choose a valid file type, JPG or PNG.'
         redirect_to(new_image_path)
-      elsif image_url
+      else
+        folder_id = '1z6-2YvXxsIaxjK4HnmX5hTkcam-0X-oO'
+        image_url = google_drive_service.upload_image(image_path, folder_id)
         @user.update!(avatar_url: image_url)
         flash[:success] = 'Success! Your profile picture has been updated.'
         redirect_to(@user)

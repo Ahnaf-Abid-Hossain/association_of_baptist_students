@@ -6,13 +6,6 @@ class User < ApplicationRecord
 
   validates :user_first_name, presence: true, if: :editing_profile?
   validates :user_last_name, presence: true, if: :editing_profile?
-  validates :user_contact_email, presence: true, if: :editing_profile?
-  validates :user_ph_num, presence: true, if: :editing_profile?
-  validates :user_class_year, presence: true, if: :editing_profile?
-  validates :user_job_field, presence: true, if: :editing_profile?
-  validates :user_location, presence: true, if: :editing_profile?
-  validates :user_status, presence: true, if: :editing_profile?
-  validates :user_major, presence: true, if: :editing_profile?
 
   devise :omniauthable, omniauth_providers: [:google_oauth2]
 
