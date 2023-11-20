@@ -1,7 +1,7 @@
 class MeetingNotesController < ApplicationController
   before_action :set_meeting_note, only: %i[show edit update destroy]
   before_action :check_approval_status
-  before_action :user_is_admin, only: %i[new create show edit]
+  before_action :user_is_admin, only: %i[new create edit destroy] 
 
   def user_is_admin
     unless current_user&.is_admin

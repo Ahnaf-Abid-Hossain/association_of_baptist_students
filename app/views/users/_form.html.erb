@@ -13,12 +13,12 @@
 
   <div class="form-group">
     <div class="input-container">
-      <%= form.label :user_first_name, "First Name" %>
+      <label style="color: black;">First Name<span style="color: red;">*</span></label>
       <%= form.text_field :user_first_name, class: 'user-input' %>
     </div>
 
     <div class="input-container">
-      <%= form.label :user_last_name, "Last Name" %>
+      <label style="color: black;">Last Name<span style="color: red;">*</span></label>
       <%= form.text_field :user_last_name, class: 'user-input' %>
     </div>
   </div>
@@ -27,12 +27,12 @@
 
   <div class="form-group">
     <div class="input-container">
-      <%= form.label :user_contact_email, "Contact Email", style: "display: block" %>
+      <label style="color: black;">Contact Email</label>
       <%= form.text_field :user_contact_email, class: 'user-input' %>
     </div>
 
     <div class="input-container">
-      <%= form.label :user_ph_num, "Phone Number", style: "display: block" %>
+      <label style="color: black;">Phone Number</label>
       <%= form.text_field :user_ph_num, class: 'user-input' %>
     </div>
   </div>
@@ -41,18 +41,18 @@
 
   <div class="form-group">
     <div class="input-container">
-      <%= form.label :user_major, "College Major", style: "display: block" %>
+      <label style="color: black;">College Major</label>
       <%= form.text_field :user_major, class: 'user-input' %>
     </div>
 
     <div class="input-container">
-      <%= form.label :user_class_year, "Class Year", style: "display: block" %>
+      <label style="color: black;">Class Year</label>
       <% current_year = Date.today.year %>
       <%= form.select :user_class_year, options_for_select((current_year - 100..current_year + 4).to_a.reverse.map { |year| [year.to_s, year] }, @user.user_class_year), include_blank: true %>
     </div>
 
     <div class="input-container">
-      <%= form.label :user_status, "Status", style: "display: block" %>
+      <label style="color: black;">Status</label>
       <%= form.select :user_status, options_for_select(["Student", "Alumnus"], @user.user_status), include_blank: true %>
     </div>
   </div>
@@ -61,16 +61,19 @@
 
   <div class="form-group">
     <div class="input-container">
-      <%= form.label :user_job_field, "Current Job Title", style: "display: block" %>
+      <label style="color: black;">Current Job Title</label>
       <%= form.text_field :user_job_field, class: 'user-input' %>
     </div>
 
     <div class="input-container">
-      <%= form.label :user_location, "Current City", style: "display: block" %>
+      <label style="color: black;">Current City</label>
       <%= form.text_field :user_location, class: 'user-input' %>
     </div>
   </div>
 
+
+  <label style="color: red;">*<span style="color: black;"> Required Fields</span></label>
+  <br>
   <br>
 
   <div>

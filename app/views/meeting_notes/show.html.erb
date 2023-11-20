@@ -1,9 +1,11 @@
+<div class = "hero">
 <%= render @meeting_note %>
 
-<div>
-  <%= link_to "Back to Directory", users_path %>
-  <%= link_to "Edit this meeting note", edit_meeting_note_path(@meeting_note) %> |
-  <%= link_to "Back to meeting notes", meeting_notes_path %>
 
-  <%= button_to "Destroy this meeting note", @meeting_note, method: :delete %>
+<div class="button-group">
+    <%= link_to meeting_notes_path do %>
+      <button class="links-button with-text danger-button button-group-left cursor-pointer"><i class="fa fa-arrow-left"></i> Back</button>
+    <% end %>
+  </div>
+
 </div>
