@@ -2,8 +2,9 @@ class ApprovalsController < ApplicationController
   before_action :require_admin
   helper ProfanityHelper
   def index
-    # @non_admin_alumni = Alumni.where.not(alum_status: 'admin')
-    @non_admins = User.where(approval_status: 0)
+    # Here we are looking at all unapproved users (approval_status = 0)
+    # but only users with completed profiles (user_first_name != "")
+    @non_admins = User.where(approval_status: 0).and(User.where.not(user_first_name: ""))
   end
 
   def require_admin

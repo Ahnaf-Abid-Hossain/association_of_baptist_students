@@ -35,4 +35,28 @@ RSpec.describe('/approvals/show_users') do
     @author.reload # Reload the author to get the latest data from the database
     expect(@author.is_admin).to(eq(initial_is_admin))
   end
+
+  it 'display completed profiles needing approval' do
+    # Sign in as an admin
+    sign_in FactoryBot.create(:admin_user)
+
+    # Create a user with a completed profile
+    user = FactoryBot.create(:user, approval_status: 0)
+
+    # Visit the approvals page and expect the user to be there
+    visit '/approvals/index'
+    expect(page).to(have_content(user.user_first_name))
+  end
+
+  it 'does not display incomplete profiles needing approval' do
+    # Sign in as an admin
+    sign_in FactoryBot.create(:admin_user)
+
+    # Create a user with an incomplete profile
+    user = FactoryBot.create(:user, approval_status: 0, user_first_name: '', user_last_name: '')
+
+    # Visit the approvals page and expect the user to not be there
+    visit '/approvals/index'
+    expect(page).to_not(have_content(user.user_first_name))
+  end
 end
