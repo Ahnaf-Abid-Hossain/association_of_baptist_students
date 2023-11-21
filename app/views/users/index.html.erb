@@ -14,7 +14,7 @@
 
   <div id="users">
     <% approved_users = @users.select { |user| user.approval_status == 1 } %>
-    <% sorted_users = approved_users.sort_by { |user| user.user_last_name } %>
+    <% sorted_users = approved_users.sort_by { |user| (user.user_last_name || '') } %>
     <% sorted_users.each_with_index do |user, index| %>
       <div class="user-item">
         <p style="display: flex; justify-content: space-between; align-items: center;">

@@ -42,7 +42,7 @@
     <% else %>
       <h2>Search Results</h2>
       <div>
-        <% sorted_results = @results.sort_by { |user| user.user_last_name} %>
+        <% sorted_results = @results.sort_by { |user| (user.user_last_name || '')} %>
         <% sorted_results.each_with_index do |user, index| %>
           <div class="user-item">
             <p style="display: flex; justify-content: space-between; align-items: center;">
