@@ -158,7 +158,7 @@ class UsersController < ApplicationController
     @class_year = params[:class_year]
     @major = params[:major]
     @current_city = params[:current_city]
-    @results = User.all
+    @results = User.where(approval_status: 1)
 
 
     class_year_present = false
