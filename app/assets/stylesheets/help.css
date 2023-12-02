@@ -9,3 +9,19 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.help-button {
+    border-color: hsl(216, 0%, 63%);
+    background-color: hsl(216, 0%, 72%);
+    color: black !important;
+}
+
+.help-button:active {
+    background-color: hsl(216, 0%, 42%);
+}
+
+.help-button:disabled {
+    border-color: #ddd;
+    background-color: #eee;
+    color: #ddd;
+}

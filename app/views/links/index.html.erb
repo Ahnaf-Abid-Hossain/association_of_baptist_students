@@ -1,6 +1,11 @@
 <div class="hero">
   <h1>Links</h1>
 
+  <%= link_to '/links/help' do %>
+    <button class="links-button with-text help-button"><i class="fa fa-question-circle"></i> Help</button>
+  <% end %>
+
+
   <%= link_to new_link_path do %>
     <button class="success-button links-button with-text">
       <i class="fas fa-plus"></i> Add Link
