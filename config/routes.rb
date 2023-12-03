@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   get 'images/new'
   get 'images/create'
   get 'approvals/index'
-  resources :prayer_requests
+  get 'prayer_requests/help', to: 'prayer_requests#help'
+  resources :prayer_requests 
   resources :meeting_notes
 
   resources :links, :except => [:show] do
