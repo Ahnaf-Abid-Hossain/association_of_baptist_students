@@ -2,9 +2,6 @@ Rails.application.routes.draw do
   get 'images/new'
   get 'images/create'
   get 'approvals/index'
-  get 'prayer_requests/help', to: 'prayer_requests#help'
-  resources :prayer_requests
-  resources :meeting_notes
 
   resources :links, :except => [:show] do
     member do
@@ -24,6 +21,13 @@ Rails.application.routes.draw do
   root 'users#index'
 
   get 'approvals/help', to: 'approvals#help'
+
+  # prayer requests routes
+  resources :prayer_requests do 
+    collection do
+      get :help
+    end
+  end
 
   # get 'meeting_notes/help', to: 'meeting_notes#help'
   resources :meeting_notes do 
