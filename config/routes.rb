@@ -12,6 +12,9 @@ Rails.application.routes.draw do
     end
   end
   get 'links/help', to: 'links#help'
+  get 'users/profile_help', to: 'users#profile_help'
+  get 'users/search_help', to: 'users#search_help'
+
     
   # Add this route for the approval page
   get 'approvals/index'
