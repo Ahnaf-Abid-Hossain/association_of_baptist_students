@@ -30,8 +30,8 @@
             <%= (check_for_profanity(user.user_first_name) || check_for_profanity(user.user_last_name) || check_for_profanity(user.email)) ? 'true' : 'false' %>
           </td>
           <td>
-            <%= button_to "Approve", approve_user_path(user), method: :patch, class: "neutral-button button-group-left links-button", data: { confirm: 'Are you sure?' }%>
-            <%= button_to "Decline", decline_user_path(user), method: :patch, class: 'neutral-button button-group-left links-button', data: { confirm: 'Are you sure?' } %>
+            <%= button_to "Approve", approve_user_path(user), method: :patch, class:"view-button", data: { confirm: 'Are you sure?' }%>
+            <%= button_to "Decline", decline_user_path(user), method: :patch, class:"view-button", data: { confirm: 'Are you sure?' } %>
           </td>
         </tr>
       <% end %>
