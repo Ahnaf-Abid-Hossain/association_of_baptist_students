@@ -123,6 +123,9 @@ class UsersController < ApplicationController
     end
   end
 
+  def profile_help; end
+  def search_help; end
+
   def privacy_settings
     @user = User.find(params[:id])
     # You can add code here to handle displaying and updating privacy settings
