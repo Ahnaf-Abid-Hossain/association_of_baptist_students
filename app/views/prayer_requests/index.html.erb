@@ -8,13 +8,19 @@
   <div>
     <!-- Holds options: Create new prayer request (button), Your prayer requests (toggle switch) -->
     <div id="prayer-request-option-bar">
-      <!-- Create new prayer request (button) -->
-      <div>
-        <%= link_to new_prayer_request_path do %>
-          <button class="success-button links-button with-text cursor-pointer">
-            <i class="fas fa-plus"></i> New prayer request
-          </button>
+      <div style="display: flex; flex-direction: row;">
+        <!-- Prayer request help (button) -->
+        <%= link_to '/prayer_requests/help' do %>
+          <button class="links-button with-text help-button" style="margin-right: 5px;"><i class="fa fa-question-circle"></i> Help</button>
         <% end %>
+        <!-- Create new prayer request (button) -->
+        <div>
+          <%= link_to new_prayer_request_path do %>
+            <button class="success-button links-button with-text cursor-pointer">
+              <i class="fas fa-plus"></i> New prayer request
+            </button>
+          <% end %>
+        </div>
       </div>
       <!-- Your prayer requests (toggle switch) -->
       <div class="flex-center">
