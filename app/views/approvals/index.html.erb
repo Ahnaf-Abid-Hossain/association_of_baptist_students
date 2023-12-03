@@ -6,6 +6,11 @@
 <div class="hero">
 
 <h1>Alumni Approval Page</h1>
+
+  <%= link_to '/approvals/help' do %>
+    <button class="links-button with-text help-button"><i class="fa fa-question-circle"></i> Help</button>
+  <% end %>
+
 <ul>
   <h1><%= @title %></h1>
   <table id = "links">
@@ -32,17 +37,17 @@
           <td>
             <%= (check_for_profanity(user.user_first_name) || check_for_profanity(user.user_last_name) || check_for_profanity(user.email)) ? 'true' : 'false' %>
           </td>
-          <td><%= button_to "Approve", approve_user_path(user), method: :patch, class: "neutral-button button-group-left links-button " %></td>
-          <td><%= button_to "Decline", decline_user_path(user), method: :patch, class: 'neutral-button button-group-left links-button' %></td>
+          <td><%= button_to "Approve", approve_user_path(user), method: :patch,class:"view-button" %></td>
+          <td><%= button_to "Decline", decline_user_path(user), method: :patch, class:"view-button" %></td>
         </tr>
       <% end %>
     </tbody>
     <% end %>
 
   </table>
-
-  <%= link_to 'Show All Users', show_users_approvals_path %>
-  <%= link_to 'Show Rejected Users', show_rejected_users_approvals_path %>
+  <br>
+  <%= link_to 'Show All Users', show_users_approvals_path, class: "view-button"%>
+  <%= link_to 'Show Rejected Users', show_rejected_users_approvals_path , class: "view-button"%>
 
 </ul>
 
