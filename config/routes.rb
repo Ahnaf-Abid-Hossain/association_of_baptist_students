@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   
   get 'prayer_requests/help', to: 'prayer_requests#help'
   resources :prayer_requests 
-  resources :meeting_notes
 
   resources :links, :except => [:show] do
     member do
