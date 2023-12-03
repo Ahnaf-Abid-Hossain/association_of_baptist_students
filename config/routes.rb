@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       patch 'down'
     end
   end
+  get 'links/help', to: 'links#help'
     
   # Add this route for the approval page
   get 'approvals/index'

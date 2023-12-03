@@ -1,0 +1,27 @@
+.help-container {
+    padding: 2em;
+    margin: 2em;
+    border: 1px solid #500000;
+    border-radius: 2em;
+    background-color: #f3f3f3;
+    color: #300000;
+    width: 80vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.help-button {
+    border-color: hsl(216, 0%, 63%);
+    background-color: hsl(216, 0%, 72%);
+    color: black !important;
+}
+
+.help-button:active {
+    background-color: hsl(216, 0%, 42%);
+}
+
+.help-button:disabled {
+    border-color: #ddd;
+    background-color: #eee;
+    color: #ddd;
+}
