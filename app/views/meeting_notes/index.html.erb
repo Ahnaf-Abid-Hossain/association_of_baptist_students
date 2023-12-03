@@ -3,12 +3,15 @@
 <div id="meeting_notes">
 <div class ="hero">
 <h1>Meeting notes</h1>
-<%= link_to "Back to Directory", current_user %>
+
+  <%= link_to help_meeting_notes_path do %>
+    <button class="links-button with-text help-button"><i class="fa fa-question-circle"></i> Help</button>
+  <% end %>
 
 <%= form_tag(basic_search_meeting_note_path, method: :get, class: 'form-inline') do %>
   <div class="form-group">
     <%= date_field_tag(:search_date, params[:search_date], class: 'form-control', placeholder: 'Enter Date') %>
-    <%= submit_tag('Search', class: 'btn btn-primary') %>
+    <%= submit_tag('Search', class: 'btn search-button') %>
     </div>
 <% end %>
 
@@ -52,6 +55,7 @@
     </table>
     <% if current_user && current_user.is_admin? %>
         <div>
+        <br>
         <%= link_to new_meeting_note_path do %>
           <button class="success-button links-button with-text cursor-pointer">
             <i class="fas fa-plus"></i> New Meeting note
@@ -62,9 +66,5 @@
 <%end%>
 
     </div>
-    <p>
-
-
-    </p>
 
 </div>
