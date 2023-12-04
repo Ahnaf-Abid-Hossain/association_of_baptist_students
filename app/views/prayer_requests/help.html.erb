@@ -1,0 +1,33 @@
+<%= link_to prayer_requests_path do %>
+    <button class="links-button with-text danger-button cursor-pointer"><i class="fa fa-arrow-left"></i> Back</button>
+<% end %>
+
+<div class="help-container" style="line-height: 2em">
+    <h1>Prayer Request Help:</h1>
+    <p style="font-style: italic">The prayer request page allows you to create posts containing prayer requests.</p><br />
+
+    <h2>New Prayer Request:</h2>
+    To create a prayer request, click the <button class="success-button links-button with-text cursor-pointer"><i class="fas fa-plus"></i> New prayer request</button> button at the top of the page.<br />
+    The creation of prayer requests contains options for <b>anonymity</b> and <b>publicity</b>. <br />
+    Regarding <b>publicity</b>, if you choose not to make your prayer request public, only the admin will be able to see it. Otherwise, everyone will have access to it.<br />
+    Concerning <b>anonymity</b>, opting to make your prayer request anonymous will remove details that can identify you from it. Otherwise, it will include your name, profile picture, and a link to your profile.
+
+    <hr />
+
+    <h2 style="margin-top: 0.75em">Viewing a Prayer Request:</h2>
+    To view a prayer request, press on the <a href="javascript:void(0);" onclick="return false;" class="align-center small-col">View</a> link next to the prayer request. When viewing your own prayer requests, you
+    can see the status of your prayer request. The status of a prayer request is only <b>"Not Read"</b> by default and is updated to <b>"Read"</b> only when an admin views the prayer request.
+
+    <hr />
+
+    <h2 style="margin-top: 0.75em">Editing a Prayer Request:</h2>
+    To edit a prayer request, click the <button class="neutral-button prayer-request-button cursor-pointer"><i class="fas fa-edit"></i></button> button next to the prayer request you want to edit.<br />
+    If you don't have sufficient permissions to edit a prayer request then the button will be grayed out like this: <i class="neutral-button prayer-request-button fa-disabled fas fa-edit"></i>
+    
+    <hr />
+
+    <h2 style="margin-top: 0.75em">Deleting a Prayer Request:</h2>
+    To delete a prayer request, click the <button class="danger-button prayer-request-button cursor-pointer"><i class="fas fa-trash-alt"></i></button> button next to the prayer request you want to delete.<br />
+    If you don't have sufficient permissions to delete a prayer request then the button will be grayed out like this: <i class="danger-button prayer-request-button fa-disabled fas fa-trash-alt"></i>
+
+</div>
