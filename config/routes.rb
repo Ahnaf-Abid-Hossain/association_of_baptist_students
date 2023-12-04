@@ -2,8 +2,6 @@ Rails.application.routes.draw do
   get 'images/new'
   get 'images/create'
   get 'approvals/index'
-  resources :prayer_requests
-  resources :meeting_notes
 
   resources :links, :except => [:show] do
     member do
@@ -11,6 +9,10 @@ Rails.application.routes.draw do
       patch 'down'
     end
   end
+  get 'links/help', to: 'links#help'
+  get 'users/profile_help', to: 'users#profile_help'
+  get 'users/search_help', to: 'users#search_help'
+
     
   # Add this route for the approval page
   get 'approvals/index'
@@ -18,6 +20,21 @@ Rails.application.routes.draw do
   # New routing
   root 'users#index'
 
+  get 'approvals/help', to: 'approvals#help'
+
+  # prayer requests routes
+  resources :prayer_requests do 
+    collection do
+      get :help
+    end
+  end
+
+  # get 'meeting_notes/help', to: 'meeting_notes#help'
+  resources :meeting_notes do 
+    collection do
+      get :help
+    end
+  end
 
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   devise_scope :user do
@@ -67,9 +84,12 @@ Rails.application.routes.draw do
   resources :users
   get '/account_created', to: 'users#account_created'
 
+
+  
+
   resources :meeting_notes
   get '/search_meeting', to: 'meeting_notes#search_meeting', as: :basic_search_meeting_note
-  
+
   # images routing
   resources :images, only: [:new, :create]
 

@@ -4,6 +4,7 @@
   <br>
   <h1>Advanced Search</h1>
 
+
   <%= form_tag search_user_path, method: :get do %>
     <div class="form-group">
       <%= label_tag 'first_name', 'First Name:', class: "search-label" %>
@@ -31,7 +32,10 @@
     </div>
 
 
-    <%= submit_tag 'Search', class: 'btn search-button' %>
+    <%= submit_tag 'Search', class: 'btn search-button2' %>
+    <%= link_to '/users/search_help' do %>
+      <button class="view-button"><i class="fa fa-question-circle"></i> Help</button>
+    <% end %>
   <% end %>
 
   <br>
